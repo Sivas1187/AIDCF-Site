@@ -1,0 +1,33 @@
+{
+  "name": "aidcf-site",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Public website for the AI Data Centre Assurance Framework (AIDCF). Content is generated from the canonical AIDCF repository at a pinned commit.",
+  "license": "Apache-2.0",
+  "scripts": {
+    "content": "node scripts/build-content.mjs",
+    "content:check": "node scripts/build-content.mjs --check",
+    "dev": "next dev",
+    "build": "next build && node scripts/postbuild.mjs",
+    "typecheck": "tsc --noEmit",
+    "check:site": "node scripts/check-site.mjs",
+    "verify": "npm run typecheck && npm run build && npm run check:site",
+    "qa": "node scripts/qa.mjs"
+  },
+  "engines": {
+    "node": ">=20.9"
+  },
+  "dependencies": {
+    "next": "16.3.8",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "axe-core": "4.10.3",
+    "playwright": "1.56.1",
+    "typescript": "5.9.3"
+  }
+}

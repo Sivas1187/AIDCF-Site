@@ -1,0 +1,663 @@
+"use client";
+
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
+import { caseData, gateName, humanise, type CaseEdge, type CaseNode, type NodeKind } from "@/lib/data";
+
+// ------------------------------------------------------------- layout
+
+const COLS: { kind: NodeKind; label: string }[] = [
+  { kind: "external", label: "External" },
+  { kind: "asset", label: "Assets" },
+  { kind: "system", label: "Systems" },
+  { kind: "function", label: "Required functions" },
+  { kind: "outcome", label: "Service outcomes" },
+];
+const NODE_W = 170;
+const NODE_H = 42;
+const ROW = 54;
+const COL_GAP = 198;
+const PAD_X = 34;
+const PAD_TOP = 44;
+
+const nodesById = new Map(caseData.nodes.map((n) => [n.id, n]));
+const colIndex = (k: NodeKind) => COLS.findIndex((c) => c.kind === k);
+const maxRows = Math.max(...COLS.map((c) => caseData.nodes.filter((n) => n.kind === c.kind).length));
+const HEIGHT = PAD_TOP + maxRows * ROW + 24;
+const WIDTH = PAD_X * 2 + (COLS.length - 1) * COL_GAP + NODE_W;
+
+const positions = new Map<string, { x: number; y: number }>();
+for (const c of COLS) {
+  const list = caseData.nodes.filter((n) => n.kind === c.kind);
+  const offset = ((maxRows - list.length) * ROW) / 2;
+  list.forEach((n, i) => {
+    positions.set(n.id, { x: PAD_X + colIndex(c.kind) * COL_GAP, y: PAD_TOP + offset + i * ROW });
+  });
+}
+
+function edgePath(e: { from: string; to: string }): string {
+  const a = positions.get(e.from);
+  const b = positions.get(e.to);
+  if (!a || !b) return "";
+  const ca = colIndex(nodesById.get(e.from)!.kind);
+  const cb = colIndex(nodesById.get(e.to)!.kind);
+  const ay = a.y + NODE_H / 2;
+  const by = b.y + NODE_H / 2;
+  if (ca < cb) {
+    const x1 = a.x + NODE_W;
+    const x2 = b.x;
+    const mid = (x1 + x2) / 2;
+    return `M${x1},${ay} C${mid},${ay} ${mid},${by} ${x2},${by}`;
+  }
+  if (ca === cb) {
+    // Same column: arc out to the right of the column.
+    const x = a.x + NODE_W;
+    const bulge = 26 + Math.min(40, Math.abs(by - ay) / 6);
+    return `M${x},${ay} C${x + bulge},${ay} ${x + bulge},${by} ${x},${by}`;
+  }
+  // Backwards (towards an upstream column): leave from the left side.
+  const x1 = a.x;
+  const x2 = b.x + NODE_W;
+  return `M${x1},${ay} C${x1 - 40},${ay} ${x2 + 40},${by} ${x2},${by}`;
+}
+
+const truncate = (s: string, n: number) => (s.length > n ? `${s.slice(0, n - 1)}…` : s);
+const edgeKey = (e: { from: string; to: string }) => `${e.from}>${e.to}`;
+
+const edgeVerb: Record<CaseEdge["kind"], [string, string]> = {
+  composes: ["is part of", "contains"],
+  implements: ["implements", "is implemented by"],
+  requires: ["is required by", "requires"],
+  depends: ["is relied on by", "relies on"],
+  propagates: ["propagates failure to", "receives failure from"],
+};
+
+const resultClass = (r: string) => `state s-${r.toLowerCase()}`;
+
+// --------------------------------------------------------- component
+
+export function CaseExplorer() {
+  const [selected, setSelected] = useState<string | null>(null);
+  const [scenarioId, setScenarioId] = useState<string>("");
+  const [view, setView] = useState<"graph" | "list">("graph");
+
+  useEffect(() => {
+    if (window.matchMedia("(max-width: 719px)").matches) setView("list");
+  }, []);
+
+  const scenario = caseData.scenarios.find((s) => s.id === scenarioId) ?? null;
+  const panelRef = useRef<HTMLDivElement>(null);
+  const first = useRef(true);
+
+  // When the panel sits below the graph, bring it into view after a choice.
+  useEffect(() => {
+    if (first.current) {
+      first.current = false;
+      return;
+    }
+    if (!(selected || scenarioId) || window.matchMedia("(min-width: 1200px)").matches) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    panelRef.current?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+  }, [selected, scenarioId]);
+
+  const path = useMemo(() => {
+    if (!scenario) return { nodes: new Set<string>(), edges: new Set<string>(), origin: new Set<string>() };
+    const nodes = new Set<string>();
+    const edges = new Set<string>();
+    for (const st of scenario.steps) {
+      nodes.add(st.from);
+      nodes.add(st.to);
+      edges.add(edgeKey(st));
+    }
+    const origin = new Set(scenario.steps.length ? [scenario.steps[0].from] : []);
+    return { nodes, edges, origin };
+  }, [scenario]);
+
+  // Path steps that are not already drawn as a structural edge get their own line.
+  const extraPathEdges = scenario ? scenario.steps.filter((s) => !caseData.edges.some((e) => edgeKey(e) === edgeKey(s))) : [];
+
+  const neighbours = useMemo(() => {
+    if (!selected) return new Set<string>();
+    const set = new Set<string>([selected]);
+    for (const e of caseData.edges) {
+      if (e.from === selected) set.add(e.to);
+      if (e.to === selected) set.add(e.from);
+    }
+    return set;
+  }, [selected]);
+
+  const select = (id: string) => setSelected((cur) => (cur === id ? null : id));
+  const onKey = (id: string) => (ev: KeyboardEvent) => {
+    if (ev.key === "Enter" || ev.key === " ") {
+      ev.preventDefault();
+      select(id);
+    }
+  };
+
+  const nodeClass = (n: CaseNode) => {
+    const c = ["g-node"];
+    if (selected === n.id) c.push("selected");
+    if (scenario) {
+      if (path.nodes.has(n.id)) c.push("on-path");
+      else if (selected !== n.id) c.push("dim");
+    } else if (selected && !neighbours.has(n.id)) c.push("dim");
+    return c.join(" ");
+  };
+
+  const edgeClass = (e: CaseEdge) => {
+    const c = ["g-edge", e.kind];
+    if (scenario) {
+      if (path.edges.has(edgeKey(e))) c.push("on-path");
+      else c.push("dim");
+    } else if (selected) {
+      if (e.from === selected || e.to === selected) c.push("hl");
+      else c.push("dim");
+    }
+    return c.join(" ");
+  };
+
+  return (
+    <div>
+      <div className="toolbar" id="explorer-top">
+        <label htmlFor="scenario">Failure scenario</label>
+        <select id="scenario" value={scenarioId} onChange={(e) => setScenarioId(e.target.value)}>
+          <option value="">None: explore the dependencies</option>
+          {caseData.scenarios.map((s) => (
+            <option key={s.id} value={s.id}>
+              {s.id}: {s.name}
+            </option>
+          ))}
+        </select>
+        <span className="seg" role="group" aria-label="View">
+          <button type="button" aria-pressed={view === "graph"} onClick={() => setView("graph")}>
+            Graph
+          </button>
+          <button type="button" aria-pressed={view === "list"} onClick={() => setView("list")}>
+            List
+          </button>
+        </span>
+        {(selected || scenarioId) && (
+          <button
+            type="button"
+            className="btn"
+            onClick={() => {
+              setSelected(null);
+              setScenarioId("");
+            }}
+          >
+            Clear
+          </button>
+        )}
+      </div>
+
+      <div className="explorer">
+        <div>
+          {view === "graph" ? (
+            <>
+              <div className="graph-frame">
+                <svg
+                  viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
+                  role="group"
+                  aria-label="Dependency graph of the synthetic capability. Failure travels from left to right. Use the list view for a text version."
+                >
+                  <defs>
+                    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                      <path d="M0,0 L10,5 L0,10 z" fill="context-stroke" />
+                    </marker>
+                  </defs>
+                  {COLS.map((c, i) => (
+                    <text key={c.kind} className="g-col-label" x={PAD_X + i * COL_GAP} y={22}>
+                      {c.label}
+                    </text>
+                  ))}
+                  {caseData.faultDomains.map((fd) => {
+                    const pts = fd.members.map((m) => positions.get(m)).filter(Boolean) as { x: number; y: number }[];
+                    if (!pts.length) return null;
+                    const x = Math.min(...pts.map((p) => p.x)) - 8;
+                    const y = Math.min(...pts.map((p) => p.y)) - 6;
+                    const w = Math.max(...pts.map((p) => p.x)) + NODE_W + 8 - x;
+                    const h = Math.max(...pts.map((p) => p.y)) + NODE_H + 6 - y;
+                    return (
+                      <g key={fd.id}>
+                        <title>{`${fd.id}: ${fd.commonMode} ${fd.blastRadius}`}</title>
+                        <rect className="g-fd" x={x} y={y} width={w} height={h} rx={8} />
+                        <text
+                          className="g-fd-label"
+                          x={x - 3}
+                          y={y + h / 2}
+                          textAnchor="middle"
+                          transform={`rotate(-90 ${x - 3} ${y + h / 2})`}
+                        >
+                          {fd.id}
+                        </text>
+                      </g>
+                    );
+                  })}
+                  {caseData.edges.map((e) => (
+                    <path key={edgeKey(e)} d={edgePath(e)} className={edgeClass(e)} markerEnd="url(#arrow)">
+                      <title>{`${nodesById.get(e.from)?.name} ${edgeVerb[e.kind][0]} ${nodesById.get(e.to)?.name}${e.label ? ` (${humanise(e.label)})` : ""}`}</title>
+                    </path>
+                  ))}
+                  {extraPathEdges.map((e) => (
+                    <path key={`x-${edgeKey(e)}`} d={edgePath(e)} className="g-edge on-path" markerEnd="url(#arrow)" />
+                  ))}
+                  {caseData.nodes.map((n) => {
+                    const p = positions.get(n.id)!;
+                    return (
+                      <g
+                        key={n.id}
+                        className={nodeClass(n)}
+                        transform={`translate(${p.x},${p.y})`}
+                        role="button"
+                        tabIndex={0}
+                        aria-pressed={selected === n.id}
+                        aria-label={`${n.name}, ${humanise(n.kind)}${n.domain ? `, domain ${n.domain}` : ""}${n.unknowns.length ? ", has an UNKNOWN" : ""}${path.nodes.has(n.id) ? ", on the failure path" : ""}`}
+                        onClick={() => select(n.id)}
+                        onKeyDown={onKey(n.id)}
+                      >
+                        <title>{n.name}</title>
+                        <rect width={NODE_W} height={NODE_H} rx={6} />
+                        <text className="g-id" x={10} y={15}>
+                          {n.id}
+                          {n.domain ? ` · ${n.domain}` : ""}
+                        </text>
+                        <text x={10} y={32}>
+                          {truncate(n.name, 25)}
+                        </text>
+                        {n.unknowns.length > 0 && (
+                          <text className="g-flag" x={NODE_W - 8} y={15} textAnchor="end">
+                            UNKNOWN
+                          </text>
+                        )}
+                        {path.origin.has(n.id) && (
+                          <text className="g-flag" x={NODE_W - 8} y={15} textAnchor="end" style={{ fill: "var(--path)" }}>
+                            ORIGIN
+                          </text>
+                        )}
+                      </g>
+                    );
+                  })}
+                </svg>
+              </div>
+              <div className="legend" aria-hidden="true">
+                <span>
+                  <i /> structure (part of, implements, required by)
+                </span>
+                <span>
+                  <i className="dash" /> dependency
+                </span>
+                <span>
+                  <i className="fd" /> shared fault domain
+                </span>
+                <span>
+                  <i className="path" /> failure path
+                </span>
+              </div>
+            </>
+          ) : (
+            <ListView selected={selected} onSelect={select} pathNodes={path.nodes} />
+          )}
+        </div>
+
+        <div ref={panelRef} className="panel" role="region" aria-live="polite" aria-label="Details">
+          {(selected || scenarioId) && (
+            <p className="only-narrow small" style={{ marginTop: 0 }}>
+              <a href="#explorer-top">Back to the elements</a>
+            </p>
+          )}
+          {scenario ? (
+            <ScenarioPanel scenario={scenario} pathNodes={path.nodes} onSelect={select} selected={selected} />
+          ) : selected ? (
+            <NodePanel id={selected} onSelect={select} onScenario={setScenarioId} />
+          ) : (
+            <IntroPanel />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ------------------------------------------------------------ panels
+
+function NodeLink({ id, onSelect }: { id: string; onSelect: (id: string) => void }) {
+  const n = nodesById.get(id);
+  if (!n) return <span className="mono">{id}</span>;
+  return (
+    <button type="button" className="linklike" onClick={() => onSelect(id)}>
+      {n.name}
+    </button>
+  );
+}
+
+function IntroPanel() {
+  const c = caseData.capability;
+  return (
+    <>
+      <h3>{c.name}</h3>
+      <p className="muted small">Synthetic. Describes no real facility.</p>
+      <p>{c.boundary}</p>
+      <p className="small">{c.demandProfile}</p>
+      <h4>How to use this</h4>
+      <ul>
+        <li>Select any box to see what it relies on, what relies on it, and what can go wrong.</li>
+        <li>Choose a failure scenario to trace it from its origin to the service outcome it breaks.</li>
+        <li>
+          Boxes marked <strong>UNKNOWN</strong> carry unresolved evidence gaps that cap the decision.
+        </li>
+      </ul>
+    </>
+  );
+}
+
+function ControlLine({ id }: { id: string }) {
+  const c = caseData.controls[id];
+  if (!c) return <li className="mono">{id}</li>;
+  return (
+    <li>
+      <span className="mono">{c.id}</span> {c.title} <span className={resultClass(c.result)}>{c.result}</span>
+      {c.gates.length > 0 && (
+        <div className="small muted">
+          Feeds{" "}
+          {c.gates.map((g, i) => (
+            <span key={g.gate}>
+              {i > 0 ? ", " : ""}
+              {g.gate} ({g.role.toLowerCase()})
+            </span>
+          ))}
+        </div>
+      )}
+      {c.rationale && <div className="small">{c.rationale}</div>}
+      {c.findings.map((fid) => {
+        const f = caseData.findings.find((x) => x.id === fid);
+        return f ? (
+          <div key={fid} className="small">
+            <strong>
+              {f.id} {humanise(f.class)}:
+            </strong>{" "}
+            {f.condition} <span className="muted">{f.gateEffect}</span>
+          </div>
+        ) : null;
+      })}
+    </li>
+  );
+}
+
+function ScenarioPanel({
+  scenario,
+  pathNodes,
+  onSelect,
+  selected,
+}: {
+  scenario: (typeof caseData.scenarios)[number];
+  pathNodes: Set<string>;
+  onSelect: (id: string) => void;
+  selected: string | null;
+}) {
+  const initiators = caseData.initiators.filter((i) => scenario.initiatedBy.includes(i.id));
+  const order: string[] = [];
+  for (const st of scenario.steps) {
+    if (!order.includes(st.from)) order.push(st.from);
+    if (!order.includes(st.to)) order.push(st.to);
+  }
+  const safeguards = caseData.safeguards.filter((s) => scenario.safeguards.includes(s.id));
+  const domainsHit = caseData.faultDomains.filter((fd) => fd.members.filter((m) => pathNodes.has(m)).length >= 2);
+  const gatesTouched = new Set<string>();
+  for (const s of safeguards) for (const c of s.controls) for (const g of caseData.controls[c]?.gates ?? []) gatesTouched.add(g.gate);
+  const gateStates = caseData.gateResults.filter((g) => gatesTouched.has(g.gate));
+
+  return (
+    <>
+      <p className="eyebrow" style={{ margin: 0 }}>
+        Failure scenario {scenario.id}
+      </p>
+      <h3>{scenario.name}</h3>
+      {initiators.map((i) => (
+        <p key={i.id} className="small">
+          <strong>{humanise(i.type)}:</strong> {i.name}
+          {i.mechanism ? `. ${/^[A-Z_]+$/.test(i.mechanism) ? humanise(i.mechanism) : i.mechanism}` : ""}.
+        </p>
+      ))}
+      <p className="small">
+        Starts in <span className="mono">{scenario.preState}</span>; without its safeguards it leaves the capability{" "}
+        <span className="mono">{scenario.residualState}</span>.
+      </p>
+
+      <h4>How it propagates</h4>
+      <ol className="path-steps">
+        {order.map((id) => (
+          <li key={id}>
+            {selected === id ? <strong>{nodesById.get(id)?.name ?? id}</strong> : <NodeLink id={id} onSelect={onSelect} />}
+          </li>
+        ))}
+      </ol>
+      {scenario.effects.map((e) => (
+        <p key={e.outcome} className="small">
+          <strong>{nodesById.get(e.outcome)?.name}:</strong> {e.effect.replace(/^Illustrative: /, "")}
+        </p>
+      ))}
+
+      {domainsHit.map((fd) => (
+        <p key={fd.id} className="notice small">
+          <strong>Common-mode failure ({fd.id}).</strong> {fd.commonMode} {fd.blastRadius}
+        </p>
+      ))}
+
+      <h4>Safeguards expected to stop it</h4>
+      <ul>
+        {safeguards.map((s) => {
+          const compromised = s.dependsOn.filter((d) => pathNodes.has(d));
+          return (
+            <li key={s.id}>
+              <strong>{s.name}</strong>{" "}
+              <span className="muted small">
+                ({humanise(s.activation)}; trigger: {s.trigger.charAt(0).toLowerCase() + s.trigger.slice(1)})
+              </span>
+              {compromised.length > 0 && (
+                <div className="small" style={{ color: "var(--fail)" }}>
+                  Depends on {compromised.map((d) => nodesById.get(d)?.name ?? d).join(", ")}, which is on this failure
+                  path, so it cannot be relied on here.
+                </div>
+              )}
+              <ul>
+                {s.controls.map((c) => (
+                  <ControlLine key={c} id={c} />
+                ))}
+              </ul>
+            </li>
+          );
+        })}
+      </ul>
+
+      {gateStates.length > 0 && (
+        <>
+          <h4>Gates these controls feed</h4>
+          <ul>
+            {gateStates.map((g) => (
+              <li key={g.gate}>
+                <span className="mono">{g.gate}</span> {gateName(g.gate)}{" "}
+                <span className={resultClass(g.state)}>{g.state}</span>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+      {scenario.restricted && (
+        <p className="small muted">This scenario carries a distribution restriction in the dataset, as a real security scenario would.</p>
+      )}
+    </>
+  );
+}
+
+function NodePanel({
+  id,
+  onSelect,
+  onScenario,
+}: {
+  id: string;
+  onSelect: (id: string) => void;
+  onScenario: (id: string) => void;
+}) {
+  const n = nodesById.get(id)!;
+  const incoming = caseData.edges.filter((e) => e.to === id);
+  const outgoing = caseData.edges.filter((e) => e.from === id);
+  const fds = caseData.faultDomains.filter((f) => f.members.includes(id));
+  const initiators = caseData.initiators.filter((i) => i.exposed.includes(id));
+  const scenarios = caseData.scenarios.filter((s) => s.steps.some((st) => st.from === id || st.to === id));
+  const safeguards = caseData.safeguards.filter((s) => s.implementedBy.includes(id) || s.dependsOn.includes(id));
+  const unknowns = caseData.unknowns.filter((u) => u.subject === id || n.unknowns.includes(u.id));
+  const outcome = caseData.outcomes.find((o) => o.id === id);
+
+  return (
+    <>
+      <p className="eyebrow" style={{ margin: 0 }}>
+        {humanise(n.type)} {n.domain ? `· domain ${n.domain}` : ""}
+      </p>
+      <h3>{n.name}</h3>
+      <p className="mono small muted">{n.id}</p>
+      {n.detail && <p>{/^[A-Z_]+$/.test(n.detail) ? humanise(n.detail) : n.detail.replace(/^Illustrative: /, "")}</p>}
+      {outcome && (
+        <p className="small">
+          <strong>Tolerance:</strong> {outcome.tolerance.replace(/^Illustrative: /, "")}
+        </p>
+      )}
+
+      {incoming.length > 0 && (
+        <>
+          <h4>Relies on</h4>
+          <ul>
+            {incoming.map((e) => (
+              <li key={edgeKey(e)}>
+                <NodeLink id={e.from} onSelect={onSelect} />{" "}
+                <span className="muted small">
+                  ({e.kind === "depends" ? humanise(e.label) + " dependency" : edgeVerb[e.kind][1]})
+                </span>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+      {outgoing.length > 0 && (
+        <>
+          <h4>Relied on by</h4>
+          <ul>
+            {outgoing.map((e) => (
+              <li key={edgeKey(e)}>
+                <NodeLink id={e.to} onSelect={onSelect} />{" "}
+                <span className="muted small">({e.kind === "depends" ? humanise(e.label) + " dependency" : edgeVerb[e.kind][0]})</span>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+      {fds.map((fd) => (
+        <p key={fd.id} className="notice small">
+          <strong>Shared fault domain {fd.id}.</strong> {fd.commonMode} {fd.blastRadius}
+        </p>
+      ))}
+      {initiators.length > 0 && (
+        <>
+          <h4>Exposed to</h4>
+          <ul>
+            {initiators.map((i) => (
+              <li key={i.id}>
+                {i.name} <span className="muted small">({humanise(i.type)})</span>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+      {scenarios.length > 0 && (
+        <>
+          <h4>Failure scenarios through this element</h4>
+          <ul>
+            {scenarios.map((s) => (
+              <li key={s.id}>
+                <button type="button" className="linklike" onClick={() => onScenario(s.id)}>
+                  {s.id}: {s.name}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+      {safeguards.length > 0 && (
+        <>
+          <h4>Safeguards</h4>
+          <ul>
+            {safeguards.map((s) => (
+              <li key={s.id}>
+                <strong>{s.name}</strong>{" "}
+                <span className="muted small">
+                  {s.implementedBy.includes(id) ? "implemented here" : "depends on this element"}
+                </span>
+                <ul>
+                  {s.controls.map((c) => (
+                    <ControlLine key={c} id={c} />
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+      {unknowns.length > 0 && (
+        <>
+          <h4>UNKNOWN records</h4>
+          <ul>
+            {unknowns.map((u) => (
+              <li key={u.id}>
+                <span className="state s-unknown">
+                  {u.id} {u.severity}
+                </span>{" "}
+                {u.reason} <span className="small muted">{u.decisionEffect}</span>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+    </>
+  );
+}
+
+function ListView({
+  selected,
+  onSelect,
+  pathNodes,
+}: {
+  selected: string | null;
+  onSelect: (id: string) => void;
+  pathNodes: Set<string>;
+}) {
+  return (
+    <div className="list-view">
+      {[...COLS].reverse().map((c) => {
+        const list = caseData.nodes.filter((n) => n.kind === c.kind);
+        return (
+          <div key={c.kind}>
+            <h3>{c.label}</h3>
+            <ul>
+              {list.map((n) => (
+                <li key={n.id}>
+                  <button
+                    type="button"
+                    aria-pressed={selected === n.id}
+                    className={pathNodes.has(n.id) ? "on-path" : undefined}
+                    onClick={() => onSelect(n.id)}
+                  >
+                    <span className="mono small muted">
+                      {n.id}
+                      {n.domain ? ` · ${n.domain}` : ""}
+                    </span>{" "}
+                    {n.name}
+                    {n.unknowns.length > 0 && <span className="state s-unknown" style={{ marginLeft: 8 }}>UNKNOWN</span>}
+                    {pathNodes.has(n.id) && <span className="visually-hidden"> (on the failure path)</span>}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })}
+    </div>
+  );
+}

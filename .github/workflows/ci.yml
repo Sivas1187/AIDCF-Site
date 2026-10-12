@@ -1,0 +1,65 @@
+name: Site CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Content, build, links and accessibility
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read pinned AIDCF commit
+        id: pin
+        run: echo "commit=$(jq -r .commit source.json)" >> "$GITHUB_OUTPUT"
+
+      - name: Check out AIDCF at the pinned commit
+        uses: actions/checkout@v4
+        with:
+          repository: Sivas1187/AIDCF
+          ref: ${{ steps.pin.outputs.commit }}
+          path: aidcf-src
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - run: npm ci
+
+      - name: Generated content matches the pinned AIDCF commit
+        run: npm run content:check
+        env:
+          AIDCF_SRC: aidcf-src
+
+      - run: npm run typecheck
+
+      - run: npm run build
+
+      - name: Links, anchors, metadata and pinned repository files
+        run: npm run check:site
+        env:
+          AIDCF_SRC: aidcf-src
+
+      - name: Install Chromium for QA
+        run: npx playwright install --with-deps chromium
+
+      - name: Accessibility, overflow, interaction and CSP checks
+        run: |
+          python3 -m http.server 4310 --directory out >/dev/null 2>&1 &
+          sleep 2
+          mkdir -p qa-shots
+          node scripts/qa.mjs http://localhost:4310 qa-shots
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: qa-screenshots
+          path: qa-shots
+          retention-days: 7

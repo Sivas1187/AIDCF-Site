@@ -1,0 +1,436 @@
+{
+  "name": "AI Data Centre Facilities Assurance Framework",
+  "repositoryStatus": "Validation Candidate for Independent Review",
+  "frameworkVersion": "Whitepaper v3.1 (release AIDCF-REL-2026.10.1)",
+  "baseline": "15 domains · 90 control families · 360 controls (registry v1.0 approved baseline; v1.1 testable-control revision PROPOSED)",
+  "implementation": "Synthetic, non-production reference implementation (AIDCF-015 v1.3, data model AIDCF-016 MDM 1.3)",
+  "externalValidation": "Not yet completed",
+  "whitepaper": {
+    "md": "whitepaper/current/AIDCF_Technical_Whitepaper_v3.1_Validation_Candidate.md",
+    "pdf": "whitepaper/current/AIDCF_Technical_Whitepaper_v3.1_Validation_Candidate.pdf",
+    "pdfSha256": "2ba438aacc0ee4565e8e93baca0a94eddd0f2478d052be4c1acb11585fb08f7b"
+  },
+  "citation": {
+    "title": "AIDCF: AI Data Centre Facilities Assurance Framework",
+    "version": "3.1",
+    "released": "2026-10-10",
+    "doi": null,
+    "reportTitle": "AIDCF: AI Data Centre Facilities Assurance Framework. Technical Whitepaper v3.1, Validation Candidate for Independent Review",
+    "authors": [
+      {
+        "family": "Sethumadhavan",
+        "given": "Siva"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "id": "AIDCF-001",
+      "title": "AIDCF Manifesto",
+      "summary": "Identity, mission, scope and assurance philosophy",
+      "path": "foundations/manifesto/AIDCF-001_Manifesto_v1.1.md",
+      "version": "1.1",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-002",
+      "title": "Core Conceptual Model",
+      "summary": "Normative keywords, canonical 16-step chain, core concepts and definitions",
+      "path": "foundations/conceptual-model/AIDCF-002_Core_Conceptual_Model_v1.0.md",
+      "version": "1.0",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-003",
+      "title": "Infrastructure Ontology and Taxonomy",
+      "summary": "Infrastructure ontology and taxonomy",
+      "path": "foundations/ontology-taxonomy/AIDCF-003_Infrastructure_Ontology_and_Taxonomy_v1.1.md",
+      "version": "1.1",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-004",
+      "title": "Threat, Hazard and Failure Model",
+      "summary": "Threat, hazard, failure and recovery model",
+      "path": "foundations/threat-model/AIDCF-004_Threat_Hazard_and_Failure_Model_v1.1.md",
+      "version": "1.1",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-005",
+      "title": "AIDCF–AI Trust Graph Integration Standard",
+      "summary": "Integration boundary with AI Trust Graph",
+      "path": "foundations/aitg-integration/AIDCF-005_AIDCF_AI_Trust_Graph_Integration_Standard_v1.1.md",
+      "version": "1.1",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-006",
+      "title": "Assurance Principles Standard",
+      "summary": "Constitutional assurance principles",
+      "path": "foundations/assurance-principles/AIDCF-006_Assurance_Principles_Standard_v1.1.md",
+      "version": "1.1",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-007A",
+      "title": "Control Universe Constitutional Amendment and Canonical Master Control Registry",
+      "summary": "Authoritative 15/90/360 cardinality decision and amendment log",
+      "path": "standards/aidcf-007a/amendment/AIDCF-007A_Control_Universe_Constitutional_Amendment_v1.1.md",
+      "version": "1.1",
+      "status": "Cardinality approved; amendment AMD-002 proposed"
+    },
+    {
+      "id": "AIDCF-007A",
+      "title": "Control Universe Constitutional Amendment and Canonical Master Control Registry",
+      "summary": "Canonical domains, families and controls (approved baseline)",
+      "path": "standards/aidcf-007a/registry/AIDCF-007A_Canonical_Master_Control_Registry_15-90-360_v1.0.md",
+      "version": "1.0",
+      "status": "Approved AIDCF baseline"
+    },
+    {
+      "id": "AIDCF-007A",
+      "title": "Control Universe Constitutional Amendment and Canonical Master Control Registry",
+      "summary": "Testable controls, evidence profiles, per-control gate mapping, parameters",
+      "path": "standards/aidcf-007a/registry/AIDCF-007A_Canonical_Master_Control_Registry_15-90-360_v1.1.md",
+      "version": "1.1",
+      "status": "PROPOSED (AMD-002), not yet approved"
+    },
+    {
+      "id": "AIDCF-008",
+      "title": "Evidence Model",
+      "summary": "Evidence model",
+      "path": "standards/aidcf-008-evidence-model/AIDCF-008_Evidence_Model_v1.1.md",
+      "version": "1.1",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-009",
+      "title": "Assessment Methodology Practitioner Handbook (v1.0 core and v1.1 enhanced companion)",
+      "summary": "Core practitioner handbook: roles, stage gates, playbooks, workpapers",
+      "path": "standards/aidcf-009-assessment-methodology/AIDCF-009_Part_A_Core_Practitioner_Handbook_v1.1.md",
+      "version": "1.1",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-009",
+      "title": "Assessment Methodology Practitioner Handbook (v1.0 core and v1.1 enhanced companion)",
+      "summary": "Enhanced practitioner companion",
+      "path": "standards/aidcf-009-assessment-methodology/AIDCF-009_Part_B_Enhanced_Practitioner_Companion_v1.2.md",
+      "version": "1.2",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-010",
+      "title": "Scoring and Decision Framework",
+      "summary": "Scoring and decision framework",
+      "path": "standards/aidcf-010-scoring-framework/AIDCF-010_Scoring_and_Decision_Framework_v1.1.md",
+      "version": "1.1",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-011",
+      "title": "Assurance Program Framework",
+      "summary": "Non-certification assurance programme framework",
+      "path": "standards/aidcf-011-assurance-program/AIDCF-011_Assurance_Program_Framework_v1.1.md",
+      "version": "1.1",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-012",
+      "title": "Reporting and Assurance Statement Standard",
+      "summary": "Reporting and assurance-statement standard",
+      "path": "standards/aidcf-012-reporting-standard/AIDCF-012_Reporting_and_Assurance_Statement_Standard_v1.1.md",
+      "version": "1.1",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-013",
+      "title": "AI Data Centre Assurance Reference Architecture",
+      "summary": "AI data-centre assurance reference architecture",
+      "path": "standards/aidcf-013-reference-architecture/AIDCF-013_AI_Data_Centre_Assurance_Reference_Architecture_v1.1.md",
+      "version": "1.1",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-014",
+      "title": "End-to-End Traceability and Machine-Executable Data Standard",
+      "summary": "End-to-end traceability and machine-executable data standard",
+      "path": "standards/aidcf-014-traceability-standard/AIDCF-014_End-to-End_Traceability_and_Machine-Executable_Data_Standard_v1.1.md",
+      "version": "1.1",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-015",
+      "title": "Reference Implementation, Synthetic Dataset and Conformance Pilot",
+      "summary": "Synthetic reference implementation on MDM 1.3",
+      "path": "implementation/aidcf-015-v1.3/README.md",
+      "version": "1.3",
+      "status": "Synthetic demonstration"
+    },
+    {
+      "id": "AIDCF-015",
+      "title": "Reference Implementation, Synthetic Dataset and Conformance Pilot",
+      "summary": "Reference implementation specification (historical; package v1.3 is current)",
+      "path": "implementation/AIDCF-015_Reference_Implementation_Synthetic_Dataset_and_Conformance_Pilot_v1.0.md",
+      "version": "1.0",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-016",
+      "title": "Machine-Executable Data Model Standard",
+      "summary": "Machine-executable data-model standard (MDM 1.3)",
+      "path": "standards/aidcf-016-machine-executable-model/AIDCF-016_Machine-Executable_Data_Model_Standard_v1.0.md",
+      "version": "1.0",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-017",
+      "title": "Capability Assurance Maturity Model",
+      "summary": "Capability assurance maturity model",
+      "path": "standards/aidcf-017-maturity-model/AIDCF-017_Capability_Assurance_Maturity_Model_v1.0.md",
+      "version": "1.0",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-018",
+      "title": "Domain Guides (one per domain, AIDCF-018-<DOM>)",
+      "summary": "Fifteen domain guides, one per control domain",
+      "path": "standards/aidcf-018-domain-guides/README.md",
+      "version": "",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-018-CAP",
+      "title": "AI Capability, Service Outcome and Demand Management Domain Guide",
+      "summary": "",
+      "path": "standards/aidcf-018-domain-guides/AIDCF-018-CAP_AI_Capability_and_Service_Outcome_Domain_Guide_v1.0.md",
+      "version": "1.0",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-018-CMP",
+      "title": "AI Compute Infrastructure Domain Guide",
+      "summary": "",
+      "path": "standards/aidcf-018-domain-guides/AIDCF-018-CMP_AI_Compute_Infrastructure_Domain_Guide_v1.0.md",
+      "version": "1.0",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-018-DEP",
+      "title": "Dependency, Concentration and External Reliance Management Domain Guide",
+      "summary": "",
+      "path": "standards/aidcf-018-domain-guides/AIDCF-018-DEP_Dependency_and_Concentration_Domain_Guide_v1.0.md",
+      "version": "1.0",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-018-ENV",
+      "title": "Environmental and Resource Performance Domain Guide",
+      "summary": "",
+      "path": "standards/aidcf-018-domain-guides/AIDCF-018-ENV_Environmental_and_Resource_Performance_Domain_Guide_v1.0.md",
+      "version": "1.0",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-018-EVA",
+      "title": "Evidence, Assessment and Assurance Management Domain Guide",
+      "summary": "",
+      "path": "standards/aidcf-018-domain-guides/AIDCF-018-EVA_Evidence_Assessment_and_Assurance_Domain_Guide_v1.0.md",
+      "version": "1.0",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-018-GOV",
+      "title": "Governance, Accountability and Assurance Direction Domain Guide",
+      "summary": "",
+      "path": "standards/aidcf-018-domain-guides/AIDCF-018-GOV_Governance_Domain_Guide_v1.0.md",
+      "version": "1.0",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-018-NET",
+      "title": "AI Network and Interconnect Architecture Domain Guide",
+      "summary": "",
+      "path": "standards/aidcf-018-domain-guides/AIDCF-018-NET_AI_Network_and_Interconnect_Domain_Guide_v1.0.md",
+      "version": "1.0",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-018-OPS",
+      "title": "Building Operations and Service Management Domain Guide",
+      "summary": "",
+      "path": "standards/aidcf-018-domain-guides/AIDCF-018-OPS_Building_Operations_and_Service_Management_Domain_Guide_v1.0.md",
+      "version": "1.0",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-018-PHY",
+      "title": "Physical Site, Building and Security Infrastructure Domain Guide",
+      "summary": "",
+      "path": "standards/aidcf-018-domain-guides/AIDCF-018-PHY_Physical_Site_Building_and_Security_Domain_Guide_v1.0.md",
+      "version": "1.0",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-018-POW",
+      "title": "Electrical Power Infrastructure and Energy Continuity Domain Guide",
+      "summary": "",
+      "path": "standards/aidcf-018-domain-guides/AIDCF-018-POW_Electrical_Power_and_Energy_Continuity_Domain_Guide_v1.0.md",
+      "version": "1.0",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-018-RES",
+      "title": "Resilience, Continuity and Recovery Domain Guide",
+      "summary": "",
+      "path": "standards/aidcf-018-domain-guides/AIDCF-018-RES_Resilience_Continuity_and_Recovery_Domain_Guide_v1.0.md",
+      "version": "1.0",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-018-SEC",
+      "title": "Digital, OT and Control-Plane Security Domain Guide",
+      "summary": "",
+      "path": "standards/aidcf-018-domain-guides/AIDCF-018-SEC_Digital_OT_and_Control-Plane_Security_Domain_Guide_v1.0.md",
+      "version": "1.0",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-018-STO",
+      "title": "AI Storage and Data Infrastructure Domain Guide",
+      "summary": "",
+      "path": "standards/aidcf-018-domain-guides/AIDCF-018-STO_AI_Storage_and_Data_Infrastructure_Domain_Guide_v1.0.md",
+      "version": "1.0",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-018-SUP",
+      "title": "Supply Chain, OEM and Ecosystem Assurance Domain Guide",
+      "summary": "",
+      "path": "standards/aidcf-018-domain-guides/AIDCF-018-SUP_Supply_Chain_OEM_and_Ecosystem_Domain_Guide_v1.0.md",
+      "version": "1.0",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-018-THM",
+      "title": "Cooling, Thermal and Fluid Infrastructure Domain Guide",
+      "summary": "",
+      "path": "standards/aidcf-018-domain-guides/AIDCF-018-THM_Cooling_Thermal_and_Fluid_Domain_Guide_v1.0.md",
+      "version": "1.0",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-019",
+      "title": "Standards Crosswalks",
+      "summary": "Crosswalks to eight external frameworks (indicative)",
+      "path": "crosswalks/README.md",
+      "version": "",
+      "status": "Indicative; needs review by holders of each standard"
+    },
+    {
+      "id": "AIDCF-VR-001",
+      "title": "Full-Stack Validation Report (formerly mislabelled AIDCF-016)",
+      "summary": "Full stack validation report",
+      "path": "validation/validation-report/AIDCF-VR-001_Full_Stack_Validation_Report_v1.1.md",
+      "version": "1.1",
+      "status": "Draft for controlled review"
+    },
+    {
+      "id": "AIDCF-WP-001",
+      "title": "Technical Whitepaper",
+      "summary": "Consolidated research argument and validation candidate",
+      "path": "whitepaper/current/AIDCF_Technical_Whitepaper_v3.1_Validation_Candidate.md",
+      "version": "3.1",
+      "status": "Independent review pending"
+    }
+  ],
+  "conformance": {
+    "release": "AIDCF-REL-2026.10.1",
+    "executedAt": "2026-10-10T14:39:12Z",
+    "independent": false,
+    "note": "Self-validation by the package author's tooling; no independent execution.",
+    "layers": [
+      {
+        "layer": "REGISTRY",
+        "checks": 1870,
+        "failed": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "SYNTAX",
+        "checks": 173,
+        "failed": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "SCHEMA",
+        "checks": 3378,
+        "failed": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "SHACL",
+        "checks": 3318,
+        "failed": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "BUSINESS_RULE",
+        "checks": 34,
+        "failed": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "TRACEABILITY",
+        "checks": 473,
+        "failed": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "GRAPH_QUERY",
+        "checks": 14,
+        "failed": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "SCORE",
+        "checks": 14,
+        "failed": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "INTEGRITY",
+        "checks": 104,
+        "failed": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "MANIFEST",
+        "checks": 271,
+        "failed": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "VOCABULARY",
+        "checks": 82,
+        "failed": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "EXPORT",
+        "checks": 5375,
+        "failed": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "FIXTURE",
+        "checks": 60,
+        "failed": 0,
+        "outcome": "PASS"
+      }
+    ],
+    "checks": 15166,
+    "allPass": true
+  }
+}

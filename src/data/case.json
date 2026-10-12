@@ -1,0 +1,5189 @@
+{
+  "source": "implementation/aidcf-015-v1.3/dataset",
+  "capability": {
+    "id": "CI-001",
+    "name": "Synthetic AI training and inference capability",
+    "boundary": "Synthetic data hall A, its power, cooling, facility water, compute, storage, fabric and supervisory control; the utility is external.",
+    "demandProfile": "Illustrative: 2.0 MW IT load with accelerator transients; training jobs of up to 14 days.",
+    "operatingEnvelope": "Illustrative: design ambient 35 C; inlet supply 30 C; NORMAL and MAINTENANCE states.",
+    "workload": [
+      "TRAINING",
+      "INFERENCE"
+    ],
+    "criticality": "HIGH"
+  },
+  "outcomes": [
+    {
+      "id": "SO-01",
+      "name": "Training availability",
+      "measure": "Illustrative: training cluster available for scheduled jobs",
+      "tolerance": "Illustrative: at most 4 hours unplanned unavailability per 30 days",
+      "states": [
+        "NORMAL",
+        "MAINTENANCE"
+      ]
+    },
+    {
+      "id": "SO-02",
+      "name": "Training checkpoint recovery",
+      "measure": "Illustrative: restart from last checkpoint after disruption",
+      "tolerance": "Illustrative: restart within 2 hours, losing at most 30 minutes of training progress",
+      "states": [
+        "RECOVERY"
+      ]
+    },
+    {
+      "id": "SO-03",
+      "name": "Inference latency",
+      "measure": "Illustrative: p99 request latency at the service edge",
+      "tolerance": "Illustrative: p99 below 300 ms at declared load",
+      "states": [
+        "NORMAL",
+        "DEGRADED"
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "AST-UTILITY",
+      "iri": "urn:aidcf:syn:asset:AST-UTILITY",
+      "kind": "external",
+      "type": "AssetInstance",
+      "name": "Utility connection",
+      "domain": "POW",
+      "detail": "External utility supply; represented as an asset because it is a material resource provider.",
+      "tolerance": null,
+      "operatingStates": [],
+      "unknowns": [],
+      "exposedTo": []
+    },
+    {
+      "id": "RES-WATER",
+      "iri": "urn:aidcf:syn:resource:RES-WATER",
+      "kind": "external",
+      "type": "Resource",
+      "name": "Make-up water supply",
+      "domain": null,
+      "detail": "WATER",
+      "tolerance": null,
+      "operatingStates": [],
+      "unknowns": [],
+      "exposedTo": []
+    },
+    {
+      "id": "CDU-VENDOR",
+      "iri": "urn:aidcf:syn:party:CDU-VENDOR",
+      "kind": "external",
+      "type": "PartyEntity",
+      "name": "CDU vendor",
+      "domain": null,
+      "detail": "External supplier",
+      "tolerance": null,
+      "operatingStates": [],
+      "unknowns": [],
+      "exposedTo": []
+    },
+    {
+      "id": "AST-SWB-01",
+      "iri": "urn:aidcf:syn:asset:AST-SWB-01",
+      "kind": "asset",
+      "type": "AssetInstance",
+      "name": "Main switchboard",
+      "domain": "POW",
+      "detail": "SWITCHBOARD",
+      "tolerance": null,
+      "operatingStates": [],
+      "unknowns": [],
+      "exposedTo": [
+        "FM-01"
+      ]
+    },
+    {
+      "id": "AST-UPS-A",
+      "iri": "urn:aidcf:syn:asset:AST-UPS-A",
+      "kind": "asset",
+      "type": "AssetInstance",
+      "name": "UPS A",
+      "domain": "POW",
+      "detail": "UPS",
+      "tolerance": null,
+      "operatingStates": [],
+      "unknowns": [],
+      "exposedTo": []
+    },
+    {
+      "id": "AST-UPS-B",
+      "iri": "urn:aidcf:syn:asset:AST-UPS-B",
+      "kind": "asset",
+      "type": "AssetInstance",
+      "name": "UPS B",
+      "domain": "POW",
+      "detail": "UPS",
+      "tolerance": null,
+      "operatingStates": [],
+      "unknowns": [],
+      "exposedTo": []
+    },
+    {
+      "id": "AST-CHL",
+      "iri": "urn:aidcf:syn:asset:AST-CHL",
+      "kind": "asset",
+      "type": "AssetInstance",
+      "name": "Chiller",
+      "domain": "THM",
+      "detail": "CHILLER",
+      "tolerance": null,
+      "operatingStates": [],
+      "unknowns": [],
+      "exposedTo": []
+    },
+    {
+      "id": "AST-CDU-1",
+      "iri": "urn:aidcf:syn:asset:AST-CDU-1",
+      "kind": "asset",
+      "type": "AssetInstance",
+      "name": "CDU 1",
+      "domain": "THM",
+      "detail": "CDU",
+      "tolerance": null,
+      "operatingStates": [],
+      "unknowns": [],
+      "exposedTo": []
+    },
+    {
+      "id": "AST-CDU-2",
+      "iri": "urn:aidcf:syn:asset:AST-CDU-2",
+      "kind": "asset",
+      "type": "AssetInstance",
+      "name": "CDU 2",
+      "domain": "THM",
+      "detail": "CDU",
+      "tolerance": null,
+      "operatingStates": [],
+      "unknowns": [],
+      "exposedTo": []
+    },
+    {
+      "id": "AST-BMS-CTRL",
+      "iri": "urn:aidcf:syn:asset:AST-BMS-CTRL",
+      "kind": "asset",
+      "type": "AssetInstance",
+      "name": "BMS controller",
+      "domain": "SEC",
+      "detail": "BMS_CONTROLLER",
+      "tolerance": null,
+      "operatingStates": [],
+      "unknowns": [],
+      "exposedTo": [
+        "FM-02",
+        "TH-01"
+      ]
+    },
+    {
+      "id": "AST-OT-GW",
+      "iri": "urn:aidcf:syn:asset:AST-OT-GW",
+      "kind": "asset",
+      "type": "AssetInstance",
+      "name": "OT remote-access gateway",
+      "domain": "SEC",
+      "detail": "OT_GATEWAY",
+      "tolerance": null,
+      "operatingStates": [],
+      "unknowns": [],
+      "exposedTo": []
+    },
+    {
+      "id": "AST-GPU-NODES",
+      "iri": "urn:aidcf:syn:asset:AST-GPU-NODES",
+      "kind": "asset",
+      "type": "AssetInstance",
+      "name": "GPU node pool",
+      "domain": "CMP",
+      "detail": "GPU_NODE_POOL",
+      "tolerance": null,
+      "operatingStates": [],
+      "unknowns": [],
+      "exposedTo": []
+    },
+    {
+      "id": "AST-FAB-SPINE",
+      "iri": "urn:aidcf:syn:asset:AST-FAB-SPINE",
+      "kind": "asset",
+      "type": "AssetInstance",
+      "name": "Fabric spine",
+      "domain": "NET",
+      "detail": "SPINE_SWITCH_SET",
+      "tolerance": null,
+      "operatingStates": [],
+      "unknowns": [],
+      "exposedTo": [
+        "FM-03"
+      ]
+    },
+    {
+      "id": "AST-STO-ARRAY",
+      "iri": "urn:aidcf:syn:asset:AST-STO-ARRAY",
+      "kind": "asset",
+      "type": "AssetInstance",
+      "name": "Checkpoint storage array",
+      "domain": "STO",
+      "detail": "STORAGE_ARRAY",
+      "tolerance": null,
+      "operatingStates": [],
+      "unknowns": [],
+      "exposedTo": []
+    },
+    {
+      "id": "SYS-POW",
+      "iri": "urn:aidcf:syn:system:SYS-POW",
+      "kind": "system",
+      "type": "InfrastructureSystem",
+      "name": "Electrical power system",
+      "domain": "POW",
+      "detail": null,
+      "tolerance": null,
+      "operatingStates": [],
+      "unknowns": [],
+      "exposedTo": [
+        "HZ-01"
+      ]
+    },
+    {
+      "id": "SYS-FWS",
+      "iri": "urn:aidcf:syn:system:SYS-FWS",
+      "kind": "system",
+      "type": "InfrastructureSystem",
+      "name": "Facility water system",
+      "domain": "THM",
+      "detail": null,
+      "tolerance": null,
+      "operatingStates": [],
+      "unknowns": [
+        "U-003"
+      ],
+      "exposedTo": [
+        "HZ-02"
+      ]
+    },
+    {
+      "id": "SYS-THM",
+      "iri": "urn:aidcf:syn:system:SYS-THM",
+      "kind": "system",
+      "type": "InfrastructureSystem",
+      "name": "Liquid-cooling secondary loop",
+      "domain": "THM",
+      "detail": null,
+      "tolerance": null,
+      "operatingStates": [],
+      "unknowns": [],
+      "exposedTo": []
+    },
+    {
+      "id": "SYS-CTL",
+      "iri": "urn:aidcf:syn:system:SYS-CTL",
+      "kind": "system",
+      "type": "IACS",
+      "name": "Supervisory control IACS",
+      "domain": "SEC",
+      "detail": null,
+      "tolerance": null,
+      "operatingStates": [],
+      "unknowns": [],
+      "exposedTo": []
+    },
+    {
+      "id": "SYS-CMP",
+      "iri": "urn:aidcf:syn:system:SYS-CMP",
+      "kind": "system",
+      "type": "InfrastructureSystem",
+      "name": "Accelerator compute cluster",
+      "domain": "CMP",
+      "detail": null,
+      "tolerance": null,
+      "operatingStates": [],
+      "unknowns": [],
+      "exposedTo": []
+    },
+    {
+      "id": "SYS-NET",
+      "iri": "urn:aidcf:syn:system:SYS-NET",
+      "kind": "system",
+      "type": "InfrastructureSystem",
+      "name": "Scale-out fabric",
+      "domain": "NET",
+      "detail": null,
+      "tolerance": null,
+      "operatingStates": [],
+      "unknowns": [],
+      "exposedTo": []
+    },
+    {
+      "id": "SYS-STO",
+      "iri": "urn:aidcf:syn:system:SYS-STO",
+      "kind": "system",
+      "type": "InfrastructureSystem",
+      "name": "Checkpoint storage system",
+      "domain": "STO",
+      "detail": null,
+      "tolerance": null,
+      "operatingStates": [],
+      "unknowns": [],
+      "exposedTo": []
+    },
+    {
+      "id": "RF-01",
+      "iri": "urn:aidcf:syn:function:RF-01",
+      "kind": "function",
+      "type": "RequiredFunction",
+      "name": "Deliver conditioned power",
+      "domain": null,
+      "detail": "Deliver conditioned power to IT and cooling loads at design demand.",
+      "tolerance": null,
+      "operatingStates": [
+        "NORMAL",
+        "MAINTENANCE"
+      ],
+      "unknowns": [],
+      "exposedTo": []
+    },
+    {
+      "id": "RF-02",
+      "iri": "urn:aidcf:syn:function:RF-02",
+      "kind": "function",
+      "type": "RequiredFunction",
+      "name": "Remove heat",
+      "domain": null,
+      "detail": "Remove 100% of rack heat at design inlet temperature (illustrative).",
+      "tolerance": null,
+      "operatingStates": [
+        "NORMAL",
+        "MAINTENANCE"
+      ],
+      "unknowns": [],
+      "exposedTo": []
+    },
+    {
+      "id": "RF-06",
+      "iri": "urn:aidcf:syn:function:RF-06",
+      "kind": "function",
+      "type": "RequiredFunction",
+      "name": "Supervise facility systems",
+      "domain": null,
+      "detail": "Supervise and command power and cooling plant through the BMS.",
+      "tolerance": null,
+      "operatingStates": [
+        "NORMAL",
+        "MAINTENANCE"
+      ],
+      "unknowns": [],
+      "exposedTo": []
+    },
+    {
+      "id": "RF-03",
+      "iri": "urn:aidcf:syn:function:RF-03",
+      "kind": "function",
+      "type": "RequiredFunction",
+      "name": "Provide accelerator compute",
+      "domain": null,
+      "detail": "Provide the declared usable accelerator capacity.",
+      "tolerance": null,
+      "operatingStates": [
+        "NORMAL",
+        "MAINTENANCE"
+      ],
+      "unknowns": [],
+      "exposedTo": []
+    },
+    {
+      "id": "RF-05",
+      "iri": "urn:aidcf:syn:function:RF-05",
+      "kind": "function",
+      "type": "RequiredFunction",
+      "name": "Provide fabric connectivity",
+      "domain": null,
+      "detail": "Provide scale-out fabric connectivity between compute and storage.",
+      "tolerance": null,
+      "operatingStates": [
+        "NORMAL",
+        "MAINTENANCE"
+      ],
+      "unknowns": [],
+      "exposedTo": []
+    },
+    {
+      "id": "RF-04",
+      "iri": "urn:aidcf:syn:function:RF-04",
+      "kind": "function",
+      "type": "RequiredFunction",
+      "name": "Persist checkpoints",
+      "domain": null,
+      "detail": "Persist and restore training checkpoints within the recovery tolerance.",
+      "tolerance": null,
+      "operatingStates": [
+        "NORMAL",
+        "MAINTENANCE"
+      ],
+      "unknowns": [],
+      "exposedTo": []
+    },
+    {
+      "id": "SO-01",
+      "iri": "urn:aidcf:syn:outcome:SO-01",
+      "kind": "outcome",
+      "type": "ServiceOutcome",
+      "name": "Training availability",
+      "domain": null,
+      "detail": "Illustrative: training cluster available for scheduled jobs",
+      "tolerance": "Illustrative: at most 4 hours unplanned unavailability per 30 days",
+      "operatingStates": [
+        "NORMAL",
+        "MAINTENANCE"
+      ],
+      "unknowns": [],
+      "exposedTo": []
+    },
+    {
+      "id": "SO-03",
+      "iri": "urn:aidcf:syn:outcome:SO-03",
+      "kind": "outcome",
+      "type": "ServiceOutcome",
+      "name": "Inference latency",
+      "domain": null,
+      "detail": "Illustrative: p99 request latency at the service edge",
+      "tolerance": "Illustrative: p99 below 300 ms at declared load",
+      "operatingStates": [
+        "NORMAL",
+        "DEGRADED"
+      ],
+      "unknowns": [],
+      "exposedTo": []
+    },
+    {
+      "id": "SO-02",
+      "iri": "urn:aidcf:syn:outcome:SO-02",
+      "kind": "outcome",
+      "type": "ServiceOutcome",
+      "name": "Training checkpoint recovery",
+      "domain": null,
+      "detail": "Illustrative: restart from last checkpoint after disruption",
+      "tolerance": "Illustrative: restart within 2 hours, losing at most 30 minutes of training progress",
+      "operatingStates": [
+        "RECOVERY"
+      ],
+      "unknowns": [],
+      "exposedTo": []
+    }
+  ],
+  "edges": [
+    {
+      "from": "AST-GPU-NODES",
+      "to": "SYS-CMP",
+      "kind": "composes",
+      "label": null
+    },
+    {
+      "from": "AST-BMS-CTRL",
+      "to": "SYS-CTL",
+      "kind": "composes",
+      "label": null
+    },
+    {
+      "from": "AST-OT-GW",
+      "to": "SYS-CTL",
+      "kind": "composes",
+      "label": null
+    },
+    {
+      "from": "AST-CHL",
+      "to": "SYS-FWS",
+      "kind": "composes",
+      "label": null
+    },
+    {
+      "from": "AST-FAB-SPINE",
+      "to": "SYS-NET",
+      "kind": "composes",
+      "label": null
+    },
+    {
+      "from": "AST-SWB-01",
+      "to": "SYS-POW",
+      "kind": "composes",
+      "label": null
+    },
+    {
+      "from": "AST-UPS-A",
+      "to": "SYS-POW",
+      "kind": "composes",
+      "label": null
+    },
+    {
+      "from": "AST-UPS-B",
+      "to": "SYS-POW",
+      "kind": "composes",
+      "label": null
+    },
+    {
+      "from": "AST-STO-ARRAY",
+      "to": "SYS-STO",
+      "kind": "composes",
+      "label": null
+    },
+    {
+      "from": "AST-CDU-1",
+      "to": "SYS-THM",
+      "kind": "composes",
+      "label": null
+    },
+    {
+      "from": "AST-CDU-2",
+      "to": "SYS-THM",
+      "kind": "composes",
+      "label": null
+    },
+    {
+      "from": "SYS-POW",
+      "to": "RF-01",
+      "kind": "implements",
+      "label": null
+    },
+    {
+      "from": "SYS-THM",
+      "to": "RF-02",
+      "kind": "implements",
+      "label": null
+    },
+    {
+      "from": "SYS-FWS",
+      "to": "RF-02",
+      "kind": "implements",
+      "label": null
+    },
+    {
+      "from": "SYS-CMP",
+      "to": "RF-03",
+      "kind": "implements",
+      "label": null
+    },
+    {
+      "from": "SYS-STO",
+      "to": "RF-04",
+      "kind": "implements",
+      "label": null
+    },
+    {
+      "from": "SYS-NET",
+      "to": "RF-05",
+      "kind": "implements",
+      "label": null
+    },
+    {
+      "from": "SYS-CTL",
+      "to": "RF-06",
+      "kind": "implements",
+      "label": null
+    },
+    {
+      "from": "RF-01",
+      "to": "SO-01",
+      "kind": "requires",
+      "label": null
+    },
+    {
+      "from": "RF-02",
+      "to": "SO-01",
+      "kind": "requires",
+      "label": null
+    },
+    {
+      "from": "RF-03",
+      "to": "SO-01",
+      "kind": "requires",
+      "label": null
+    },
+    {
+      "from": "RF-05",
+      "to": "SO-01",
+      "kind": "requires",
+      "label": null
+    },
+    {
+      "from": "RF-06",
+      "to": "SO-01",
+      "kind": "requires",
+      "label": null
+    },
+    {
+      "from": "RF-04",
+      "to": "SO-02",
+      "kind": "requires",
+      "label": null
+    },
+    {
+      "from": "RF-05",
+      "to": "SO-02",
+      "kind": "requires",
+      "label": null
+    },
+    {
+      "from": "RF-02",
+      "to": "SO-03",
+      "kind": "requires",
+      "label": null
+    },
+    {
+      "from": "RF-03",
+      "to": "SO-03",
+      "kind": "requires",
+      "label": null
+    },
+    {
+      "from": "RF-05",
+      "to": "SO-03",
+      "kind": "requires",
+      "label": null
+    },
+    {
+      "from": "AST-CHL",
+      "to": "AST-CDU-2",
+      "kind": "depends",
+      "label": "FLUID",
+      "dependency": "DEP-05"
+    },
+    {
+      "from": "AST-SWB-01",
+      "to": "AST-UPS-B",
+      "kind": "depends",
+      "label": "ELECTRICAL",
+      "dependency": "DEP-03"
+    },
+    {
+      "from": "AST-SWB-01",
+      "to": "AST-UPS-A",
+      "kind": "depends",
+      "label": "ELECTRICAL",
+      "dependency": "DEP-02"
+    },
+    {
+      "from": "AST-BMS-CTRL",
+      "to": "AST-CDU-1",
+      "kind": "depends",
+      "label": "CONTROL",
+      "dependency": "DEP-06"
+    },
+    {
+      "from": "AST-FAB-SPINE",
+      "to": "AST-GPU-NODES",
+      "kind": "depends",
+      "label": "NETWORK",
+      "dependency": "DEP-13"
+    },
+    {
+      "from": "RES-WATER",
+      "to": "SYS-FWS",
+      "kind": "depends",
+      "label": "UTILITY",
+      "dependency": "DEP-15"
+    },
+    {
+      "from": "SYS-POW",
+      "to": "SYS-NET",
+      "kind": "depends",
+      "label": "ELECTRICAL",
+      "dependency": "DEP-16"
+    },
+    {
+      "from": "SYS-FWS",
+      "to": "SYS-THM",
+      "kind": "depends",
+      "label": "FLUID",
+      "dependency": "DEP-11"
+    },
+    {
+      "from": "AST-BMS-CTRL",
+      "to": "AST-CDU-2",
+      "kind": "depends",
+      "label": "CONTROL",
+      "dependency": "DEP-07"
+    },
+    {
+      "from": "AST-UTILITY",
+      "to": "SYS-POW",
+      "kind": "depends",
+      "label": "UTILITY",
+      "dependency": "DEP-01"
+    },
+    {
+      "from": "SYS-FWS",
+      "to": "AST-CHL",
+      "kind": "propagates",
+      "label": null
+    },
+    {
+      "from": "CDU-VENDOR",
+      "to": "AST-CDU-1",
+      "kind": "depends",
+      "label": "SUPPLIER",
+      "dependency": "DEP-12"
+    },
+    {
+      "from": "SYS-THM",
+      "to": "SYS-CMP",
+      "kind": "depends",
+      "label": "THERMAL",
+      "dependency": "DEP-10"
+    },
+    {
+      "from": "SYS-NET",
+      "to": "SYS-STO",
+      "kind": "depends",
+      "label": "NETWORK",
+      "dependency": "DEP-08"
+    },
+    {
+      "from": "AST-CHL",
+      "to": "AST-CDU-1",
+      "kind": "depends",
+      "label": "FLUID",
+      "dependency": "DEP-04"
+    },
+    {
+      "from": "SYS-POW",
+      "to": "SYS-CTL",
+      "kind": "depends",
+      "label": "ELECTRICAL",
+      "dependency": "DEP-17"
+    },
+    {
+      "from": "SYS-POW",
+      "to": "SYS-CMP",
+      "kind": "depends",
+      "label": "ELECTRICAL",
+      "dependency": "DEP-09"
+    }
+  ],
+  "faultDomains": [
+    {
+      "id": "FD-01",
+      "commonMode": "Common main switchboard upstream of both UPS units.",
+      "blastRadius": "Both redundant units fail together.",
+      "boundary": "Plant room",
+      "members": [
+        "AST-UPS-A",
+        "AST-UPS-B",
+        "AST-SWB-01"
+      ]
+    },
+    {
+      "id": "FD-02",
+      "commonMode": "Single BMS controller commanding both CDUs.",
+      "blastRadius": "Both redundant units fail together.",
+      "boundary": "Plant room",
+      "members": [
+        "AST-CDU-1",
+        "AST-CDU-2",
+        "AST-BMS-CTRL"
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "id": "DEP-01",
+      "name": "SYS-POW depends on AST-UTILITY",
+      "type": "UTILITY",
+      "external": true,
+      "faultDomain": null
+    },
+    {
+      "id": "DEP-02",
+      "name": "AST-UPS-A depends on AST-SWB-01",
+      "type": "ELECTRICAL",
+      "external": false,
+      "faultDomain": "FD-01"
+    },
+    {
+      "id": "DEP-03",
+      "name": "AST-UPS-B depends on AST-SWB-01",
+      "type": "ELECTRICAL",
+      "external": false,
+      "faultDomain": "FD-01"
+    },
+    {
+      "id": "DEP-04",
+      "name": "AST-CDU-1 depends on AST-CHL",
+      "type": "FLUID",
+      "external": false,
+      "faultDomain": null
+    },
+    {
+      "id": "DEP-05",
+      "name": "AST-CDU-2 depends on AST-CHL",
+      "type": "FLUID",
+      "external": false,
+      "faultDomain": null
+    },
+    {
+      "id": "DEP-06",
+      "name": "AST-CDU-1 depends on AST-BMS-CTRL",
+      "type": "CONTROL",
+      "external": false,
+      "faultDomain": "FD-02"
+    },
+    {
+      "id": "DEP-07",
+      "name": "AST-CDU-2 depends on AST-BMS-CTRL",
+      "type": "CONTROL",
+      "external": false,
+      "faultDomain": "FD-02"
+    },
+    {
+      "id": "DEP-08",
+      "name": "SYS-STO depends on SYS-NET",
+      "type": "NETWORK",
+      "external": false,
+      "faultDomain": null
+    },
+    {
+      "id": "DEP-09",
+      "name": "SYS-CMP depends on SYS-POW",
+      "type": "ELECTRICAL",
+      "external": false,
+      "faultDomain": null
+    },
+    {
+      "id": "DEP-10",
+      "name": "SYS-CMP depends on SYS-THM",
+      "type": "THERMAL",
+      "external": false,
+      "faultDomain": null
+    },
+    {
+      "id": "DEP-11",
+      "name": "SYS-THM depends on SYS-FWS",
+      "type": "FLUID",
+      "external": false,
+      "faultDomain": null
+    },
+    {
+      "id": "DEP-12",
+      "name": "AST-CDU-1 depends on CDU-VENDOR",
+      "type": "SUPPLIER",
+      "external": true,
+      "faultDomain": null
+    },
+    {
+      "id": "DEP-13",
+      "name": "AST-GPU-NODES depends on AST-FAB-SPINE",
+      "type": "NETWORK",
+      "external": false,
+      "faultDomain": null
+    },
+    {
+      "id": "DEP-14",
+      "name": "SAF-CDU-FAILOVER depends on AST-BMS-CTRL",
+      "type": "CONTROL",
+      "external": false,
+      "faultDomain": null
+    },
+    {
+      "id": "DEP-15",
+      "name": "SYS-FWS depends on RES-WATER",
+      "type": "UTILITY",
+      "external": true,
+      "faultDomain": null
+    },
+    {
+      "id": "DEP-16",
+      "name": "SYS-NET depends on SYS-POW",
+      "type": "ELECTRICAL",
+      "external": false,
+      "faultDomain": null
+    },
+    {
+      "id": "DEP-17",
+      "name": "SYS-CTL depends on SYS-POW",
+      "type": "ELECTRICAL",
+      "external": false,
+      "faultDomain": null
+    }
+  ],
+  "initiators": [
+    {
+      "id": "FM-01",
+      "type": "FailureMode",
+      "name": "Switchboard busbar fault",
+      "mechanism": "Busbar insulation breakdown",
+      "scenarios": [
+        "FS-01"
+      ],
+      "exposed": [
+        "AST-SWB-01"
+      ]
+    },
+    {
+      "id": "FM-02",
+      "type": "FailureMode",
+      "name": "BMS controller failure",
+      "mechanism": "Controller CPU lock-up after firmware fault",
+      "scenarios": [
+        "FS-02"
+      ],
+      "exposed": [
+        "AST-BMS-CTRL"
+      ]
+    },
+    {
+      "id": "FM-03",
+      "type": "FailureMode",
+      "name": "Fabric spine optic failure",
+      "mechanism": "Optic degradation and link flap",
+      "scenarios": [
+        "FS-05"
+      ],
+      "exposed": [
+        "AST-FAB-SPINE"
+      ]
+    },
+    {
+      "id": "HZ-01",
+      "type": "Hazard",
+      "name": "Utility voltage sag",
+      "mechanism": "UTILITY_DISTURBANCE",
+      "scenarios": [
+        "FS-03"
+      ],
+      "exposed": [
+        "SYS-POW"
+      ]
+    },
+    {
+      "id": "HZ-02",
+      "type": "Hazard",
+      "name": "Heatwave above design ambient",
+      "mechanism": "ENVIRONMENTAL",
+      "scenarios": [
+        "FS-04"
+      ],
+      "exposed": [
+        "CI-001",
+        "SYS-FWS"
+      ]
+    },
+    {
+      "id": "TH-01",
+      "type": "Threat",
+      "name": "Unauthorised remote command to BMS",
+      "mechanism": "Synthetic external actor using a vendor remote-access path",
+      "scenarios": [
+        "FS-02"
+      ],
+      "exposed": [
+        "AST-BMS-CTRL"
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "FS-01",
+      "name": "Switchboard failure",
+      "preState": "NORMAL",
+      "residualState": "FAILED",
+      "confidence": "CONF-2",
+      "initiatedBy": [
+        "FM-01"
+      ],
+      "steps": [
+        {
+          "from": "AST-SWB-01",
+          "to": "AST-UPS-A"
+        },
+        {
+          "from": "AST-SWB-01",
+          "to": "AST-UPS-B"
+        },
+        {
+          "from": "AST-UPS-A",
+          "to": "SYS-POW"
+        },
+        {
+          "from": "SYS-POW",
+          "to": "RF-01"
+        },
+        {
+          "from": "RF-01",
+          "to": "SO-01"
+        }
+      ],
+      "safeguards": [
+        "SAF-UPS-RT"
+      ],
+      "effects": [
+        {
+          "outcome": "SO-01",
+          "effect": "Illustrative: outcome breaches tolerance without the expected safeguards.",
+          "exceedsTolerance": true
+        }
+      ],
+      "restricted": false
+    },
+    {
+      "id": "FS-02",
+      "name": "BMS controller loss or unauthorised command",
+      "preState": "NORMAL",
+      "residualState": "DEGRADED",
+      "confidence": "CONF-2",
+      "initiatedBy": [
+        "FM-02",
+        "TH-01"
+      ],
+      "steps": [
+        {
+          "from": "AST-BMS-CTRL",
+          "to": "AST-CDU-1"
+        },
+        {
+          "from": "AST-BMS-CTRL",
+          "to": "AST-CDU-2"
+        },
+        {
+          "from": "AST-CDU-1",
+          "to": "SYS-THM"
+        },
+        {
+          "from": "SYS-THM",
+          "to": "RF-02"
+        },
+        {
+          "from": "RF-02",
+          "to": "SO-01"
+        }
+      ],
+      "safeguards": [
+        "SAF-CDU-FAILOVER",
+        "SAF-SEG",
+        "SAF-LEAK"
+      ],
+      "effects": [
+        {
+          "outcome": "SO-01",
+          "effect": "Illustrative: outcome breaches tolerance without the expected safeguards.",
+          "exceedsTolerance": true
+        }
+      ],
+      "restricted": true
+    },
+    {
+      "id": "FS-03",
+      "name": "Utility sag affecting fabric and checkpoints",
+      "preState": "NORMAL",
+      "residualState": "RECOVERY",
+      "confidence": "CONF-2",
+      "initiatedBy": [
+        "HZ-01"
+      ],
+      "steps": [
+        {
+          "from": "AST-UTILITY",
+          "to": "SYS-POW"
+        },
+        {
+          "from": "SYS-POW",
+          "to": "SYS-NET"
+        },
+        {
+          "from": "SYS-NET",
+          "to": "SYS-STO"
+        },
+        {
+          "from": "SYS-STO",
+          "to": "RF-04"
+        },
+        {
+          "from": "RF-04",
+          "to": "SO-02"
+        }
+      ],
+      "safeguards": [
+        "SAF-UPS-RT",
+        "SAF-CKPT"
+      ],
+      "effects": [
+        {
+          "outcome": "SO-02",
+          "effect": "Illustrative: outcome breaches tolerance without the expected safeguards.",
+          "exceedsTolerance": true
+        }
+      ],
+      "restricted": false
+    },
+    {
+      "id": "FS-04",
+      "name": "Heatwave and chiller trip",
+      "preState": "NORMAL",
+      "residualState": "DEGRADED",
+      "confidence": "CONF-2",
+      "initiatedBy": [
+        "HZ-02"
+      ],
+      "steps": [
+        {
+          "from": "RES-WATER",
+          "to": "SYS-FWS"
+        },
+        {
+          "from": "SYS-FWS",
+          "to": "AST-CHL"
+        },
+        {
+          "from": "AST-CHL",
+          "to": "AST-CDU-2"
+        },
+        {
+          "from": "AST-CDU-2",
+          "to": "SYS-THM"
+        },
+        {
+          "from": "SYS-THM",
+          "to": "SYS-CMP"
+        },
+        {
+          "from": "SYS-CMP",
+          "to": "RF-03"
+        },
+        {
+          "from": "RF-03",
+          "to": "SO-03"
+        }
+      ],
+      "safeguards": [
+        "SAF-THROTTLE",
+        "SAF-LEAK"
+      ],
+      "effects": [
+        {
+          "outcome": "SO-03",
+          "effect": "Illustrative: outcome breaches tolerance without the expected safeguards.",
+          "exceedsTolerance": true
+        }
+      ],
+      "restricted": false
+    },
+    {
+      "id": "FS-05",
+      "name": "Fabric spine optic failure",
+      "preState": "NORMAL",
+      "residualState": "DEGRADED",
+      "confidence": "CONF-2",
+      "initiatedBy": [
+        "FM-03"
+      ],
+      "steps": [
+        {
+          "from": "AST-FAB-SPINE",
+          "to": "SYS-NET"
+        },
+        {
+          "from": "SYS-NET",
+          "to": "RF-05"
+        },
+        {
+          "from": "RF-05",
+          "to": "SO-01"
+        }
+      ],
+      "safeguards": [
+        "SAF-FAB-RR"
+      ],
+      "effects": [
+        {
+          "outcome": "SO-01",
+          "effect": "Illustrative: outcome breaches tolerance without the expected safeguards.",
+          "exceedsTolerance": true
+        }
+      ],
+      "restricted": false
+    }
+  ],
+  "safeguards": [
+    {
+      "id": "SAF-CDU-FAILOVER",
+      "name": "CDU failover",
+      "activation": "AUTOMATIC",
+      "trigger": "CDU trip or low flow",
+      "implementedBy": [
+        "AST-CDU-2"
+      ],
+      "dependsOn": [
+        "AST-BMS-CTRL"
+      ],
+      "controls": [
+        "MCF-THM-010"
+      ]
+    },
+    {
+      "id": "SAF-CKPT",
+      "name": "Checkpoint and restore",
+      "activation": "AUTOMATIC",
+      "trigger": "Job failure",
+      "implementedBy": [
+        "AST-STO-ARRAY"
+      ],
+      "dependsOn": [],
+      "controls": [
+        "MCF-STO-017",
+        "MCF-RES-016"
+      ]
+    },
+    {
+      "id": "SAF-FAB-RR",
+      "name": "Fabric re-routing",
+      "activation": "AUTOMATIC",
+      "trigger": "Link or switch failure",
+      "implementedBy": [
+        "AST-FAB-SPINE"
+      ],
+      "dependsOn": [],
+      "controls": [
+        "MCF-NET-002"
+      ]
+    },
+    {
+      "id": "SAF-LEAK",
+      "name": "Leak detection and isolation",
+      "activation": "HYBRID",
+      "trigger": "Leak sensor alarm",
+      "implementedBy": [
+        "AST-BMS-CTRL"
+      ],
+      "dependsOn": [],
+      "controls": [
+        "MCF-THM-019",
+        "MCF-OPS-013"
+      ]
+    },
+    {
+      "id": "SAF-SEG",
+      "name": "OT segmentation and remote-access control",
+      "activation": "AUTOMATIC",
+      "trigger": "Any remote session request",
+      "implementedBy": [
+        "CND-01",
+        "AST-OT-GW"
+      ],
+      "dependsOn": [],
+      "controls": [
+        "MCF-SEC-005",
+        "MCF-SEC-010",
+        "MCF-SUP-021"
+      ]
+    },
+    {
+      "id": "SAF-THROTTLE",
+      "name": "Accelerator thermal throttling",
+      "activation": "AUTOMATIC",
+      "trigger": "Inlet over-temperature",
+      "implementedBy": [
+        "AST-GPU-NODES"
+      ],
+      "dependsOn": [],
+      "controls": [
+        "MCF-CMP-019"
+      ]
+    },
+    {
+      "id": "SAF-UPS-RT",
+      "name": "UPS ride-through",
+      "activation": "AUTOMATIC",
+      "trigger": "Loss of mains",
+      "implementedBy": [
+        "AST-UPS-A",
+        "AST-UPS-B"
+      ],
+      "dependsOn": [],
+      "controls": [
+        "MCF-POW-009",
+        "MCF-POW-019"
+      ]
+    }
+  ],
+  "controls": {
+    "MCF-CAP-001": {
+      "id": "MCF-CAP-001",
+      "title": "Capability Register",
+      "domain": "CAP",
+      "gates": [
+        {
+          "gate": "CG-01",
+          "role": "CRITICAL"
+        }
+      ],
+      "result": "CONFORMING",
+      "claimType": "IMPLEMENTATION",
+      "sufficiency": "S3",
+      "rationale": "Synthetic capability register entry with owner, lifecycle and approval; configuration extract and traceability analysis cover all three required classes at S3.",
+      "assessment": "CA-001",
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-CAP-002": {
+      "id": "MCF-CAP-002",
+      "title": "Capability Ownership",
+      "domain": "CAP",
+      "gates": [
+        {
+          "gate": "CG-13",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-01",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-CAP-004": {
+      "id": "MCF-CAP-004",
+      "title": "Architecture Linkage",
+      "domain": "CAP",
+      "gates": [
+        {
+          "gate": "CG-02",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-03",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-01",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-CAP-005": {
+      "id": "MCF-CAP-005",
+      "title": "Availability Outcomes",
+      "domain": "CAP",
+      "gates": [
+        {
+          "gate": "CG-01",
+          "role": "CRITICAL"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-CAP-006": {
+      "id": "MCF-CAP-006",
+      "title": "Performance Outcomes",
+      "domain": "CAP",
+      "gates": [
+        {
+          "gate": "CG-01",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-08",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-CAP-007": {
+      "id": "MCF-CAP-007",
+      "title": "Integrity Outcomes",
+      "domain": "CAP",
+      "gates": [
+        {
+          "gate": "CG-01",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-08",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-CAP-008": {
+      "id": "MCF-CAP-008",
+      "title": "Recovery Outcomes",
+      "domain": "CAP",
+      "gates": [
+        {
+          "gate": "CG-01",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-10",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-CAP-010": {
+      "id": "MCF-CAP-010",
+      "title": "Impact Tolerance",
+      "domain": "CAP",
+      "gates": [
+        {
+          "gate": "CG-01",
+          "role": "CRITICAL"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-CAP-023": {
+      "id": "MCF-CAP-023",
+      "title": "Material Change Impact",
+      "domain": "CAP",
+      "gates": [
+        {
+          "gate": "CG-14",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-01",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-CMP-001": {
+      "id": "MCF-CMP-001",
+      "title": "Accelerator Architecture",
+      "domain": "CMP",
+      "gates": [
+        {
+          "gate": "CG-08",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-01",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "CONFORMING",
+      "claimType": "DESIGN",
+      "sufficiency": "S3",
+      "rationale": "Accelerator architecture design and analysis evidence meet the DESIGN claim at S3.",
+      "assessment": "CA-005",
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-CMP-006": {
+      "id": "MCF-CMP-006",
+      "title": "Scale-Up Domain Integrity",
+      "domain": "CMP",
+      "gates": [
+        {
+          "gate": "CG-08",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-09",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-CMP-008": {
+      "id": "MCF-CMP-008",
+      "title": "Fault-Domain Design",
+      "domain": "CMP",
+      "gates": [
+        {
+          "gate": "CG-09",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-08",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-03",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-CMP-009": {
+      "id": "MCF-CMP-009",
+      "title": "Usable Accelerator Capacity",
+      "domain": "CMP",
+      "gates": [
+        {
+          "gate": "CG-08",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-01",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-CMP-013": {
+      "id": "MCF-CMP-013",
+      "title": "Firmware Baseline",
+      "domain": "CMP",
+      "gates": [
+        {
+          "gate": "CG-08",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-14",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-15",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-CMP-015": {
+      "id": "MCF-CMP-015",
+      "title": "Upgrade Testing",
+      "domain": "CMP",
+      "gates": [
+        {
+          "gate": "CG-14",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-09",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-08",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-CMP-019": {
+      "id": "MCF-CMP-019",
+      "title": "Error and Degradation Detection",
+      "domain": "CMP",
+      "gates": [
+        {
+          "gate": "CG-08",
+          "role": "CRITICAL"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-CMP-023": {
+      "id": "MCF-CMP-023",
+      "title": "Node Rebuild",
+      "domain": "CMP",
+      "gates": [
+        {
+          "gate": "CG-10",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-08",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-DEP-001": {
+      "id": "MCF-DEP-001",
+      "title": "Asset-to-Function Mapping",
+      "domain": "DEP",
+      "gates": [
+        {
+          "gate": "CG-03",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-02",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "PARTIAL",
+      "claimType": "IMPLEMENTATION",
+      "sufficiency": "S4",
+      "rationale": "Asset-to-function mapping covers power, cooling and compute but omits the facility water plant and recovery dependencies (F-001).",
+      "assessment": "CA-002",
+      "findings": [
+        "F-001"
+      ],
+      "unknowns": []
+    },
+    "MCF-DEP-002": {
+      "id": "MCF-DEP-002",
+      "title": "Upstream Dependency Mapping",
+      "domain": "DEP",
+      "gates": [
+        {
+          "gate": "CG-03",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-15",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-DEP-005": {
+      "id": "MCF-DEP-005",
+      "title": "Shared Source Analysis",
+      "domain": "DEP",
+      "gates": [
+        {
+          "gate": "CG-03",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-05",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-06",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-09",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-DEP-007": {
+      "id": "MCF-DEP-007",
+      "title": "Shared Route Analysis",
+      "domain": "DEP",
+      "gates": [
+        {
+          "gate": "CG-03",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-09",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-DEP-009": {
+      "id": "MCF-DEP-009",
+      "title": "Utility Dependency",
+      "domain": "DEP",
+      "gates": [
+        {
+          "gate": "CG-03",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-05",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-DEP-010": {
+      "id": "MCF-DEP-010",
+      "title": "Telecom Dependency",
+      "domain": "DEP",
+      "gates": [
+        {
+          "gate": "CG-03",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-10",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-DEP-012": {
+      "id": "MCF-DEP-012",
+      "title": "Cloud and Service Dependency",
+      "domain": "DEP",
+      "gates": [
+        {
+          "gate": "CG-03",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-15",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-10",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-DEP-017": {
+      "id": "MCF-DEP-017",
+      "title": "Assessment Boundary",
+      "domain": "DEP",
+      "gates": [
+        {
+          "gate": "CG-02",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-03",
+          "role": "CRITICAL"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-DEP-018": {
+      "id": "MCF-DEP-018",
+      "title": "Provider Boundary",
+      "domain": "DEP",
+      "gates": [
+        {
+          "gate": "CG-13",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-03",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-ENV-018": {
+      "id": "MCF-ENV-018",
+      "title": "Refrigerants and Coolants",
+      "domain": "ENV",
+      "gates": [
+        {
+          "gate": "CG-04",
+          "role": "CRITICAL"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-EVA-009": {
+      "id": "MCF-EVA-009",
+      "title": "Decision Question",
+      "domain": "EVA",
+      "gates": [
+        {
+          "gate": "CG-01",
+          "role": "CRITICAL"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-EVA-010": {
+      "id": "MCF-EVA-010",
+      "title": "Scope and Criteria",
+      "domain": "EVA",
+      "gates": [
+        {
+          "gate": "CG-02",
+          "role": "CRITICAL"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-EVA-017": {
+      "id": "MCF-EVA-017",
+      "title": "Gate Applicability",
+      "domain": "EVA",
+      "gates": [],
+      "result": "CONFORMING",
+      "claimType": "DESIGN",
+      "sufficiency": "S3",
+      "rationale": "Gate applicability recorded for all fifteen gates with rationale and no APPROVED_NA claim.",
+      "assessment": "CA-012",
+      "findings": [
+        "F-006"
+      ],
+      "unknowns": []
+    },
+    "MCF-GOV-002": {
+      "id": "MCF-GOV-002",
+      "title": "Decision Rights",
+      "domain": "GOV",
+      "gates": [
+        {
+          "gate": "CG-13",
+          "role": "CRITICAL"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-GOV-005": {
+      "id": "MCF-GOV-005",
+      "title": "RACI and Role Ownership",
+      "domain": "GOV",
+      "gates": [
+        {
+          "gate": "CG-13",
+          "role": "CRITICAL"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-GOV-006": {
+      "id": "MCF-GOV-006",
+      "title": "Critical Function Accountability",
+      "domain": "GOV",
+      "gates": [
+        {
+          "gate": "CG-13",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-03",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-GOV-007": {
+      "id": "MCF-GOV-007",
+      "title": "Risk Acceptance Authority",
+      "domain": "GOV",
+      "gates": [
+        {
+          "gate": "CG-13",
+          "role": "CRITICAL"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-NET-001": {
+      "id": "MCF-NET-001",
+      "title": "Fabric Topology",
+      "domain": "NET",
+      "gates": [
+        {
+          "gate": "CG-08",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-02",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "CONFORMING",
+      "claimType": "IMPLEMENTATION",
+      "sufficiency": "S4",
+      "rationale": "Fabric topology documented, exported and observed at S4; topology export age recorded as U-002 (US2).",
+      "assessment": "CA-007",
+      "findings": [],
+      "unknowns": [
+        "U-002"
+      ]
+    },
+    "MCF-NET-002": {
+      "id": "MCF-NET-002",
+      "title": "Path Diversity",
+      "domain": "NET",
+      "gates": [
+        {
+          "gate": "CG-03",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-08",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-09",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-NET-004": {
+      "id": "MCF-NET-004",
+      "title": "Fabric Fault-Domain Design",
+      "domain": "NET",
+      "gates": [
+        {
+          "gate": "CG-09",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-08",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-03",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-NET-007": {
+      "id": "MCF-NET-007",
+      "title": "Congestion Control",
+      "domain": "NET",
+      "gates": [
+        {
+          "gate": "CG-08",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-09",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-NET-008": {
+      "id": "MCF-NET-008",
+      "title": "Collective Communication Performance",
+      "domain": "NET",
+      "gates": [
+        {
+          "gate": "CG-08",
+          "role": "CRITICAL"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-NET-009": {
+      "id": "MCF-NET-009",
+      "title": "Storage Fabric",
+      "domain": "NET",
+      "gates": [
+        {
+          "gate": "CG-08",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-10",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-NET-015": {
+      "id": "MCF-NET-015",
+      "title": "OOB Resilience",
+      "domain": "NET",
+      "gates": [
+        {
+          "gate": "CG-10",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-15",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-03",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-NET-022": {
+      "id": "MCF-NET-022",
+      "title": "Configuration Management",
+      "domain": "NET",
+      "gates": [
+        {
+          "gate": "CG-14",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-08",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-10",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-OPS-002": {
+      "id": "MCF-OPS-002",
+      "title": "Role Clarity",
+      "domain": "OPS",
+      "gates": [
+        {
+          "gate": "CG-13",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-14",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-OPS-004": {
+      "id": "MCF-OPS-004",
+      "title": "Competence and Authorisation",
+      "domain": "OPS",
+      "gates": [
+        {
+          "gate": "CG-04",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-13",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-OPS-006": {
+      "id": "MCF-OPS-006",
+      "title": "Method Statements",
+      "domain": "OPS",
+      "gates": [
+        {
+          "gate": "CG-14",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-04",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-OPS-007": {
+      "id": "MCF-OPS-007",
+      "title": "Permit to Work",
+      "domain": "OPS",
+      "gates": [
+        {
+          "gate": "CG-04",
+          "role": "CRITICAL"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-OPS-008": {
+      "id": "MCF-OPS-008",
+      "title": "Lockout and Tagout",
+      "domain": "OPS",
+      "gates": [
+        {
+          "gate": "CG-04",
+          "role": "CRITICAL"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-OPS-013": {
+      "id": "MCF-OPS-013",
+      "title": "Alarm Rationalisation",
+      "domain": "OPS",
+      "gates": [
+        {
+          "gate": "CG-07",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-06",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-05",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "PARTIAL",
+      "claimType": "OPERATION",
+      "sufficiency": "S4",
+      "rationale": "Alarm rationalisation completed for power but not for cooling and leak alarms (F-003).",
+      "assessment": "CA-008",
+      "findings": [
+        "F-003"
+      ],
+      "unknowns": []
+    },
+    "MCF-OPS-017": {
+      "id": "MCF-OPS-017",
+      "title": "Configuration Baseline",
+      "domain": "OPS",
+      "gates": [
+        {
+          "gate": "CG-14",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-02",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-07",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-OPS-018": {
+      "id": "MCF-OPS-018",
+      "title": "Change Assessment",
+      "domain": "OPS",
+      "gates": [
+        {
+          "gate": "CG-14",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-03",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-OPS-020": {
+      "id": "MCF-OPS-020",
+      "title": "Rollback and Validation",
+      "domain": "OPS",
+      "gates": [
+        {
+          "gate": "CG-14",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-10",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-PHY-010": {
+      "id": "MCF-PHY-010",
+      "title": "Fire Zones",
+      "domain": "PHY",
+      "gates": [
+        {
+          "gate": "CG-09",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-04",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-PHY-021": {
+      "id": "MCF-PHY-021",
+      "title": "Fire Detection",
+      "domain": "PHY",
+      "gates": [
+        {
+          "gate": "CG-04",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-09",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-PHY-022": {
+      "id": "MCF-PHY-022",
+      "title": "Suppression Interfaces",
+      "domain": "PHY",
+      "gates": [
+        {
+          "gate": "CG-04",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-06",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-07",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-PHY-023": {
+      "id": "MCF-PHY-023",
+      "title": "Egress and Emergency Access",
+      "domain": "PHY",
+      "gates": [
+        {
+          "gate": "CG-04",
+          "role": "CRITICAL"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-PHY-024": {
+      "id": "MCF-PHY-024",
+      "title": "Emergency Shutdown Governance",
+      "domain": "PHY",
+      "gates": [
+        {
+          "gate": "CG-04",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-07",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-09",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-POW-001": {
+      "id": "MCF-POW-001",
+      "title": "Utility Capacity",
+      "domain": "POW",
+      "gates": [
+        {
+          "gate": "CG-05",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-03",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "CONFORMING",
+      "claimType": "OPERATION",
+      "sufficiency": "S5",
+      "rationale": "Utility capacity evidenced by documentary, configuration, operational metering and analytical evidence at S5.",
+      "assessment": "CA-003",
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-POW-005": {
+      "id": "MCF-POW-005",
+      "title": "Generator Capacity",
+      "domain": "POW",
+      "gates": [
+        {
+          "gate": "CG-05",
+          "role": "CRITICAL"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-POW-006": {
+      "id": "MCF-POW-006",
+      "title": "Start Reliability",
+      "domain": "POW",
+      "gates": [
+        {
+          "gate": "CG-05",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-07",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-POW-007": {
+      "id": "MCF-POW-007",
+      "title": "Fuel Autonomy",
+      "domain": "POW",
+      "gates": [
+        {
+          "gate": "CG-05",
+          "role": "CRITICAL"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-POW-009": {
+      "id": "MCF-POW-009",
+      "title": "UPS Topology",
+      "domain": "POW",
+      "gates": [
+        {
+          "gate": "CG-05",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-09",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-02",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-POW-010": {
+      "id": "MCF-POW-010",
+      "title": "Battery Condition",
+      "domain": "POW",
+      "gates": [
+        {
+          "gate": "CG-04",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-05",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-POW-011": {
+      "id": "MCF-POW-011",
+      "title": "Runtime and Derating",
+      "domain": "POW",
+      "gates": [
+        {
+          "gate": "CG-05",
+          "role": "CRITICAL"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-POW-013": {
+      "id": "MCF-POW-013",
+      "title": "Switchgear Integrity",
+      "domain": "POW",
+      "gates": [
+        {
+          "gate": "CG-04",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-05",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-POW-014": {
+      "id": "MCF-POW-014",
+      "title": "Selective Coordination",
+      "domain": "POW",
+      "gates": [
+        {
+          "gate": "CG-09",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-05",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-POW-016": {
+      "id": "MCF-POW-016",
+      "title": "Earthing and Bonding",
+      "domain": "POW",
+      "gates": [
+        {
+          "gate": "CG-04",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-05",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-POW-019": {
+      "id": "MCF-POW-019",
+      "title": "Transient Ride-Through",
+      "domain": "POW",
+      "gates": [
+        {
+          "gate": "CG-05",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-06",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-POW-020": {
+      "id": "MCF-POW-020",
+      "title": "Load-Step Response",
+      "domain": "POW",
+      "gates": [
+        {
+          "gate": "CG-05",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-03",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-POW-021": {
+      "id": "MCF-POW-021",
+      "title": "EPMS Coverage",
+      "domain": "POW",
+      "gates": [
+        {
+          "gate": "CG-07",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-05",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-15",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-POW-023": {
+      "id": "MCF-POW-023",
+      "title": "Switching Procedures",
+      "domain": "POW",
+      "gates": [
+        {
+          "gate": "CG-04",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-07",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-14",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-POW-024": {
+      "id": "MCF-POW-024",
+      "title": "Black-Start and Restoration",
+      "domain": "POW",
+      "gates": [
+        {
+          "gate": "CG-10",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-05",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-07",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-RES-005": {
+      "id": "MCF-RES-005",
+      "title": "Fault-Domain Definition",
+      "domain": "RES",
+      "gates": [
+        {
+          "gate": "CG-09",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-03",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-02",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-RES-007": {
+      "id": "MCF-RES-007",
+      "title": "Blast Radius",
+      "domain": "RES",
+      "gates": [
+        {
+          "gate": "CG-09",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-03",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-RES-008": {
+      "id": "MCF-RES-008",
+      "title": "Isolation Validation",
+      "domain": "RES",
+      "gates": [
+        {
+          "gate": "CG-09",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-04",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-RES-013": {
+      "id": "MCF-RES-013",
+      "title": "Recovery Dependencies",
+      "domain": "RES",
+      "gates": [
+        {
+          "gate": "CG-10",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-03",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-RES-014": {
+      "id": "MCF-RES-014",
+      "title": "Recovery Sequencing",
+      "domain": "RES",
+      "gates": [
+        {
+          "gate": "CG-10",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-05",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-06",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-RES-016": {
+      "id": "MCF-RES-016",
+      "title": "Data and Checkpoint Recovery",
+      "domain": "RES",
+      "gates": [
+        {
+          "gate": "CG-10",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-08",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-RES-017": {
+      "id": "MCF-RES-017",
+      "title": "Component Tests",
+      "domain": "RES",
+      "gates": [
+        {
+          "gate": "CG-10",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-05",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-06",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "UNKNOWN",
+      "claimType": "OPERATION",
+      "sufficiency": "S2",
+      "rationale": "Component tests evidenced only by operational records; no E4 test evidence at the S3 floor, so the result is UNKNOWN (U-001).",
+      "assessment": "CA-009",
+      "findings": [],
+      "unknowns": [
+        "U-001"
+      ]
+    },
+    "MCF-RES-018": {
+      "id": "MCF-RES-018",
+      "title": "Integrated Scenario Tests",
+      "domain": "RES",
+      "gates": [
+        {
+          "gate": "CG-10",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-09",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-05",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-06",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-SEC-003": {
+      "id": "MCF-SEC-003",
+      "title": "Privileged Access",
+      "domain": "SEC",
+      "gates": [
+        {
+          "gate": "CG-15",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-07",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-SEC-005": {
+      "id": "MCF-SEC-005",
+      "title": "BMS and EPMS Security",
+      "domain": "SEC",
+      "gates": [
+        {
+          "gate": "CG-07",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-15",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-05",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-06",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "PARTIAL",
+      "claimType": "EFFECTIVENESS",
+      "sufficiency": "S4",
+      "rationale": "BMS and EPMS security controls partly effective; write authority to the BMS controller is not restricted to named identities (F-005).",
+      "assessment": "CA-011",
+      "findings": [
+        "F-005"
+      ],
+      "unknowns": []
+    },
+    "MCF-SEC-006": {
+      "id": "MCF-SEC-006",
+      "title": "Cluster Manager Security",
+      "domain": "SEC",
+      "gates": [
+        {
+          "gate": "CG-15",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-08",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-SEC-009": {
+      "id": "MCF-SEC-009",
+      "title": "Security Zoning",
+      "domain": "SEC",
+      "gates": [
+        {
+          "gate": "CG-07",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-15",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-09",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-SEC-010": {
+      "id": "MCF-SEC-010",
+      "title": "Management-Plane Segmentation",
+      "domain": "SEC",
+      "gates": [
+        {
+          "gate": "CG-15",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-07",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-SEC-012": {
+      "id": "MCF-SEC-012",
+      "title": "Remote Access",
+      "domain": "SEC",
+      "gates": [
+        {
+          "gate": "CG-15",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-07",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-SEC-021": {
+      "id": "MCF-SEC-021",
+      "title": "Agent or Automation Authority",
+      "domain": "SEC",
+      "gates": [
+        {
+          "gate": "CG-15",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-07",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-SEC-023": {
+      "id": "MCF-SEC-023",
+      "title": "Command Allowlisting",
+      "domain": "SEC",
+      "gates": [
+        {
+          "gate": "CG-07",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-15",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-STO-005": {
+      "id": "MCF-STO-005",
+      "title": "Throughput and IOPS",
+      "domain": "STO",
+      "gates": [
+        {
+          "gate": "CG-08",
+          "role": "CRITICAL"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-STO-009": {
+      "id": "MCF-STO-009",
+      "title": "Data Integrity",
+      "domain": "STO",
+      "gates": [
+        {
+          "gate": "CG-08",
+          "role": "CRITICAL"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-STO-010": {
+      "id": "MCF-STO-010",
+      "title": "Metadata Integrity",
+      "domain": "STO",
+      "gates": [
+        {
+          "gate": "CG-08",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-10",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-STO-015": {
+      "id": "MCF-STO-015",
+      "title": "Erasure Coding",
+      "domain": "STO",
+      "gates": [
+        {
+          "gate": "CG-09",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-08",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-STO-016": {
+      "id": "MCF-STO-016",
+      "title": "Immutable Recovery Copy",
+      "domain": "STO",
+      "gates": [
+        {
+          "gate": "CG-10",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-15",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-STO-017": {
+      "id": "MCF-STO-017",
+      "title": "Checkpoint Durability",
+      "domain": "STO",
+      "gates": [
+        {
+          "gate": "CG-08",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-10",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "CONFORMING",
+      "claimType": "EFFECTIVENESS",
+      "sufficiency": "S4",
+      "rationale": "Checkpoint durability shown by configuration, operational logs and a synthetic restore test (TST-001) at S4.",
+      "assessment": "CA-006",
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-STO-018": {
+      "id": "MCF-STO-018",
+      "title": "Restart Readiness",
+      "domain": "STO",
+      "gates": [
+        {
+          "gate": "CG-10",
+          "role": "CRITICAL"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-STO-020": {
+      "id": "MCF-STO-020",
+      "title": "Recovery Validation",
+      "domain": "STO",
+      "gates": [
+        {
+          "gate": "CG-10",
+          "role": "CRITICAL"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-SUP-004": {
+      "id": "MCF-SUP-004",
+      "title": "Sub-Tier Visibility",
+      "domain": "SUP",
+      "gates": [
+        {
+          "gate": "CG-03",
+          "role": "CRITICAL"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-SUP-021": {
+      "id": "MCF-SUP-021",
+      "title": "Support Identity",
+      "domain": "SUP",
+      "gates": [
+        {
+          "gate": "CG-15",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-13",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "PARTIAL",
+      "claimType": "IMPLEMENTATION",
+      "sufficiency": "S4",
+      "rationale": "Support identity controls exist for the remote-access conduit, but vendor accounts are not time-bound (F-004).",
+      "assessment": "CA-010",
+      "findings": [
+        "F-004"
+      ],
+      "unknowns": []
+    },
+    "MCF-SUP-022": {
+      "id": "MCF-SUP-022",
+      "title": "Activation and Approval",
+      "domain": "SUP",
+      "gates": [
+        {
+          "gate": "CG-15",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-14",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-THM-002": {
+      "id": "MCF-THM-002",
+      "title": "Design Capacity",
+      "domain": "THM",
+      "gates": [
+        {
+          "gate": "CG-06",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-02",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-THM-003": {
+      "id": "MCF-THM-003",
+      "title": "Resilient Capacity",
+      "domain": "THM",
+      "gates": [
+        {
+          "gate": "CG-06",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-09",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-05",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-THM-004": {
+      "id": "MCF-THM-004",
+      "title": "Seasonal Derating",
+      "domain": "THM",
+      "gates": [
+        {
+          "gate": "CG-06",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-03",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-THM-009": {
+      "id": "MCF-THM-009",
+      "title": "Direct-to-Chip Architecture",
+      "domain": "THM",
+      "gates": [
+        {
+          "gate": "CG-06",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "PARTIAL",
+      "claimType": "DESIGN",
+      "sufficiency": "S3",
+      "rationale": "Direct-to-chip design reviewed; the design basis does not state cold-plate flow at the transient envelope (F-002).",
+      "assessment": "CA-004",
+      "findings": [
+        "F-002"
+      ],
+      "unknowns": []
+    },
+    "MCF-THM-010": {
+      "id": "MCF-THM-010",
+      "title": "CDU Capacity",
+      "domain": "THM",
+      "gates": [
+        {
+          "gate": "CG-06",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-07",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-THM-011": {
+      "id": "MCF-THM-011",
+      "title": "Secondary Loop Integrity",
+      "domain": "THM",
+      "gates": [
+        {
+          "gate": "CG-06",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-09",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-THM-013": {
+      "id": "MCF-THM-013",
+      "title": "Chiller Capacity",
+      "domain": "THM",
+      "gates": [
+        {
+          "gate": "CG-06",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-04",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-THM-015": {
+      "id": "MCF-THM-015",
+      "title": "Water Continuity",
+      "domain": "THM",
+      "gates": [
+        {
+          "gate": "CG-06",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-03",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-THM-018": {
+      "id": "MCF-THM-018",
+      "title": "Water Quality",
+      "domain": "THM",
+      "gates": [
+        {
+          "gate": "CG-04",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-06",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-THM-019": {
+      "id": "MCF-THM-019",
+      "title": "Leak Detection",
+      "domain": "THM",
+      "gates": [
+        {
+          "gate": "CG-06",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-09",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-04",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-THM-020": {
+      "id": "MCF-THM-020",
+      "title": "Isolation and Drainage",
+      "domain": "THM",
+      "gates": [
+        {
+          "gate": "CG-09",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-04",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-06",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-THM-021": {
+      "id": "MCF-THM-021",
+      "title": "Control Stability",
+      "domain": "THM",
+      "gates": [
+        {
+          "gate": "CG-07",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-06",
+          "role": "SUPPORTING"
+        },
+        {
+          "gate": "CG-15",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    },
+    "MCF-THM-024": {
+      "id": "MCF-THM-024",
+      "title": "Thermal Recovery",
+      "domain": "THM",
+      "gates": [
+        {
+          "gate": "CG-10",
+          "role": "CRITICAL"
+        },
+        {
+          "gate": "CG-06",
+          "role": "SUPPORTING"
+        }
+      ],
+      "result": "NOT_ASSESSED",
+      "claimType": null,
+      "sufficiency": null,
+      "rationale": null,
+      "assessment": null,
+      "findings": [],
+      "unknowns": []
+    }
+  },
+  "findings": [
+    {
+      "id": "F-001",
+      "control": "MCF-DEP-001",
+      "class": "WEAKNESS",
+      "status": "OPEN",
+      "condition": "Asset-to-function mapping omits the facility water plant and recovery dependencies.",
+      "consequence": "Shared-source dependencies for RF-02 cannot be analysed.",
+      "gateEffect": "CRITICAL input to CG-03 is PARTIAL: CG-03 FAIL."
+    },
+    {
+      "id": "F-002",
+      "control": "MCF-THM-009",
+      "class": "WEAKNESS",
+      "status": "OPEN",
+      "condition": "Design basis does not state cold-plate flow at the transient envelope.",
+      "consequence": "Thermal margin under transients is not demonstrated.",
+      "gateEffect": "SUPPORTING input to CG-06; no gate-level defeat on its own."
+    },
+    {
+      "id": "F-003",
+      "control": "MCF-OPS-013",
+      "class": "SIGNIFICANT_WEAKNESS",
+      "status": "OPEN",
+      "condition": "Cooling and leak alarms are not rationalised.",
+      "consequence": "Critical alarms may not reach the operator with a defined response.",
+      "gateEffect": "CRITICAL input to CG-07 is PARTIAL: CG-07 FAIL."
+    },
+    {
+      "id": "F-004",
+      "control": "MCF-SUP-021",
+      "class": "SIGNIFICANT_WEAKNESS",
+      "status": "OPEN",
+      "condition": "Vendor support accounts on the remote-access conduit are not time-bound.",
+      "consequence": "Third-party access is not revoked in a timely way.",
+      "gateEffect": "CRITICAL input to CG-15 is PARTIAL: CG-15 FAIL."
+    },
+    {
+      "id": "F-005",
+      "control": "MCF-SEC-005",
+      "class": "SIGNIFICANT_WEAKNESS",
+      "status": "OPEN",
+      "condition": "Write authority to the BMS controller is not restricted to named identities.",
+      "consequence": "Unattributable commands to cooling and power plant are possible.",
+      "gateEffect": "CRITICAL input to CG-07 is PARTIAL: CG-07 FAIL."
+    },
+    {
+      "id": "F-006",
+      "control": "MCF-EVA-017",
+      "class": "OBSERVATION",
+      "status": "CLOSED",
+      "condition": "Two evidence fixtures used inconsistent file naming.",
+      "consequence": "Minor retrieval delay.",
+      "gateEffect": "None."
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "U-001",
+      "name": "E4 test evidence for MCF-RES-017",
+      "severity": "US3",
+      "material": true,
+      "subject": "CA-009",
+      "reason": "No component test records at the S3 floor were provided.",
+      "evidenceNeeded": "Component test reports (E4).",
+      "decisionEffect": "Control result UNKNOWN; decision capped at CONDITIONALLY_ASSURED by this UNKNOWN alone.",
+      "constrains": [],
+      "status": "DISPOSITIONED"
+    },
+    {
+      "id": "U-002",
+      "name": "Current fabric topology export",
+      "severity": "US2",
+      "material": false,
+      "subject": "CA-007",
+      "reason": "Topology export is older than the evidence currency window.",
+      "evidenceNeeded": "Fresh topology export.",
+      "decisionEffect": "Limitation recorded; no ceiling.",
+      "constrains": [
+        "CG-08"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "U-003",
+      "name": "Exclusivity of the facility water plant",
+      "severity": "US5",
+      "material": true,
+      "subject": "SYS-FWS",
+      "reason": "It cannot be determined whether the facility water plant is shared with other tenants.",
+      "evidenceNeeded": "Facility water service agreement and plant schematic.",
+      "decisionEffect": "Systemic: decision capped at INCONCLUSIVE by this UNKNOWN alone; CG-03 and CG-06 cannot pass.",
+      "constrains": [
+        "CG-03",
+        "CG-06"
+      ],
+      "status": "DISPOSITIONED"
+    },
+    {
+      "id": "U-004",
+      "name": "Integrated cross-domain recovery exercise (GC-10-5)",
+      "severity": "US4",
+      "material": true,
+      "subject": "GR-CG-10",
+      "reason": "No integrated recovery exercise within the evidence currency window was provided.",
+      "evidenceNeeded": "Integrated recovery exercise report.",
+      "decisionEffect": "Critical: CG-10 UNKNOWN; decision capped at LIMITED by this UNKNOWN alone.",
+      "constrains": [
+        "CG-10"
+      ],
+      "status": "DISPOSITIONED"
+    },
+    {
+      "id": "U-005",
+      "name": "Achieved security level (SL-A) of the BMS zone",
+      "severity": "US4",
+      "material": true,
+      "subject": "ZONE-BMS",
+      "reason": "SL-T and SL-C are recorded but no assessment of SL-A was provided.",
+      "evidenceNeeded": "Zone SL-A assessment.",
+      "decisionEffect": "Critical: CG-07 cannot pass; decision capped at LIMITED by this UNKNOWN alone.",
+      "constrains": [
+        "CG-07"
+      ],
+      "status": "DISPOSITIONED"
+    }
+  ],
+  "gateResults": [
+    {
+      "gate": "CG-01",
+      "state": "UNKNOWN",
+      "applicability": "IN_SCOPE",
+      "sufficiency": "S2",
+      "rationale": "UNKNOWN: 6 of 7 CRITICAL controls UNKNOWN or NOT_ASSESSED; criteria not demonstrated met: GC-01-2, GC-01-3, GC-01-4, GC-01-5, GC-01-6; gate evidence S2 below floor S3.",
+      "decisionEffect": "Gate UNKNOWN caps the decision at INCONCLUSIVE.",
+      "findings": [],
+      "evaluations": [
+        {
+          "control": "MCF-CAP-001",
+          "role": "CRITICAL",
+          "result": "CONFORMING"
+        },
+        {
+          "control": "MCF-CAP-005",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-CAP-006",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-CAP-007",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-CAP-008",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-CAP-010",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-CMP-001",
+          "role": "SUPPORTING",
+          "result": "CONFORMING"
+        },
+        {
+          "control": "MCF-EVA-009",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        }
+      ],
+      "criteria": [
+        {
+          "id": "GC-01-1",
+          "outcome": "MET"
+        },
+        {
+          "id": "GC-01-2",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-01-3",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-01-4",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-01-5",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-01-6",
+          "outcome": "NOT_EVALUATED"
+        }
+      ]
+    },
+    {
+      "gate": "CG-02",
+      "state": "NOT_ASSESSED",
+      "applicability": "IN_SCOPE",
+      "sufficiency": "S2",
+      "rationale": "No CRITICAL control of this gate (3 in the registry) was assessed and no gate criterion was evaluated.",
+      "decisionEffect": "Gate NOT_ASSESSED caps the decision at LIMITED.",
+      "findings": [],
+      "evaluations": [
+        {
+          "control": "MCF-CAP-004",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-DEP-001",
+          "role": "SUPPORTING",
+          "result": "PARTIAL"
+        },
+        {
+          "control": "MCF-DEP-017",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-EVA-010",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-NET-001",
+          "role": "SUPPORTING",
+          "result": "CONFORMING"
+        }
+      ],
+      "criteria": [
+        {
+          "id": "GC-02-1",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-02-2",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-02-3",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-02-4",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-02-5",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-02-6",
+          "outcome": "NOT_EVALUATED"
+        }
+      ]
+    },
+    {
+      "gate": "CG-03",
+      "state": "FAIL",
+      "applicability": "IN_SCOPE",
+      "sufficiency": "S2",
+      "rationale": "FAIL: CRITICAL control(s) MCF-DEP-001 PARTIAL; criteria not met: GC-03-1.",
+      "decisionEffect": "Gate FAIL caps the decision at LIMITED.",
+      "findings": [
+        "F-001"
+      ],
+      "evaluations": [
+        {
+          "control": "MCF-DEP-001",
+          "role": "CRITICAL",
+          "result": "PARTIAL"
+        },
+        {
+          "control": "MCF-DEP-002",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-DEP-005",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-DEP-007",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-DEP-009",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-DEP-010",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-DEP-012",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-DEP-017",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-POW-001",
+          "role": "SUPPORTING",
+          "result": "CONFORMING"
+        },
+        {
+          "control": "MCF-SUP-004",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        }
+      ],
+      "criteria": [
+        {
+          "id": "GC-03-1",
+          "outcome": "NOT_MET"
+        },
+        {
+          "id": "GC-03-2",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-03-3",
+          "outcome": "UNKNOWN"
+        },
+        {
+          "id": "GC-03-4",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-03-5",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-03-6",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-03-7",
+          "outcome": "NOT_EVALUATED"
+        }
+      ]
+    },
+    {
+      "gate": "CG-04",
+      "state": "NOT_ASSESSED",
+      "applicability": "IN_SCOPE",
+      "sufficiency": "S0",
+      "rationale": "No CRITICAL control of this gate (13 in the registry) was assessed and no gate criterion was evaluated.",
+      "decisionEffect": "Gate NOT_ASSESSED caps the decision at LIMITED.",
+      "findings": [],
+      "evaluations": [
+        {
+          "control": "MCF-ENV-018",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-OPS-004",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-OPS-007",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-OPS-008",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-PHY-021",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-PHY-022",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-PHY-023",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-PHY-024",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-POW-010",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-POW-013",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-POW-016",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-POW-023",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-THM-018",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        }
+      ],
+      "criteria": [
+        {
+          "id": "GC-04-1",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-04-2",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-04-3",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-04-4",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-04-5",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-04-6",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-04-7",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-04-8",
+          "outcome": "NOT_EVALUATED"
+        }
+      ]
+    },
+    {
+      "gate": "CG-05",
+      "state": "UNKNOWN",
+      "applicability": "IN_SCOPE",
+      "sufficiency": "S2",
+      "rationale": "UNKNOWN: 7 of 8 CRITICAL controls UNKNOWN or NOT_ASSESSED; criteria not demonstrated met: GC-05-2, GC-05-3, GC-05-4, GC-05-5, GC-05-6, GC-05-7, GC-05-8; gate evidence S2 below floor S5.",
+      "decisionEffect": "Gate UNKNOWN caps the decision at INCONCLUSIVE.",
+      "findings": [],
+      "evaluations": [
+        {
+          "control": "MCF-OPS-013",
+          "role": "SUPPORTING",
+          "result": "PARTIAL"
+        },
+        {
+          "control": "MCF-POW-001",
+          "role": "CRITICAL",
+          "result": "CONFORMING"
+        },
+        {
+          "control": "MCF-POW-005",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-POW-006",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-POW-007",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-POW-009",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-POW-011",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-POW-019",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-POW-020",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-RES-017",
+          "role": "SUPPORTING",
+          "result": "UNKNOWN"
+        },
+        {
+          "control": "MCF-SEC-005",
+          "role": "SUPPORTING",
+          "result": "PARTIAL"
+        }
+      ],
+      "criteria": [
+        {
+          "id": "GC-05-1",
+          "outcome": "MET"
+        },
+        {
+          "id": "GC-05-2",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-05-3",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-05-4",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-05-5",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-05-6",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-05-7",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-05-8",
+          "outcome": "NOT_EVALUATED"
+        }
+      ]
+    },
+    {
+      "gate": "CG-06",
+      "state": "UNKNOWN",
+      "applicability": "IN_SCOPE",
+      "sufficiency": "S2",
+      "rationale": "UNKNOWN: 7 of 7 CRITICAL controls UNKNOWN or NOT_ASSESSED; criteria not demonstrated met: GC-06-1, GC-06-2, GC-06-3, GC-06-4, GC-06-5, GC-06-6, GC-06-7, GC-06-8; gate evidence S2 below floor S5; US4/US5 UNKNOWN attached: urn:aidcf:syn:unknown:U-003.",
+      "decisionEffect": "Gate UNKNOWN caps the decision at LIMITED.",
+      "findings": [],
+      "evaluations": [
+        {
+          "control": "MCF-OPS-013",
+          "role": "SUPPORTING",
+          "result": "PARTIAL"
+        },
+        {
+          "control": "MCF-RES-017",
+          "role": "SUPPORTING",
+          "result": "UNKNOWN"
+        },
+        {
+          "control": "MCF-SEC-005",
+          "role": "SUPPORTING",
+          "result": "PARTIAL"
+        },
+        {
+          "control": "MCF-THM-002",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-THM-003",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-THM-004",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-THM-009",
+          "role": "SUPPORTING",
+          "result": "PARTIAL"
+        },
+        {
+          "control": "MCF-THM-010",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-THM-011",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-THM-013",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-THM-015",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        }
+      ],
+      "criteria": [
+        {
+          "id": "GC-06-1",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-06-2",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-06-3",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-06-4",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-06-5",
+          "outcome": "UNKNOWN"
+        },
+        {
+          "id": "GC-06-6",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-06-7",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-06-8",
+          "outcome": "NOT_EVALUATED"
+        }
+      ]
+    },
+    {
+      "gate": "CG-07",
+      "state": "FAIL",
+      "applicability": "IN_SCOPE",
+      "sufficiency": "S2",
+      "rationale": "FAIL: CRITICAL control(s) MCF-OPS-013 PARTIAL, MCF-SEC-005 PARTIAL; criteria not met: GC-07-6.",
+      "decisionEffect": "Gate FAIL caps the decision at NOT_ASSURED.",
+      "findings": [
+        "F-003",
+        "F-005"
+      ],
+      "evaluations": [
+        {
+          "control": "MCF-OPS-013",
+          "role": "CRITICAL",
+          "result": "PARTIAL"
+        },
+        {
+          "control": "MCF-POW-021",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-SEC-005",
+          "role": "CRITICAL",
+          "result": "PARTIAL"
+        },
+        {
+          "control": "MCF-SEC-009",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-SEC-023",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-THM-021",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        }
+      ],
+      "criteria": [
+        {
+          "id": "GC-07-1",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-07-2",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-07-3",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-07-4",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-07-5",
+          "outcome": "UNKNOWN"
+        },
+        {
+          "id": "GC-07-6",
+          "outcome": "NOT_MET"
+        },
+        {
+          "id": "GC-07-7",
+          "outcome": "NOT_EVALUATED"
+        }
+      ]
+    },
+    {
+      "gate": "CG-08",
+      "state": "UNKNOWN",
+      "applicability": "IN_SCOPE",
+      "sufficiency": "S2",
+      "rationale": "UNKNOWN: 10 of 12 CRITICAL controls UNKNOWN or NOT_ASSESSED; criteria not demonstrated met: GC-08-1, GC-08-2, GC-08-3, GC-08-5, GC-08-6, GC-08-7; gate evidence S2 below floor S4.",
+      "decisionEffect": "Gate UNKNOWN caps the decision at LIMITED.",
+      "findings": [],
+      "evaluations": [
+        {
+          "control": "MCF-CMP-001",
+          "role": "SUPPORTING",
+          "result": "CONFORMING"
+        },
+        {
+          "control": "MCF-CMP-006",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-CMP-009",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-CMP-013",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-CMP-019",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-NET-001",
+          "role": "CRITICAL",
+          "result": "CONFORMING"
+        },
+        {
+          "control": "MCF-NET-007",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-NET-008",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-NET-009",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-STO-005",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-STO-009",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-STO-010",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-STO-017",
+          "role": "CRITICAL",
+          "result": "CONFORMING"
+        }
+      ],
+      "criteria": [
+        {
+          "id": "GC-08-1",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-08-2",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-08-3",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-08-4",
+          "outcome": "MET"
+        },
+        {
+          "id": "GC-08-5",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-08-6",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-08-7",
+          "outcome": "NOT_EVALUATED"
+        }
+      ]
+    },
+    {
+      "gate": "CG-09",
+      "state": "NOT_ASSESSED",
+      "applicability": "IN_SCOPE",
+      "sufficiency": "S0",
+      "rationale": "No CRITICAL control of this gate (9 in the registry) was assessed and no gate criterion was evaluated.",
+      "decisionEffect": "Gate NOT_ASSESSED caps the decision at LIMITED.",
+      "findings": [],
+      "evaluations": [
+        {
+          "control": "MCF-CMP-008",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-NET-004",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-PHY-010",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-POW-014",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-RES-005",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-RES-007",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-RES-008",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-STO-015",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-THM-020",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        }
+      ],
+      "criteria": [
+        {
+          "id": "GC-09-1",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-09-2",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-09-3",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-09-4",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-09-5",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-09-6",
+          "outcome": "NOT_EVALUATED"
+        }
+      ]
+    },
+    {
+      "gate": "CG-10",
+      "state": "UNKNOWN",
+      "applicability": "IN_SCOPE",
+      "sufficiency": "S2",
+      "rationale": "UNKNOWN: 11 of 11 CRITICAL controls UNKNOWN or NOT_ASSESSED; criteria not demonstrated met: GC-10-1, GC-10-2, GC-10-3, GC-10-4, GC-10-5, GC-10-6, GC-10-7; gate evidence S2 below floor S5; US4/US5 UNKNOWN attached: urn:aidcf:syn:unknown:U-004.",
+      "decisionEffect": "Gate UNKNOWN caps the decision at LIMITED.",
+      "findings": [],
+      "evaluations": [
+        {
+          "control": "MCF-CMP-023",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-NET-015",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-POW-024",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-RES-013",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-RES-014",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-RES-016",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-RES-017",
+          "role": "SUPPORTING",
+          "result": "UNKNOWN"
+        },
+        {
+          "control": "MCF-RES-018",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-STO-016",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-STO-017",
+          "role": "SUPPORTING",
+          "result": "CONFORMING"
+        },
+        {
+          "control": "MCF-STO-018",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-STO-020",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-THM-024",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        }
+      ],
+      "criteria": [
+        {
+          "id": "GC-10-1",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-10-2",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-10-3",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-10-4",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-10-5",
+          "outcome": "UNKNOWN"
+        },
+        {
+          "id": "GC-10-6",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-10-7",
+          "outcome": "NOT_EVALUATED"
+        }
+      ]
+    },
+    {
+      "gate": "CG-11",
+      "state": "NOT_ASSESSED",
+      "applicability": "IN_SCOPE",
+      "sufficiency": "S0",
+      "rationale": "No CRITICAL control of this gate (0 in the registry) was assessed and no gate criterion was evaluated.",
+      "decisionEffect": "Gate NOT_ASSESSED caps the decision at LIMITED.",
+      "findings": [],
+      "evaluations": [],
+      "criteria": [
+        {
+          "id": "GC-11-1",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-11-2",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-11-3",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-11-4",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-11-5",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-11-6",
+          "outcome": "NOT_EVALUATED"
+        }
+      ]
+    },
+    {
+      "gate": "CG-12",
+      "state": "NOT_ASSESSED",
+      "applicability": "IN_SCOPE",
+      "sufficiency": "S0",
+      "rationale": "No CRITICAL control of this gate (0 in the registry) was assessed and no gate criterion was evaluated.",
+      "decisionEffect": "Gate NOT_ASSESSED caps the decision at LIMITED.",
+      "findings": [],
+      "evaluations": [],
+      "criteria": [
+        {
+          "id": "GC-12-1",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-12-2",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-12-3",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-12-4",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-12-5",
+          "outcome": "NOT_EVALUATED"
+        }
+      ]
+    },
+    {
+      "gate": "CG-13",
+      "state": "NOT_ASSESSED",
+      "applicability": "IN_SCOPE",
+      "sufficiency": "S2",
+      "rationale": "No CRITICAL control of this gate (7 in the registry) was assessed and no gate criterion was evaluated.",
+      "decisionEffect": "Gate NOT_ASSESSED caps the decision at LIMITED.",
+      "findings": [],
+      "evaluations": [
+        {
+          "control": "MCF-CAP-002",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-DEP-018",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-GOV-002",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-GOV-005",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-GOV-006",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-GOV-007",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-OPS-002",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-SUP-021",
+          "role": "SUPPORTING",
+          "result": "PARTIAL"
+        }
+      ],
+      "criteria": [
+        {
+          "id": "GC-13-1",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-13-2",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-13-3",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-13-4",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-13-5",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-13-6",
+          "outcome": "NOT_EVALUATED"
+        }
+      ]
+    },
+    {
+      "gate": "CG-14",
+      "state": "NOT_ASSESSED",
+      "applicability": "IN_SCOPE",
+      "sufficiency": "S0",
+      "rationale": "No CRITICAL control of this gate (7 in the registry) was assessed and no gate criterion was evaluated.",
+      "decisionEffect": "Gate NOT_ASSESSED caps the decision at LIMITED.",
+      "findings": [],
+      "evaluations": [
+        {
+          "control": "MCF-CAP-023",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-CMP-015",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-NET-022",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-OPS-006",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-OPS-017",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-OPS-018",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-OPS-020",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        }
+      ],
+      "criteria": [
+        {
+          "id": "GC-14-1",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-14-2",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-14-3",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-14-4",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-14-5",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-14-6",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-14-7",
+          "outcome": "NOT_EVALUATED"
+        }
+      ]
+    },
+    {
+      "gate": "CG-15",
+      "state": "FAIL",
+      "applicability": "IN_SCOPE",
+      "sufficiency": "S2",
+      "rationale": "FAIL: CRITICAL control(s) MCF-SUP-021 PARTIAL; criteria not met: GC-15-4.",
+      "decisionEffect": "Gate FAIL caps the decision at LIMITED.",
+      "findings": [
+        "F-004"
+      ],
+      "evaluations": [
+        {
+          "control": "MCF-SEC-003",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-SEC-005",
+          "role": "SUPPORTING",
+          "result": "PARTIAL"
+        },
+        {
+          "control": "MCF-SEC-006",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-SEC-010",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-SEC-012",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-SEC-021",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        },
+        {
+          "control": "MCF-SUP-021",
+          "role": "CRITICAL",
+          "result": "PARTIAL"
+        },
+        {
+          "control": "MCF-SUP-022",
+          "role": "CRITICAL",
+          "result": "NOT_ASSESSED"
+        }
+      ],
+      "criteria": [
+        {
+          "id": "GC-15-1",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-15-2",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-15-3",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-15-4",
+          "outcome": "NOT_MET"
+        },
+        {
+          "id": "GC-15-5",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-15-6",
+          "outcome": "NOT_EVALUATED"
+        },
+        {
+          "id": "GC-15-7",
+          "outcome": "NOT_EVALUATED"
+        }
+      ]
+    }
+  ],
+  "decision": {
+    "question": "Can the synthetic AI training and inference capability CI-001 be relied on to meet SO-01 to SO-03 in NORMAL and MAINTENANCE states, as at 2026-10-10?",
+    "scope": "Synthetic capability CI-001 within snapshot SNAP-001; NORMAL and MAINTENANCE states.",
+    "state": "NOT_ASSURED",
+    "recommended": "NOT_ASSURED",
+    "controllingReasons": [
+      "CG-07 FAIL (failCeiling NOT_ASSURED)"
+    ],
+    "otherCeilings": "Ceilings that are not controlling: CG-01 UNKNOWN (INCONCLUSIVE); CG-02 NOT_ASSESSED (LIMITED); CG-03 FAIL (LIMITED); CG-04 NOT_ASSESSED (LIMITED); CG-05 UNKNOWN (INCONCLUSIVE); CG-06 UNKNOWN (LIMITED); CG-08 UNKNOWN (LIMITED); CG-09 NOT_ASSESSED (LIMITED); CG-10 UNKNOWN (LIMITED); CG-11 NOT_ASSESSED (LIMITED); CG-12 NOT_ASSESSED (LIMITED); CG-13 NOT_ASSESSED (LIMITED); CG-14 NOT_ASSESSED (LIMITED); CG-15 FAIL (LIMITED); U-001 US3 (CONDITIONALLY_ASSURED); U-003 US5 (INCONCLUSIVE); U-004 US4 (LIMITED); U-005 US4 (LIMITED).",
+    "limitations": [
+      "Synthetic data only; describes no real facility.",
+      "Approval is a synthetic record; no human approval was given."
+    ],
+    "validUntil": "2027-04-10",
+    "notCertification": true,
+    "approvalNote": "Synthetic record; no human approval was given."
+  },
+  "score": {
+    "band": "WITHHELD",
+    "bandWithheldReason": "coverage 3.0556% below 80%; US4/US5 UNKNOWN open in scope",
+    "coverage": {
+      "inScopeCount": 360,
+      "notApplicableCount": 0,
+      "assessedCount": 12,
+      "scoredCount": 11,
+      "unknownCount": 1,
+      "notAssessedCount": 348,
+      "coveragePercent": 3.0556
+    },
+    "meanScore": 77.2727,
+    "method": "AIDCF-016 MDM score 1.3: mean of CONFORMING 100, PARTIAL 50, NONCONFORMING 0 over scored controls; coverage = scored / (in scope - NOT_APPLICABLE); band WITHHELD below 80% coverage or with an open US4/US5 UNKNOWN; hash = sha256 of canonical JSON {method, weighting, inputs}.",
+    "hash": "5783596f4e5330457c0fb74dd333f2be893a49b2cccf6bcc2787fd617f980060"
+  },
+  "summary": {
+    "fail": [
+      "CG-03",
+      "CG-07",
+      "CG-15"
+    ],
+    "unknown": [
+      "CG-01",
+      "CG-05",
+      "CG-06",
+      "CG-08",
+      "CG-10"
+    ],
+    "notAssessed": 7,
+    "pass": 0,
+    "assessed": 12,
+    "scored": 11,
+    "coveragePercent": 3.0556,
+    "unknownRecords": 5,
+    "findings": 6
+  }
+}

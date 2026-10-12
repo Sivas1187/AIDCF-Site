@@ -1,0 +1,41 @@
+{
+  "backTest": {
+    "protocol": "research/back-testing/AIDCF-VAL-001_Incident_Back-Testing_Protocol_v1.0.md",
+    "logged": 221,
+    "eligible": 140,
+    "excluded": 81,
+    "eligibleByStratum": {
+      "CONTROL_PLANE_OT": 16,
+      "CHANGE_HUMAN": 62,
+      "NETWORK_FABRIC": 22,
+      "EXTERNAL_DEPENDENCY": 13,
+      "POWER": 12,
+      "COOLING": 10,
+      "STORAGE": 5
+    },
+    "excludedByCode": {
+      "EX-05": 5,
+      "EX-02": 51,
+      "EX-04": 8,
+      "EX-01": 8,
+      "EX-06": 8,
+      "EX-03": 1
+    },
+    "selected": 0,
+    "coded": 0
+  },
+  "expertPanel": {
+    "protocol": "validation/expert-panel/AIDCF-VAL-002_Expert_Panel_Content_Validation_Protocol_v1.0.md",
+    "controls": 48,
+    "gates": 15
+  },
+  "pilot": {
+    "protocol": "pilots/pilot-framework/AIDCF-PIL-001_Mini-Pilot_Protocol_v1.0.md",
+    "starterControls": 58,
+    "evidenceRequests": 274
+  },
+  "independentReview": {
+    "reviews": 0,
+    "dispositions": 0
+  }
+}

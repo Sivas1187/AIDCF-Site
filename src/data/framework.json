@@ -1,0 +1,487 @@
+{
+  "domains": [
+    {
+      "id": "GOV",
+      "name": "Governance, Accountability and Assurance Direction",
+      "families": 6,
+      "controls": 24,
+      "gates": [
+        "CG-13"
+      ]
+    },
+    {
+      "id": "CAP",
+      "name": "AI Capability, Service Outcome and Demand Management",
+      "families": 6,
+      "controls": 24,
+      "gates": [
+        "CG-01",
+        "CG-02",
+        "CG-13",
+        "CG-14"
+      ]
+    },
+    {
+      "id": "DEP",
+      "name": "Dependency, Concentration and External Reliance Management",
+      "families": 6,
+      "controls": 24,
+      "gates": [
+        "CG-02",
+        "CG-03",
+        "CG-13"
+      ]
+    },
+    {
+      "id": "PHY",
+      "name": "Physical Site, Building and Security Infrastructure",
+      "families": 6,
+      "controls": 24,
+      "gates": [
+        "CG-04",
+        "CG-09"
+      ]
+    },
+    {
+      "id": "POW",
+      "name": "Electrical Power Infrastructure and Energy Continuity",
+      "families": 6,
+      "controls": 24,
+      "gates": [
+        "CG-04",
+        "CG-05",
+        "CG-07",
+        "CG-09",
+        "CG-10"
+      ]
+    },
+    {
+      "id": "THM",
+      "name": "Cooling, Thermal and Fluid Infrastructure",
+      "families": 6,
+      "controls": 24,
+      "gates": [
+        "CG-04",
+        "CG-06",
+        "CG-07",
+        "CG-09",
+        "CG-10"
+      ]
+    },
+    {
+      "id": "ENV",
+      "name": "Environmental and Resource Performance",
+      "families": 6,
+      "controls": 24,
+      "gates": [
+        "CG-04"
+      ]
+    },
+    {
+      "id": "CMP",
+      "name": "AI Compute Infrastructure",
+      "families": 6,
+      "controls": 24,
+      "gates": [
+        "CG-08",
+        "CG-09",
+        "CG-10",
+        "CG-14"
+      ]
+    },
+    {
+      "id": "STO",
+      "name": "AI Storage and Data Infrastructure",
+      "families": 6,
+      "controls": 24,
+      "gates": [
+        "CG-08",
+        "CG-09",
+        "CG-10"
+      ]
+    },
+    {
+      "id": "NET",
+      "name": "AI Network and Interconnect Architecture",
+      "families": 6,
+      "controls": 24,
+      "gates": [
+        "CG-08",
+        "CG-09",
+        "CG-10",
+        "CG-14"
+      ]
+    },
+    {
+      "id": "OPS",
+      "name": "Building Operations and Service Management",
+      "families": 6,
+      "controls": 24,
+      "gates": [
+        "CG-04",
+        "CG-07",
+        "CG-13",
+        "CG-14"
+      ]
+    },
+    {
+      "id": "RES",
+      "name": "Resilience, Continuity and Recovery",
+      "families": 6,
+      "controls": 24,
+      "gates": [
+        "CG-09",
+        "CG-10"
+      ]
+    },
+    {
+      "id": "SUP",
+      "name": "Supply Chain, OEM and Ecosystem Assurance",
+      "families": 6,
+      "controls": 24,
+      "gates": [
+        "CG-03",
+        "CG-15"
+      ]
+    },
+    {
+      "id": "SEC",
+      "name": "Digital, OT and Control-Plane Security",
+      "families": 6,
+      "controls": 24,
+      "gates": [
+        "CG-07",
+        "CG-15"
+      ]
+    },
+    {
+      "id": "EVA",
+      "name": "Evidence, Assessment and Assurance Management",
+      "families": 6,
+      "controls": 24,
+      "gates": [
+        "CG-01",
+        "CG-02"
+      ]
+    }
+  ],
+  "counts": {
+    "domains": 15,
+    "families": 90,
+    "controls": 360,
+    "gates": 15,
+    "gateMappings": 589,
+    "critical": 106,
+    "supporting": 483,
+    "gateCriteria": 101
+  },
+  "gates": [
+    {
+      "id": "CG-01",
+      "name": "Capability and outcome definition",
+      "scope": "Capability Instance, Service Outcomes, tolerances, criticality and decision question are defined, owned and approved",
+      "evidenceFloor": "S3",
+      "failCeiling": "INCONCLUSIVE for the whole decision: the top claim cannot be framed. The assessment returns to planning (AIDCF-009 DT-02) and no outcome-level decision is issued.",
+      "unknownCeiling": "INCONCLUSIVE for each Service Outcome whose definition or tolerance is UNKNOWN (US5); the remaining outcomes are capped at LIMITED.",
+      "owner": "AIDCF-010",
+      "critical": 7,
+      "supporting": 16,
+      "criteria": 6
+    },
+    {
+      "id": "CG-02",
+      "name": "Boundary and architecture integrity",
+      "scope": "Assessment boundary, current architecture, as-built reconciliation and exclusions",
+      "evidenceFloor": "S3",
+      "failCeiling": "If the boundary itself cannot be established: INCONCLUSIVE for the whole decision. If reconciliation demonstrates material divergence in part of the architecture: NOT_ASSURED for claims about the unreconciled systems and LIMITED for the decision as a whole.",
+      "unknownCeiling": "LIMITED. Claims about systems whose reconciliation is incomplete are restricted to the DESIGN claim type.",
+      "owner": "AIDCF-010",
+      "critical": 3,
+      "supporting": 16,
+      "criteria": 6
+    },
+    {
+      "id": "CG-03",
+      "name": "Critical dependency visibility",
+      "scope": "Material internal and external dependencies, common-mode exposure and concentration are identified and owned",
+      "evidenceFloor": "S4",
+      "failCeiling": "NOT_ASSURED for every Service Outcome whose redundancy or independence claim is defeated by the identified common mode; LIMITED for the decision as a whole.",
+      "unknownCeiling": "LIMITED. RESILIENCE claims for the affected outcomes are INCONCLUSIVE.",
+      "owner": "AIDCF-010",
+      "critical": 9,
+      "supporting": 50,
+      "criteria": 7
+    },
+    {
+      "id": "CG-04",
+      "name": "Life safety and hazardous energy",
+      "scope": "Fire, electrical arc-flash and shock, hazardous fluids and chemicals, confined space, refrigerants, battery thermal runaway and safe work",
+      "evidenceFloor": "S4",
+      "failCeiling": "NOT_ASSURED for any claim relying on the affected area; all hazardous testing in the affected area is suspended; the duty holder is notified immediately (outside the decision process); LIMITED for the decision as a whole.",
+      "unknownCeiling": "LIMITED for outcomes depending on the affected area. No hazardous test is authorised there until the gate is resolved, so EFFECTIVENESS and RESILIENCE claims that need such tests remain UNKNOWN.",
+      "owner": "AIDCF-010",
+      "critical": 13,
+      "supporting": 24,
+      "criteria": 8
+    },
+    {
+      "id": "CG-05",
+      "name": "Resilient electrical supply",
+      "scope": "Utility, distribution, UPS/BESS, generation, fuel, protection and power quality sufficient for the Service Outcomes across operating states",
+      "evidenceFloor": "S5",
+      "failCeiling": "NOT_ASSURED for every Service Outcome depending on the affected electrical path; LIMITED for the decision as a whole where unaffected paths remain.",
+      "unknownCeiling": "LIMITED for outcomes depending on electrical continuity; RESILIENCE claims depending on the affected path are INCONCLUSIVE.",
+      "owner": "AIDCF-010",
+      "critical": 8,
+      "supporting": 39,
+      "criteria": 8
+    },
+    {
+      "id": "CG-06",
+      "name": "Thermal continuity",
+      "scope": "Heat-removal path (air, liquid, facility water, heat rejection) sufficient across operating states including transients",
+      "evidenceFloor": "S5",
+      "failCeiling": "NOT_ASSURED for Service Outcomes served by the affected heat-removal path at the declared load.",
+      "unknownCeiling": "LIMITED for outcomes depending on the affected heat-removal path.",
+      "owner": "AIDCF-010",
+      "critical": 7,
+      "supporting": 46,
+      "criteria": 8
+    },
+    {
+      "id": "CG-07",
+      "name": "Critical control-system integrity",
+      "scope": "BMS, EPMS, CDU, PLC/SCADA and automation function safely, fail safe, and are configured and governed",
+      "evidenceFloor": "S4",
+      "failCeiling": "NOT_ASSURED for Service Outcomes depending on the affected automated function. Claims based on demonstrated manual operation may be assessed separately and support at most LIMITED.",
+      "unknownCeiling": "LIMITED for outcomes depending on the affected automation.",
+      "owner": "AIDCF-010",
+      "critical": 6,
+      "supporting": 26,
+      "criteria": 7
+    },
+    {
+      "id": "CG-08",
+      "name": "Compute, storage and network functional integrity",
+      "scope": "Accelerators, storage and fabrics deliver the required function, performance and integrity",
+      "evidenceFloor": "S4",
+      "failCeiling": "NOT_ASSURED for Service Outcomes delivered by the affected cluster, fabric or storage tier. Facility outcomes defined at the rack interface are unaffected.",
+      "unknownCeiling": "LIMITED for the Service Outcomes delivered by the affected cluster, fabric or storage tier.",
+      "owner": "AIDCF-010",
+      "critical": 12,
+      "supporting": 63,
+      "criteria": 7
+    },
+    {
+      "id": "CG-09",
+      "name": "Failure containment",
+      "scope": "Fault domains, isolation and blast-radius limits prevent propagation beyond tolerance",
+      "evidenceFloor": "S4",
+      "failCeiling": "NOT_ASSURED for RESILIENCE claims, and for any Service Outcome whose tolerance assumes the defeated containment; LIMITED for the decision as a whole.",
+      "unknownCeiling": "INCONCLUSIVE for RESILIENCE claims of the affected outcomes; LIMITED for the decision as a whole.",
+      "owner": "AIDCF-010",
+      "critical": 9,
+      "supporting": 42,
+      "criteria": 6
+    },
+    {
+      "id": "CG-10",
+      "name": "Recovery readiness",
+      "scope": "Restoration of outcomes (power, cooling, compute, data and checkpoint, network, control plane) within tolerance is planned and tested",
+      "evidenceFloor": "S5",
+      "failCeiling": "NOT_ASSURED for recovery outcomes and for RESILIENCE claims of the affected outcomes; LIMITED for the decision as a whole.",
+      "unknownCeiling": "LIMITED; recovery outcomes are INCONCLUSIVE. DESIGN claims about recovery may still be reported.",
+      "owner": "AIDCF-010",
+      "critical": 11,
+      "supporting": 56,
+      "criteria": 7
+    },
+    {
+      "id": "CG-11",
+      "name": "Evidence sufficiency",
+      "scope": "Evidence for decisive claims meets the AIDCF-008 floors (meta-gate across all controls)",
+      "evidenceFloor": "S4",
+      "failCeiling": "INCONCLUSIVE for the whole decision. Any previously issued decision relying on the affected evidence is SUSPENDED, and the matter is escalated as an evidence nonconformance (AIDCF-008 §47).",
+      "unknownCeiling": "LIMITED.",
+      "owner": "AIDCF-010",
+      "critical": 0,
+      "supporting": 0,
+      "criteria": 6
+    },
+    {
+      "id": "CG-12",
+      "name": "Critical UNKNOWN",
+      "scope": "No unresolved US4 or US5 UNKNOWN without disposition (meta-gate across all controls)",
+      "evidenceFloor": "S3",
+      "failCeiling": "INCONCLUSIVE for the whole decision; escalated as an evidence nonconformance (concealed UNKNOWN, AIDCF-008 §47).",
+      "unknownCeiling": "LIMITED; INCONCLUSIVE if any undispositioned UNKNOWN is US5.",
+      "owner": "AIDCF-010",
+      "critical": 0,
+      "supporting": 0,
+      "criteria": 5
+    },
+    {
+      "id": "CG-13",
+      "name": "Responsibility and authority",
+      "scope": "Every critical function and dependency has an accountable owner and decision authority",
+      "evidenceFloor": "S3",
+      "failCeiling": "NOT_ASSURED for OPERATION, EFFECTIVENESS and RESILIENCE claims about the unowned function or dependency; LIMITED for the decision as a whole. If GC-13-6 is not met, no decision advances beyond the RECOMMENDED lifecycle state.",
+      "unknownCeiling": "LIMITED.",
+      "owner": "AIDCF-010",
+      "critical": 7,
+      "supporting": 28,
+      "criteria": 6
+    },
+    {
+      "id": "CG-14",
+      "name": "Change control",
+      "scope": "Material changes are controlled, impact-assessed and validated",
+      "evidenceFloor": "S4",
+      "failCeiling": "Affected evidence is invalidated (STALE, U3) and claims relying on the post-change state become UNKNOWN; any prior decision covering the affected scope is SUSPENDED; LIMITED for the decision as a whole, or NOT_ASSURED where the uncontrolled change is demonstrated to have defeated a safeguard.",
+      "unknownCeiling": "LIMITED.",
+      "owner": "AIDCF-010",
+      "critical": 7,
+      "supporting": 35,
+      "criteria": 7
+    },
+    {
+      "id": "CG-15",
+      "name": "Integrated digital authority over infrastructure",
+      "scope": "Identity, privilege, remote access and control-plane reach over facility and AI infrastructure are bounded, monitored and recoverable",
+      "evidenceFloor": "S4",
+      "failCeiling": "NOT_ASSURED for every Service Outcome reachable through the unbounded authority path; LIMITED for the decision as a whole.",
+      "unknownCeiling": "LIMITED; INCONCLUSIVE where the unverified authority reaches the scope of two or more other gates (US5).",
+      "owner": "AIDCF-010",
+      "critical": 7,
+      "supporting": 42,
+      "criteria": 7
+    }
+  ],
+  "decisionStates": [
+    {
+      "code": "REASONABLY_ASSURED",
+      "meaning": "Sufficient appropriate evidence supports the bounded top claim; all applicable gates PASS or APPROVED_NA; no undisposed US3 or higher UNKNOWN"
+    },
+    {
+      "code": "CONDITIONALLY_ASSURED",
+      "meaning": "Bounded top claim supported subject to named, owned, time-bound conditions; no gate FAIL or UNKNOWN"
+    },
+    {
+      "code": "LIMITED",
+      "meaning": "Some sub-claims supported; material limitations, a gate UNKNOWN, or a gate FAIL whose AIDCF-010 ceiling is LIMITED prevent a broader conclusion"
+    },
+    {
+      "code": "INCONCLUSIVE",
+      "meaning": "Evidence, method, boundary or definition cannot support any determination"
+    },
+    {
+      "code": "NOT_ASSURED",
+      "meaning": "Evidence demonstrates that the top claim, or a controlling gate, is not met"
+    }
+  ],
+  "chain": [
+    {
+      "step": "1",
+      "name": "Decision Question",
+      "question": "What decision will rely on this assessment, and who will make it?",
+      "owner": "AIDCF-011"
+    },
+    {
+      "step": "2",
+      "name": "Capability Instance",
+      "question": "Which bounded deployment is the subject?",
+      "owner": "AIDCF-003"
+    },
+    {
+      "step": "3",
+      "name": "Service Outcome",
+      "question": "What must it achieve, within which tolerances?",
+      "owner": "AIDCF-003"
+    },
+    {
+      "step": "4",
+      "name": "Required Function",
+      "question": "Which functions must be delivered for each outcome?",
+      "owner": "AIDCF-003"
+    },
+    {
+      "step": "5",
+      "name": "Architecture",
+      "question": "Which systems, assets and interfaces implement each function, as built?",
+      "owner": "AIDCF-003, AIDCF-013"
+    },
+    {
+      "step": "6",
+      "name": "Dependency and Fault Domain",
+      "question": "What does each element rely on, and what fails together?",
+      "owner": "AIDCF-003"
+    },
+    {
+      "step": "7",
+      "name": "Threat / Hazard / Failure Scenario",
+      "question": "How can the outcome be defeated?",
+      "owner": "AIDCF-004"
+    },
+    {
+      "step": "8",
+      "name": "Safeguard",
+      "question": "Which real measures prevent, detect, contain or recover?",
+      "owner": "AIDCF-004"
+    },
+    {
+      "step": "9",
+      "name": "Control",
+      "question": "Which AIDCF requirements test those safeguards?",
+      "owner": "AIDCF-007A"
+    },
+    {
+      "step": "10",
+      "name": "Evidence Requirement",
+      "question": "What evidence would demonstrate each control at the required claim type?",
+      "owner": "AIDCF-008"
+    },
+    {
+      "step": "11",
+      "name": "Evidence Object",
+      "question": "What evidence was actually obtained?",
+      "owner": "AIDCF-008"
+    },
+    {
+      "step": "12",
+      "name": "Control Assessment",
+      "question": "What result does the evidence support, for which claim type and scope?",
+      "owner": "AIDCF-009"
+    },
+    {
+      "step": "13",
+      "name": "Finding / UNKNOWN Record",
+      "question": "What deficiencies and unresolved uncertainties remain?",
+      "owner": "AIDCF-008, AIDCF-009"
+    },
+    {
+      "step": "14",
+      "name": "Gate Result",
+      "question": "Are the non-compensating prerequisites met?",
+      "owner": "AIDCF-010"
+    },
+    {
+      "step": "15",
+      "name": "Score Snapshot and Decision Recommendation",
+      "question": "What do the results summarise to, and what does the engine recommend?",
+      "owner": "AIDCF-010"
+    },
+    {
+      "step": "16",
+      "name": "Assurance Decision",
+      "question": "What has accountable authority decided, with which conditions and validity?",
+      "owner": "AIDCF-010, AIDCF-011"
+    },
+    {
+      "step": "Loop",
+      "name": "Report and Reassessment Trigger",
+      "question": "How is the decision communicated, and what invalidates it?",
+      "owner": "AIDCF-012, AIDCF-014"
+    }
+  ],
+  "chainSource": "foundations/conceptual-model/AIDCF-002_Core_Conceptual_Model_v1.0.md"
+}
