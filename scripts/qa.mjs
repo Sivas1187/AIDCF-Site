@@ -9,7 +9,7 @@ const axeSource = readFileSync(require.resolve("axe-core/axe.min.js"), "utf8");
 
 const [base, out] = process.argv.slice(2);
 const pages = ["/", "/case/", "/privacy/", "/accessibility/"];
-const viewports = { desktop: { width: 1366, height: 900 }, mobile: { width: 375, height: 812 } };
+const viewports = { desktop: { width: 1366, height: 900 }, tablet: { width: 1024, height: 768 }, mobile: { width: 375, height: 812 } };
 const browser = await chromium.launch();
 let problems = 0;
 
@@ -68,7 +68,7 @@ for (const scheme of ["light", "dark"]) {
         problems++;
       }
       await page.screenshot({ path: `${out}/${scheme}-desktop-case-node.png` });
-    } else {
+    } else if (vpName === "mobile") {
       const listShown = await page.locator(".list-view").count();
       if (!listShown) {
         console.log(`CASE ${scheme} mobile: list view not default`);

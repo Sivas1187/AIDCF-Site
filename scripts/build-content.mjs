@@ -10,13 +10,15 @@
 //   node scripts/build-content.mjs            regenerate src/data/
 //   node scripts/build-content.mjs --check    fail if src/data/ is stale
 //
-// The AIDCF checkout is read from $AIDCF_SRC (default ../aidcf). The script
-// refuses to run if the checkout is not at the pinned commit, so the site
-// cannot silently drift from the release it declares.
+// Files are read from git objects at the pinned commit (git show
+// <commit>:<path>), not from the working tree. Editing a framework file, or
+// checking out another branch, therefore cannot change the site until
+// source.json is deliberately moved to a new commit. The repository is the
+// AIDCF clone at ../aidcf, or $AIDCF_SRC if set; it needs full history.
 
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -34,10 +36,22 @@ function fail(message) {
   process.exit(1);
 }
 
+const git = (...args) => execFileSync("git", ["-C", src, ...args], { maxBuffer: 256 * 1024 * 1024 });
+
 function read(rel) {
-  const p = join(src, rel);
-  if (!existsSync(p)) fail(`missing source file ${rel}`);
-  return readFileSync(p);
+  try {
+    return git("show", `${pin.commit}:${rel}`);
+  } catch {
+    fail(`${rel} does not exist at the pinned commit ${pin.commit.slice(0, 7)}`);
+  }
+}
+
+function listDir(rel) {
+  try {
+    return git("ls-tree", "--name-only", `${pin.commit}:${rel}`).toString("utf8").split("\n").filter(Boolean);
+  } catch {
+    fail(`${rel} does not exist at the pinned commit ${pin.commit.slice(0, 7)}`);
+  }
 }
 
 const sources = new Map();
@@ -99,15 +113,10 @@ function assertEq(label, actual, expected) {
 
 // ---------------------------------------------------------- source pinning
 
-if (!existsSync(src)) fail(`AIDCF checkout not found at ${src}; set AIDCF_SRC`);
-let head;
 try {
-  head = execFileSync("git", ["-C", src, "rev-parse", "HEAD"], { encoding: "utf8" }).trim();
+  execFileSync("git", ["-C", src, "cat-file", "-e", `${pin.commit}^{commit}`], { stdio: "ignore" });
 } catch {
-  fail(`${src} is not a git checkout`);
-}
-if (head !== pin.commit) {
-  fail(`AIDCF checkout is at ${head}, but source.json pins ${pin.commit}. Check out the pinned commit or update source.json deliberately.`);
+  fail(`pinned commit ${pin.commit} is not in the repository at ${src}. Fetch full history (fetch-depth: 0) or set AIDCF_SRC.`);
 }
 
 // ------------------------------------------------------------ framework
@@ -494,8 +503,8 @@ const panelControls = csv("validation/expert-panel/control-sample.csv");
 const panelGates = csv("validation/expert-panel/gate-sample.csv");
 const starter = csv("pilots/pilot-framework/starter-profile.csv");
 const evidenceRequests = csv("pilots/pilot-authorisation/evidence-request-list.csv");
-const dispositions = readdirSync(join(src, "validation/reviewer-dispositions")).filter((f) => f !== "README.md");
-const reviews = readdirSync(join(src, "validation/independent-review")).filter((f) => f !== "README.md");
+const dispositions = listDir("validation/reviewer-dispositions").filter((f) => f !== "README.md");
+const reviews = listDir("validation/independent-review").filter((f) => f !== "README.md");
 
 const validation = {
   backTest: {

@@ -231,7 +231,7 @@ p {
   font-size: 0.8rem;
 }
 
-@media (min-width: 960px) {
+@media (min-width: 1240px) {
   .brand small {
     display: inline;
   }
@@ -268,7 +268,7 @@ p {
   display: none;
 }
 
-@media (max-width: 879px) {
+@media (max-width: 959px) {
   .nav-toggle {
     display: inline-flex;
     margin-left: auto;

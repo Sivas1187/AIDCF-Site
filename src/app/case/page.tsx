@@ -4,7 +4,7 @@ import { GateResults } from "@/components/GateResults";
 import { caseData, gateName, humanise, manifest, percent, repoUrl, sourceUrl } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "Synthetic case",
+  title: "Infrastructure graph (synthetic case)",
   description:
     "Trace failures through a synthetic AI training and inference capability: dependencies, shared fault domains, safeguards, controls, evidence, critical gates and the computed assurance decision.",
 };

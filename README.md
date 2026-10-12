@@ -7,7 +7,7 @@ The framework itself lives in [Sivas1187/AIDCF](https://github.com/Sivas1187/AID
 ## How the content stays honest
 
 - **Generated, not copied.** Every count, name, gate, decision state and synthetic-case result on the site comes from `src/data/*.json`. Those files are written by `scripts/build-content.mjs` from the AIDCF repository.
-- **Pinned to a commit.** `source.json` names the AIDCF release and the exact commit. The content script refuses to run against any other commit, and CI fails if `src/data/` no longer matches the pinned commit.
+- **Pinned to a commit.** `source.json` names the AIDCF release and the exact commit. The content script reads every file from git at that commit, never from the working tree, and CI fails if `src/data/` no longer matches it.
 - **Hashed.** `src/data/manifest.json` records the SHA-256 of every source file used. The whitepaper PDF hash is shown on the site.
 - **Status from the source.** The repository status, the proposed state of registry v1.1, the validation counts and the conformance results are read from the AIDCF files. A few status sentences have no source file to read (whether a pilot host, expert panel or inter-rater trial exists yet). Those are written in `src/app/page.tsx` and must be updated by hand when the situation changes.
 
@@ -26,8 +26,7 @@ Requires Node 22 and a checkout of the AIDCF repository.
 
 ```bash
 npm ci
-git clone https://github.com/Sivas1187/AIDCF ../aidcf
-git -C ../aidcf checkout "$(jq -r .commit source.json)"
+git clone https://github.com/Sivas1187/AIDCF ../aidcf   # full history; any branch
 
 npm run content        # regenerate src/data/ from ../aidcf (or set AIDCF_SRC)
 npm run dev            # local preview at http://localhost:3000
@@ -35,7 +34,7 @@ npm run build          # static export to out/, then CSP and _headers
 npm run check:site     # links, anchors, metadata, pinned files, headline figures
 ```
 
-To move the site to a new AIDCF release or commit, edit `source.json`, check out that commit in the AIDCF checkout, run `npm run content`, review the diff in `src/data/`, and commit both together.
+To move the site to a new AIDCF release or commit, `git -C ../aidcf pull`, edit the commit in `source.json`, run `npm run content`, review the diff in `src/data/`, and commit both together.
 
 ## Checks
 

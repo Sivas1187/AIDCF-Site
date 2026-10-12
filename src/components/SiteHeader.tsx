@@ -6,9 +6,9 @@ import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
 
 const links = [
-  { href: "/#problem", label: "Problem" },
-  { href: "/#method", label: "Method" },
-  { href: "/case/", label: "Synthetic case" },
+  { href: "/#method", label: "Methodology" },
+  { href: "/#domains", label: "15 domains" },
+  { href: "/case/", label: "Infrastructure graph" },
   { href: "/#validation", label: "Validation" },
   { href: "/#research", label: "Research" },
   { href: "/#about", label: "About" },

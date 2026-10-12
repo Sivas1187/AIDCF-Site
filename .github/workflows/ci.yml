@@ -15,15 +15,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Read pinned AIDCF commit
-        id: pin
-        run: echo "commit=$(jq -r .commit source.json)" >> "$GITHUB_OUTPUT"
-
-      - name: Check out AIDCF at the pinned commit
+      - name: Clone AIDCF with full history (content is read at the pinned commit)
         uses: actions/checkout@v4
         with:
           repository: Sivas1187/AIDCF
-          ref: ${{ steps.pin.outputs.commit }}
+          fetch-depth: 0
           path: aidcf-src
 
       - uses: actions/setup-node@v4

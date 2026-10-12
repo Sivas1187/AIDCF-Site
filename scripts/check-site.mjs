@@ -4,9 +4,10 @@
 //  - every internal link and #anchor resolves;
 //  - no script is loaded from another origin;
 //  - every link into the AIDCF repository at the pinned commit names a file
-//    that exists in the pinned checkout (when $AIDCF_SRC is available);
+//    that exists at that commit;
 //  - headline figures on the homepage match the generated data.
 
+import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 
@@ -74,10 +75,12 @@ for (const [path, html] of pages) {
   }
 }
 
-if (existsSync(src)) {
-  for (const p of pinned) if (!existsSync(join(src, decodeURIComponent(p)))) fail(`pinned link to missing file ${p}`);
-} else {
-  console.warn(`check-site: ${src} not found; skipped ${pinned.size} pinned-file checks`);
+for (const p of pinned) {
+  try {
+    execFileSync("git", ["-C", src, "cat-file", "-e", `${manifest.commit}:${decodeURIComponent(p)}`], { stdio: "ignore" });
+  } catch {
+    fail(`pinned link to a path missing at ${manifest.commit.slice(0, 7)}: ${p}`);
+  }
 }
 
 const home = pages.get("/") ?? "";
