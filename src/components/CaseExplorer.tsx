@@ -450,7 +450,7 @@ function ScenarioPanel({
             <li key={s.id}>
               <strong>{s.name}</strong>{" "}
               <span className="muted small">
-                ({humanise(s.activation)}; trigger: {s.trigger.charAt(0).toLowerCase() + s.trigger.slice(1)})
+                ({humanise(s.activation)}; trigger: {s.trigger})
               </span>
               {compromised.length > 0 && (
                 <div className="small" style={{ color: "var(--fail)" }}>
