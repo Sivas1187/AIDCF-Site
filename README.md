@@ -53,16 +53,19 @@ The site is plain static files: no server code, database, forms, cookies, analyt
 - `scripts/postbuild.mjs` adds a Content-Security-Policy to every page that allows only the site's own scripts and the hashed inline bootstrap scripts.
 - It also writes `out/_headers` for Cloudflare Pages with HSTS, `X-Frame-Options`, `frame-ancestors 'none'`, `nosniff`, a referrer policy and a permissions policy.
 
-## Deploying on Cloudflare Pages
+## Deploying on Cloudflare
 
-1. Cloudflare dashboard → **Workers & Pages** → **Create** → **Pages** → **Connect to Git** → select this repository.
+The site deploys as a Cloudflare Worker that serves the static files in `out/` (Workers static assets). `wrangler.jsonc` declares this, so Cloudflare does not try to convert the project into a server-rendered Next.js app.
+
+1. Cloudflare dashboard → **Workers & Pages** → **Create** → **Import a repository** → select this repository.
 2. Build settings:
-   - Framework preset: **None**
    - Build command: `npm run build`
-   - Build output directory: `out`
-   - Environment variable: `NODE_VERSION` = `22` (also set by `.node-version`)
-3. Deploy. Every push gets a preview URL on `*.pages.dev`; review it there first.
-4. When ready, **Custom domains** → add `aidcf.org` (and `www.aidcf.org` with a redirect to the apex). The domain is registered at Cloudflare, so DNS is configured automatically.
+   - Deploy command: `npx wrangler deploy`
+   - Root directory: `/`
+3. Every push to `main` builds and deploys to the `*.workers.dev` address. Review the site there first.
+4. When ready, open the Worker → **Settings** → **Domains & Routes** → **Add** → **Custom domain**, and add `aidcf.org`. Add `www.aidcf.org` the same way, then create a redirect rule (**Rules** → **Redirect Rules**, "Redirect from WWW to root" template) so `www` sends visitors to `https://aidcf.org` with a 301.
+
+`out/_headers` supplies the security headers, and `not_found_handling` serves the site's 404 page.
 
 ## Licence
 
