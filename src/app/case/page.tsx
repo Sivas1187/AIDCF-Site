@@ -141,7 +141,7 @@ export default function CasePage() {
               </div>
               <div>
                 <b>{percent(sc.coverage.coveragePercent, 2)}</b>
-                <span>coverage</span>
+                <span>coverage (scored controls only)</span>
               </div>
               <div>
                 <b>{sc.band}</b>

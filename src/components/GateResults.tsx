@@ -75,7 +75,7 @@ export function GateResults() {
             ? `${notAssessed} of ${g.evaluations.length} mapped controls were not assessed. `
             : "This is a meta-gate evaluated on criteria rather than controls. "}
           {Object.entries(criteria)
-            .map(([k, v]) => `${v} criteria ${humanise(k).toLowerCase()}`)
+            .map(([k, v]) => `${v} ${v === 1 ? "criterion" : "criteria"} ${humanise(k).toLowerCase()}`)
             .join(", ")}
           .
         </p>

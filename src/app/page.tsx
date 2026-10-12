@@ -147,6 +147,7 @@ export default function Home() {
         <div className="wrap">
           <p className="eyebrow">
             Public review edition · {research.repositoryStatus} · Release {manifest.release}
+            {research.citation.released ? `, ${research.citation.released}` : ""}
           </p>
           <h1>AI capability depends on more than compute.</h1>
           <p className="lede">
@@ -469,7 +470,9 @@ export default function Home() {
                   </td>
                 </tr>
                 <tr>
-                  <td data-label="Instrument">Independent review</td>
+                  <td data-label="Instrument">
+                    <a href={sourceUrl("validation/independent-review/README.md")}>Independent review</a>
+                  </td>
                   <td data-label="Question">Does the method stand up to power, cooling, HPC, OT security and assurance specialists?</td>
                   <td data-label="State">
                     {ir.reviews > 0 ? `${ir.reviews} received; ${ir.dispositions} dispositions published.` : "Not started. Reviewers are invited."}
@@ -540,10 +543,13 @@ export default function Home() {
                       <a href={sourceUrl(a.path)}>
                         <span className="mono">{a.id}</span> {a.title}
                       </a>
+                      {coreArtifacts.filter((b) => b.id === a.id).length > 1 && (
+                        <div className="small muted mono">{a.path.split("/").pop()}</div>
+                      )}
                     </td>
                     <td data-label="Covers">{a.summary}</td>
                     <td data-label="Version" className="mono">
-                      {a.version}
+                      {a.version || "–"}
                     </td>
                     <td data-label="Status">{a.status}</td>
                   </tr>
