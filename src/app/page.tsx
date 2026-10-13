@@ -59,6 +59,114 @@ const reviewGap = [
   },
 ];
 
+// Where AIDCF sits next to specialist reviews. The difference is the level at which
+// the assurance argument is organised, not a claim that other methods lack
+// cross-domain reasoning; any comparative benefit is untested (VAL-001 v1.1 10A).
+const roleCompare = [
+  {
+    dim: "Primary subject",
+    review: "A defined facility, system, process or engineering scope",
+    aidcf: "A defined AI capability and its required service outcomes",
+  },
+  {
+    dim: "Technical depth",
+    review: "Deep expertise within the engagement's scope",
+    aidcf: "Uses specialist assessments as evidence and does not replace them",
+  },
+  {
+    dim: "Failure analysis",
+    review: "FMEA, fault tree analysis and integrated systems testing can already analyse cross-system failures",
+    aidcf: "Relates those failure paths to a capability-level assurance question",
+  },
+  {
+    dim: "Evidence",
+    review: "What the relevant standard or engagement requires",
+    aidcf: "Links each piece of evidence to the controls, gates and conclusion it supports",
+  },
+  {
+    dim: "Uncertainty",
+    review: "Can be managed explicitly, depending on the method",
+    aidcf: "UNKNOWN is a formal, visible state that caps the decision",
+  },
+  {
+    dim: "Output",
+    review: "Certificate, test report, risk findings or engineering recommendation",
+    aidcf: "A bounded, capability-specific assurance decision with an accountable owner",
+  },
+  {
+    dim: "Validation maturity",
+    review: "Varies by standard and practice",
+    aidcf: "Research stage: a validation candidate, not yet used on a real facility",
+  },
+];
+
+// Intended users. Who applies AIDCF and who uses its outputs are different groups.
+const audiences = [
+  {
+    title: "Data-centre owners and operators",
+    who: "Facilities directors, critical environment teams, reliability engineers, infrastructure operations leaders",
+    use: "Relate facility engineering evidence to the dependencies and service outcomes of a defined AI capability, and see where more testing or evidence may be needed.",
+  },
+  {
+    title: "AI infrastructure and service owners",
+    who: "GPU cluster and HPC platform owners, AI service engineering and workload reliability teams",
+    use: "See which facilities, systems, operating states and shared dependencies could stop the AI service meeting its objectives.",
+  },
+  {
+    title: "Assurance and engineering assessors",
+    who: "Commissioning specialists, OT assessors, engineering consultants, internal audit and technology risk teams",
+    use: "Use one structure to bring findings together, challenge unsupported conclusions and record what remains unknown, without displacing specialist assessments.",
+  },
+  {
+    title: "Decision owners",
+    who: "CTOs, infrastructure executives, service owners, investment and operational-risk committees",
+    use: "Receive a traceable statement of what is assured, under which assumptions, for how long, and what limits the decision.",
+  },
+];
+
+// AIDCF-009 Part A section 0.6 (lifecycle) and A6 (stage gates SG0 to SG7).
+const handbook = "standards/aidcf-009-assessment-methodology/AIDCF-009_Part_A_Core_Practitioner_Handbook_v1.1.md";
+const phases = [
+  { name: "Initiate", gate: "SG0 Authorise", what: "Charter the decision question, sponsor, decision authority and intended users." },
+  { name: "Profile, scope and tailor", gate: "SG1 Scope", what: "Define the capability, its boundary and dependencies, and which controls apply." },
+  { name: "Plan", gate: "SG2 Plan", what: "Plan the work, rules of engagement, safety approvals, evidence requests and team competence." },
+  { name: "Collect and validate", gate: "SG3 Fieldwork", what: "Document and configuration review, interviews, inspection, sampling, data analysis and testing." },
+  { name: "Assess, analyse, gate and find", gate: "SG4 Technical review", what: "Control results, failure scenarios, critical gate results, findings and UNKNOWNs." },
+  { name: "Review", gate: "SG5 Independent review", what: "An independent reviewer challenges the evidence, gate logic and recommendation." },
+  { name: "Decide and report", gate: "SG6 Decide, SG7 Archive", what: "The decision authority issues a bounded decision, or records a decision not to issue one." },
+  { name: "Reassess", gate: "Re-entry at SG0 or SG1", what: "Changes, incidents, evidence expiry and gate result changes trigger a delta or full reassessment." },
+];
+
+// A practical problem, and the AIDCF work product designed to address it (AIDCF-009 Part A
+// workpapers). These are intended outputs, not demonstrated benefits.
+const outputs = [
+  {
+    problem: "Nobody has defined what must be assured for this AI capability",
+    output: "A bounded decision question and service-outcome requirements",
+    wp: "WP-01 Assessment Charter, WP-02 Capability Profile",
+  },
+  {
+    problem: "Infrastructure dependencies are spread across teams",
+    output: "A traceable capability and dependency model",
+    wp: "WP-03 Scope and Boundary",
+  },
+  {
+    problem: "Engineering and security findings use different scopes and evidence",
+    output: "Mapped controls, safeguards and evidence requirements",
+    wp: "WP-04 Applicability Matrix, WP-06 Evidence Request, WP-12 Control Result",
+  },
+  {
+    problem: "Important controls or dependencies cannot be verified",
+    output: "Explicit findings, UNKNOWN records and gate limitations",
+    wp: "WP-13 to WP-17",
+  },
+  {
+    problem: "Decision-makers receive reports without a consolidated assurance basis",
+    output: "An independently reviewed, bounded decision record",
+    wp: "WP-18 Independent Review, WP-19 Assurance Decision",
+  },
+];
+
 const doctrines = [
   {
     title: "Claims are scoped to a capability",
@@ -177,49 +285,32 @@ export default function Home() {
             Public review edition · {research.repositoryStatus} · Release {manifest.release}
             {research.citation.released ? `, ${research.citation.released}` : ""}
           </p>
-          <h1>AI capability depends on more than compute.</h1>
+          <h1>Can your AI infrastructure support the outcomes your AI services depend on?</h1>
           <p className="lede">
-            The {research.name} (AIDCF) traces an AI service outcome through the power, cooling, network, storage,
-            control systems and suppliers it depends on, to the evidence, the critical gates and an accountable,
-            bounded decision.
+            The {research.name} (AIDCF) is an open, evidence-driven assessment methodology. It connects facilities,
+            power, cooling, compute, storage, networks, operations and suppliers to the requirements of a defined AI
+            service, and brings existing engineering and security evidence into one traceable argument, so that
+            dependencies, safeguards, gaps and uncertainty are visible before an accountable person decides.
           </p>
-          <FailureStory variant="hero" />
           <div className="actions">
-            <Link className="btn" href="/domains/">
-              Explore the 15 domains
+            <Link className="btn primary" href="/#how">
+              See how it works
             </Link>
-            <a className="btn" href={sourceUrl(research.whitepaper.pdf)}>
-              Read the whitepaper (PDF)
-            </a>
+            <Link className="btn" href="/case/">
+              See the synthetic example
+            </Link>
             <a className="btn" href={repoUrl}>
               View on GitHub
             </a>
           </div>
-          <div className="notice" role="note">
-            <p>
-              <strong>A methodology, not a certification or a product.</strong> AIDCF is a validation candidate. It
-              has not yet been independently reviewed or used on a real facility, whether it adds anything to
-              existing reviews has not been tested, and the example on this site is synthetic.
-            </p>
-          </div>
-          <div className="figures" aria-label="Framework at a glance">
-            <div className="figure">
-              <b>{framework.counts.domains}</b>
-              <span>assurance domains</span>
-            </div>
-            <div className="figure">
-              <b>{framework.counts.families}</b>
-              <span>control families</span>
-            </div>
-            <div className="figure">
-              <b>{framework.counts.controls}</b>
-              <span>controls</span>
-            </div>
-            <div className="figure">
-              <b>{framework.counts.gates}</b>
-              <span>non-compensating critical gates</span>
-            </div>
-          </div>
+          <p className="status-line" role="note">
+            Research-stage methodology · Not a certification ·{" "}
+            {ev.completedAssessments === 0
+              ? "No completed real-world assessment recorded"
+              : `${ev.completedAssessments} completed real-world assessment(s) recorded`}{" "}
+            · Independent validation {ir.reviews > 0 ? "under review" : "pending"}
+          </p>
+          <FailureStory variant="hero" />
         </div>
       </section>
 
@@ -263,15 +354,6 @@ export default function Home() {
             than shown here. AIDCF treats existing certifications and reports as bounded evidence, not as proof that
             an AI capability is resilient.
           </p>
-          <div className="notice" role="note" style={{ marginTop: 16 }}>
-            <p>
-              <strong>Untested claim.</strong> Whether AIDCF finds weaknesses that these reviews miss has not been
-              tested. The draft{" "}
-              <a href={sourceUrl(bt.draftProtocol)}>comparative protocol (AIDCF-VAL-001 v1.1, section 10A)</a> is
-              designed to test it against engineering studies, commissioning and OT risk assessment.{" "}
-              {bt.comparison.rows > 0 ? "Comparative coding has started; no results are published yet." : "No comparative coding has started, so there are no results."}
-            </p>
-          </div>
           <div className="card" style={{ marginTop: 20 }}>
             <h3>The question AIDCF answers</h3>
             <p>
@@ -282,26 +364,113 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="block" id="method" aria-labelledby="method-h">
+      <section className="block" id="what" aria-labelledby="what-h">
         <div className="wrap">
           <div className="section-head">
             <span className="num">02</span>
-            <h2 id="method-h">How AIDCF reasons</h2>
+            <h2 id="what-h">What AIDCF is</h2>
             <p>
-              One chain runs from the decision being made to the decision taken. Every link must be supported, and
-              every gap is recorded rather than assumed away.
+              AIDCF evaluates whether the infrastructure behind a defined AI capability can meet that
+              capability&rsquo;s required outcomes under stated conditions. It builds a traceable argument from
+              dependencies and failure scenarios, through safeguards, controls and evidence, to an accountable
+              assurance decision. It complements existing technical standards and professional judgement; it does not
+              replace them.
             </p>
           </div>
+          <div className="card">
+            <h3>What AIDCF is not</h3>
+            <p style={{ margin: 0 }}>
+              Not a monitoring platform, an uptime guarantee, a data-centre certification, an AI model-safety
+              framework, or a replacement for engineering assurance.
+            </p>
+          </div>
+          <h3 id="method" style={{ marginTop: 28 }}>
+            How AIDCF reasons
+          </h3>
+          <p>
+            One chain runs from the decision being made to the decision taken. Every link must be supported, and every
+            gap is recorded rather than assumed away.
+          </p>
           <ChainVisual />
         </div>
       </section>
 
-      <section className="block" id="doctrine" aria-labelledby="doctrine-h">
+      <section className="block" id="why" aria-labelledby="why-h">
         <div className="wrap">
           <div className="section-head">
             <span className="num">03</span>
-            <h2 id="doctrine-h">What makes it different</h2>
+            <h2 id="why-h">Why AIDCF, alongside existing reviews</h2>
+            <p>
+              The proposed contribution is not that existing engineering assurance is deficient. It is that a set of
+              individually credible assessments does not by itself give one traceable conclusion for a particular AI
+              service. AIDCF organises the assurance argument at that level.
+            </p>
           </div>
+          <div className="card">
+            <p className="eyebrow" style={{ margin: 0 }}>
+              Illustrative example, not an empirical finding about existing reviews
+            </p>
+            <h3>A facility looks well assessed. Is the AI service assured?</h3>
+            <p>
+              <strong>Evidence available:</strong> power redundancy reviewed, cooling commissioned, protection
+              coordination studied, OT security assessed.
+            </p>
+            <p>
+              <strong>Question still open:</strong> will the AI workload meet its recovery and service tolerances
+              during a shared cooling-control failure?
+            </p>
+            <ol className="steps-inline">
+              <li>
+                <b>Define</b> the capability, service outcome and tolerance.
+              </li>
+              <li>
+                <b>Trace</b> the infrastructure, dependencies and failure paths that matter to it.
+              </li>
+              <li>
+                <b>Evaluate</b> the safeguards, controls and supporting evidence.
+              </li>
+              <li>
+                <b>Decide</b> whether the evidence supports a bounded assurance conclusion.
+              </li>
+            </ol>
+          </div>
+          <div className="table-scroll" style={{ marginTop: 20 }}>
+            <table className="table stack">
+              <caption className="visually-hidden">Specialist review and AIDCF compared by dimension</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Dimension</th>
+                  <th scope="col">Specialist review</th>
+                  <th scope="col">AIDCF&rsquo;s proposed role</th>
+                </tr>
+              </thead>
+              <tbody>
+                {roleCompare.map((r) => (
+                  <tr key={r.dim}>
+                    <td data-label="Dimension">{r.dim}</td>
+                    <td data-label="Specialist review">{r.review}</td>
+                    <td data-label="AIDCF">{r.aidcf}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <h3 style={{ marginTop: 28 }}>Three hypotheses, not yet tested</h3>
+          <ul>
+            <li>AIDCF may improve traceability across assurance evidence.</li>
+            <li>It may expose gaps between component-level findings and service-level decisions.</li>
+            <li>It may make uncertainty and decision responsibility more explicit.</li>
+          </ul>
+          <div className="notice" role="note" style={{ marginTop: 16 }}>
+            <p>
+              <strong>Untested claim.</strong> Whether AIDCF finds weaknesses that these reviews miss has not been
+              tested. The draft{" "}
+              <a href={sourceUrl(bt.draftProtocol)}>comparative protocol (AIDCF-VAL-001 v1.1, section 10A)</a> is
+              designed to test it against engineering studies, commissioning and OT risk assessment.{" "}
+              {bt.comparison.rows > 0 ? "Comparative coding has started; no results are published yet." : "No comparative coding has started, so there are no results."}
+            </p>
+          </div>
+          <h3 style={{ marginTop: 28 }}>What it does differently</h3>
           <div className="grid-2">
             {doctrines.map((d) => (
               <div className="card" key={d.title}>
@@ -324,83 +493,83 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="block" id="domains" aria-labelledby="domains-h">
+      <section className="block" id="who" aria-labelledby="who-h">
         <div className="wrap">
           <div className="section-head">
             <span className="num">04</span>
-            <h2 id="domains-h">Fifteen assurance domains</h2>
+            <h2 id="who-h">Who it is for</h2>
             <p>
-              Domains organise the assessment work and give every concern an owner. They do not partition the
-              argument: a single failure scenario routinely crosses power, cooling, compute, storage, network,
-              operations and security.
+              Engineering and assurance practitioners apply AIDCF. Service owners and accountable executives use its
+              outputs. It suits organisations that control, operate or can obtain meaningful evidence about the
+              infrastructure behind an AI capability; it is not aimed at every tenant, IT team or AI model developer.
             </p>
           </div>
-          <ul className="domain-grid" style={{ listStyle: "none", padding: 0, margin: 0 }}>
-            {framework.domains.map((d) => {
-              const guide = domainGuide(d.id);
-              return (
-                <li className="domain" key={d.id}>
-                  <Link className="code" href={`/domains/${d.id.toLowerCase()}/`}>
-                    {d.id}
-                    <span className="visually-hidden"> controls</span>
-                  </Link>
-                  <span>{d.name}</span>
-                  <span className="meta">
-                    {d.families} families · {d.controls} controls · gates {d.gates.join(", ") || "none"}
-                  </span>
-                  {guide && (
-                    <a className="small" href={sourceUrl(guide)}>
-                      Domain guide<span className="visually-hidden"> for {d.name}</span>
-                    </a>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-          <p className="actions" style={{ marginTop: 16 }}>
-            <Link className="btn primary" href="/domains/">
-              Open the domain explorer
-            </Link>
+          <div className="grid-2">
+            {audiences.map((a) => (
+              <div className="card" key={a.title}>
+                <h3>{a.title}</h3>
+                <p className="small muted">{a.who}</p>
+                <p style={{ margin: 0 }}>{a.use}</p>
+              </div>
+            ))}
+          </div>
+          <p className="caption">
+            Intended uses. Whether AIDCF delivers them in practice is what the validation programme is designed to
+            test.
           </p>
         </div>
       </section>
 
-      <section className="block" id="gates" aria-labelledby="gates-h">
+      <section className="block" id="how" aria-labelledby="how-h">
         <div className="wrap">
           <div className="section-head">
             <span className="num">05</span>
-            <h2 id="gates-h">Fifteen critical gates</h2>
+            <h2 id="how-h">How an assessment works</h2>
             <p>
-              Each gate has its own criteria, an evidence floor, and a ceiling that applies when it fails or is
-              UNKNOWN. In total {framework.counts.critical} control-to-gate mappings are CRITICAL and{" "}
-              {framework.counts.supporting} are SUPPORTING, against {framework.counts.gateCriteria} gate criteria.
+              An assessment runs through eight phases, each closed by a stage gate with a named approver. It can be run
+              first-party, co-sourced, second-party or by an independent third party. Its length depends on scope and
+              evidence access; no typical duration is claimed.
             </p>
           </div>
-          <div className="gate-list">
-            {framework.gates.map((g) => (
-              <details className="gate" key={g.id}>
-                <summary>
-                  <span className="mono">{g.id}</span>
-                  <span>{g.name}</span>
-                  <span className="muted small">
-                    {g.critical} critical · {g.supporting} supporting controls · {g.criteria} criteria
-                  </span>
-                </summary>
-                <div className="body">
-                  <dl>
-                    <dt>Scope</dt>
-                    <dd>{g.scope}</dd>
-                    <dt>Evidence floor</dt>
-                    <dd className="mono">{g.evidenceFloor}</dd>
-                    <dt>If the gate fails</dt>
-                    <dd>{g.failCeiling}</dd>
-                    <dt>If the gate is UNKNOWN</dt>
-                    <dd>{g.unknownCeiling}</dd>
-                  </dl>
-                </div>
-              </details>
+          <ol className="phase-list">
+            {phases.map((ph) => (
+              <li key={ph.name}>
+                <b>{ph.name}</b> <span className="mono small">{ph.gate}</span>
+                <span>{ph.what}</span>
+              </li>
             ))}
+          </ol>
+          <h3 style={{ marginTop: 28 }}>What it is designed to produce</h3>
+          <div className="table-scroll">
+            <table className="table stack">
+              <caption className="visually-hidden">Practical problems and the AIDCF output designed for each</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Practical problem</th>
+                  <th scope="col">Intended output</th>
+                  <th scope="col">Workpapers</th>
+                </tr>
+              </thead>
+              <tbody>
+                {outputs.map((o) => (
+                  <tr key={o.problem}>
+                    <td data-label="Problem">{o.problem}</td>
+                    <td data-label="Output">{o.output}</td>
+                    <td data-label="Workpapers" className="small">
+                      {o.wp}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
+          <p className="caption">
+            Roles include a sponsor, lead assessor, domain specialists, an evidence lead, technical and independent
+            reviewers, a safety authority, the capability owner and the decision authority, with separation rules
+            between them. Source: <a href={sourceUrl(handbook)}>AIDCF-009 Part A practitioner handbook</a> (draft for
+            controlled review). These outputs are what the method is designed to produce, not demonstrated benefits
+            such as fewer outages or lower assessment cost.
+          </p>
         </div>
       </section>
 
@@ -408,7 +577,7 @@ export default function Home() {
         <div className="wrap">
           <div className="section-head">
             <span className="num">06</span>
-            <h2 id="case-h">A worked synthetic case</h2>
+            <h2 id="case-h">Worked example: a synthetic case</h2>
             <p>
               The reference implementation assesses one synthetic AI training and inference capability. It does not
               produce a favourable answer from thin evidence.
@@ -458,10 +627,108 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="block" id="validation" aria-labelledby="validation-h">
+      <section className="block" id="domains" aria-labelledby="domains-h">
         <div className="wrap">
           <div className="section-head">
             <span className="num">07</span>
+            <h2 id="domains-h">Fifteen assurance domains</h2>
+            <p>
+              Domains organise the assessment work and give every concern an owner. They do not partition the
+              argument: a single failure scenario routinely crosses power, cooling, compute, storage, network,
+              operations and security.
+            </p>
+          </div>
+          <div className="figures" aria-label="Framework at a glance">
+            <div className="figure">
+              <b>{framework.counts.domains}</b>
+              <span>assurance domains</span>
+            </div>
+            <div className="figure">
+              <b>{framework.counts.families}</b>
+              <span>control families</span>
+            </div>
+            <div className="figure">
+              <b>{framework.counts.controls}</b>
+              <span>controls</span>
+            </div>
+            <div className="figure">
+              <b>{framework.counts.gates}</b>
+              <span>non-compensating critical gates</span>
+            </div>
+          </div>
+          <ul className="domain-grid" style={{ listStyle: "none", padding: 0, margin: 0 }}>
+            {framework.domains.map((d) => {
+              const guide = domainGuide(d.id);
+              return (
+                <li className="domain" key={d.id}>
+                  <Link className="code" href={`/domains/${d.id.toLowerCase()}/`}>
+                    {d.id}
+                    <span className="visually-hidden"> controls</span>
+                  </Link>
+                  <span>{d.name}</span>
+                  <span className="meta">
+                    {d.families} families · {d.controls} controls · gates {d.gates.join(", ") || "none"}
+                  </span>
+                  {guide && (
+                    <a className="small" href={sourceUrl(guide)}>
+                      Domain guide<span className="visually-hidden"> for {d.name}</span>
+                    </a>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+          <p className="actions" style={{ marginTop: 16 }}>
+            <Link className="btn primary" href="/domains/">
+              Open the domain explorer
+            </Link>
+          </p>
+        </div>
+      </section>
+
+      <section className="block" id="gates" aria-labelledby="gates-h">
+        <div className="wrap">
+          <div className="section-head">
+            <span className="num">08</span>
+            <h2 id="gates-h">Fifteen critical gates</h2>
+            <p>
+              Each gate has its own criteria, an evidence floor, and a ceiling that applies when it fails or is
+              UNKNOWN. In total {framework.counts.critical} control-to-gate mappings are CRITICAL and{" "}
+              {framework.counts.supporting} are SUPPORTING, against {framework.counts.gateCriteria} gate criteria.
+            </p>
+          </div>
+          <div className="gate-list">
+            {framework.gates.map((g) => (
+              <details className="gate" key={g.id}>
+                <summary>
+                  <span className="mono">{g.id}</span>
+                  <span>{g.name}</span>
+                  <span className="muted small">
+                    {g.critical} critical · {g.supporting} supporting controls · {g.criteria} criteria
+                  </span>
+                </summary>
+                <div className="body">
+                  <dl>
+                    <dt>Scope</dt>
+                    <dd>{g.scope}</dd>
+                    <dt>Evidence floor</dt>
+                    <dd className="mono">{g.evidenceFloor}</dd>
+                    <dt>If the gate fails</dt>
+                    <dd>{g.failCeiling}</dd>
+                    <dt>If the gate is UNKNOWN</dt>
+                    <dd>{g.unknownCeiling}</dd>
+                  </dl>
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="block" id="validation" aria-labelledby="validation-h">
+        <div className="wrap">
+          <div className="section-head">
+            <span className="num">09</span>
             <h2 id="validation-h">Validation status</h2>
             <p>What has been done, what has been prepared, and what is still needed before anyone should rely on AIDCF.</p>
           </div>
@@ -560,7 +827,7 @@ export default function Home() {
       <section className="block" id="research" aria-labelledby="research-h">
         <div className="wrap">
           <div className="section-head">
-            <span className="num">08</span>
+            <span className="num">10</span>
             <h2 id="research-h">Research and artifacts</h2>
             <p>The GitHub repository is the canonical source. This site is generated from it at a pinned commit.</p>
           </div>

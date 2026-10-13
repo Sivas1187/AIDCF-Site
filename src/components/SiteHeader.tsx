@@ -6,9 +6,10 @@ import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
 
 const links = [
-  { href: "/#method", label: "Methodology" },
-  { href: "/domains/", label: "15 domains" },
-  { href: "/case/", label: "Infrastructure graph" },
+  { href: "/#how", label: "How it works" },
+  { href: "/#who", label: "Who it's for" },
+  { href: "/domains/", label: "Methodology" },
+  { href: "/case/", label: "Worked example" },
   { href: "/scenarios/", label: "Scenarios" },
   { href: "/#validation", label: "Validation" },
   { href: "/#research", label: "Research" },
