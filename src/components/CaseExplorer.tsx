@@ -116,10 +116,6 @@ export function CaseExplorer() {
   const [view, setView] = useState<"graph" | "list">("graph");
   const [journey, setJourney] = useState<number | null>(null);
 
-  useEffect(() => {
-    if (window.matchMedia("(max-width: 719px)").matches) setView("list");
-  }, []);
-
   // /case/#journey (linked from the failure story) opens the guided journey.
   useEffect(() => {
     const read = () => {
@@ -358,6 +354,7 @@ export function CaseExplorer() {
                   })}
                 </svg>
               </div>
+              <p className="graph-hint small muted">Swipe sideways to see the whole graph, or switch to List.</p>
               <div className="legend" aria-hidden="true">
                 <span>
                   <i /> structure (part of, implements, required by)

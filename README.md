@@ -15,7 +15,8 @@ The framework itself lives in [Sivas1187/AIDCF](https://github.com/Sivas1187/AID
 
 | Path | Content |
 |---|---|
-| `/` | Problem, simplified assurance chain, doctrine, decision states, 15 domains, 15 critical gates, synthetic-case summary, validation status, whitepaper and citation |
+| `/` | Problem, simplified assurance chain, doctrine, decision-state ladder, stage-gate lifecycle, synthetic-case summary with a coverage waffle and one failure-path graph, domain × gate matrix, validation status, whitepaper and citation |
+| `/method/` | Detail moved off the homepage: what existing reviews leave open, AIDCF alongside specialist reviews, intended work products, the 15 critical gates with floors and ceilings, and the validation instruments |
 | `/domains/` | Domain explorer: the 15 domains in the seven clusters of whitepaper section 8, the domains each shares critical gates with, and the domains behind each gate |
 | `/domains/<code>/` | One page per domain: every family and control with its objective, requirement, evidence classes and gate roles (registry v1.1, proposed) |
 | `/case/` | The AIDCF-015 v1.3 synthetic case: decision question (with any erratum), interactive dependency graph with five failure scenarios and a guided step-by-step journey, gate results and the computed decision |

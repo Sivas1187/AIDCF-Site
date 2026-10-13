@@ -5,10 +5,10 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
 
-const links = [
+const links: { href: string; label: string; also?: string[] }[] = [
   { href: "/#how", label: "How it works" },
   { href: "/#who", label: "Who it's for" },
-  { href: "/domains/", label: "Methodology" },
+  { href: "/method/", label: "Methodology", also: ["/domains/"] },
   { href: "/case/", label: "Worked example" },
   { href: "/scenarios/", label: "Scenarios" },
   { href: "/#validation", label: "Validation" },
@@ -52,7 +52,12 @@ export function SiteHeader() {
               <li key={l.href}>
                 <Link
                   href={l.href}
-                  aria-current={pathname === l.href || (!l.href.includes("#") && pathname.startsWith(l.href)) ? "page" : undefined}
+                  aria-current={
+                    pathname === l.href ||
+                    (!l.href.includes("#") && [l.href, ...(l.also ?? [])].some((h) => pathname.startsWith(h)))
+                      ? "page"
+                      : undefined
+                  }
                   onClick={() => setOpen(false)}
                 >
                   {l.label}
