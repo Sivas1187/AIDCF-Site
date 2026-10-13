@@ -222,6 +222,23 @@ const findings = ofType("Finding");
 const unknowns = ofType("UnknownRecord");
 const gateResults = ofType("GateResult");
 const decision = ofType("AssuranceDecision")[0];
+
+// Errata recorded against the release (ERRATA.md). Released files are never edited in place, so the site shows the
+// erratum next to the text it corrects.
+const errata = read("ERRATA.md")
+  .toString("utf8")
+  .split("\n")
+  .map((l) => l.match(/^\| (E-\d{3}) \| ([^|]+) \| ([^|]+) \| ([^|]+) \| ([^|]+) \| ([^|]+) \|$/))
+  .filter(Boolean)
+  .map((m) => ({
+    id: m[1],
+    release: m[2].trim(),
+    found: m[3].trim(),
+    location: m[4].trim().replace(/`/g, ""),
+    erratum: m[5].trim(),
+    correction: m[6].trim(),
+  }))
+  .filter((e) => e.location.includes("decision question"));
 const recommendation = ofType("DecisionRecommendation")[0];
 const score = ofType("ScoreSnapshot")[0];
 
@@ -450,6 +467,7 @@ const caseData = {
       criteria: (g.criteriaResults ?? []).map((c) => ({ id: c.criterionId, outcome: c.criterionOutcome })),
     }))
     .sort((a, b) => a.gate.localeCompare(b.gate)),
+  errata,
   decision: {
     question: decision.decisionQuestion,
     scope: decision.decisionScope,

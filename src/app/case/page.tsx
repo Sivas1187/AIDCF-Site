@@ -47,6 +47,20 @@ export default function CasePage() {
               Scope: {d.scope}
             </p>
           </div>
+          {caseData.errata.map((e) => (
+            <div key={e.id} className="notice" role="note" style={{ marginTop: 12 }}>
+              <p className="small">
+                <strong>
+                  Erratum {e.id} (recorded {e.found}).
+                </strong>{" "}
+                {e.erratum}
+              </p>
+              <p className="small" style={{ margin: 0 }}>
+                <strong>Correction:</strong> {e.correction}{" "}
+                <a href={sourceUrl("ERRATA.md")}>Errata register</a>
+              </p>
+            </div>
+          ))}
           <h3 style={{ marginTop: 24 }}>Required service outcomes</h3>
           <div className="table-scroll">
             <table className="table stack">

@@ -120,6 +120,7 @@ export interface CaseData {
     evaluations: { control: string; role: string; result: string }[];
     criteria: { id: string; outcome: string }[];
   }[];
+  errata: { id: string; release: string; found: string; location: string; erratum: string; correction: string }[];
   decision: {
     question: string;
     scope: string;
