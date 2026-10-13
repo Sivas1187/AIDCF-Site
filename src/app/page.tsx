@@ -308,7 +308,9 @@ export default function Home() {
             {ev.completedAssessments === 0
               ? "No completed real-world assessment recorded"
               : `${ev.completedAssessments} completed real-world assessment(s) recorded`}{" "}
-            · Independent validation {ir.reviews > 0 ? "under review" : "pending"}
+            {/* Fixed wording: reviews received are not independent validation. Change only on an explicit,
+                justified validation status. */}
+            · Independent validation pending
           </p>
           <FailureStory variant="hero" />
         </div>
@@ -526,9 +528,10 @@ export default function Home() {
             <span className="num">05</span>
             <h2 id="how-h">How an assessment works</h2>
             <p>
-              An assessment runs through eight phases, each closed by a stage gate with a named approver. It can be run
-              first-party, co-sourced, second-party or by an independent third party. Its length depends on scope and
-              evidence access; no typical duration is claimed.
+              AIDCF-009 Part A describes an eight-phase assessment lifecycle governed by stage gates SG0 to SG7, with
+              defined review and approval responsibilities. Reassessment is triggered by relevant changes or events. An
+              assessment can be run first-party, co-sourced, second-party or by an independent third party. Its length
+              depends on scope and evidence access; no typical duration is claimed.
             </p>
           </div>
           <ol className="phase-list">
