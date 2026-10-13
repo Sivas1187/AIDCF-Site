@@ -21,6 +21,15 @@ const sharedGates = (a: string, b: string) => [...criticalGates.get(a)!.keys()].
 export function DomainExplorer() {
   const [selected, setSelected] = useState<string>("POW");
   const [gate, setGate] = useState<string>("");
+  // On phones each cluster folds to one line; these are the ones opened by hand.
+  const [opened, setOpened] = useState<Set<string>>(new Set());
+  const toggle = (name: string, open: boolean) =>
+    setOpened((cur) => {
+      const next = new Set(cur);
+      if (open) next.add(name);
+      else next.delete(name);
+      return next;
+    });
 
   // A link such as /domains/#THM opens that domain.
   useEffect(() => {
@@ -29,6 +38,8 @@ export function DomainExplorer() {
       if (domainsById.has(id)) {
         setSelected(id);
         setGate("");
+        // On phones the domain's cluster was folded when the browser tried to scroll to it.
+        requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ block: "center" }));
       }
     };
     read();
@@ -83,18 +94,31 @@ export function DomainExplorer() {
       <div className="explorer">
         <div>
           <ol className="dx-map" aria-label="Domain clusters, from direction to assurance integrity">
-            {framework.clusters.map((c, i) => (
-              <li key={c.name} className="dx-cluster">
+            {framework.clusters.map((c, i) => {
+              const auto = c.domains.includes(selected) || (gate !== "" && c.domains.some((id) => criticalGates.get(id)!.has(gate)));
+              const open = auto || opened.has(c.name);
+              return (
+              <li key={c.name} className={`dx-cluster${open ? "" : " folded"}`}>
                 <div className="dx-cluster-head">
                   <span className="dx-step" aria-hidden="true">
                     {i + 1}
                   </span>
                   <div>
                     <h3>{c.name}</h3>
-                    <p className="small muted">{c.rationale}</p>
+                    <p className="small muted dx-rationale">{c.rationale}</p>
+                    <button
+                      type="button"
+                      className="linklike small dx-fold"
+                      aria-expanded={open}
+                      aria-controls={`dx-cl-${i}`}
+                      disabled={auto}
+                      onClick={() => toggle(c.name, !open)}
+                    >
+                      {open ? "Hide" : "Show"} {c.domains.join(", ")}
+                    </button>
                   </div>
                 </div>
-                <ul className="dx-domains">
+                <ul className="dx-domains" id={`dx-cl-${i}`}>
                   {c.domains.map((id) => {
                     const x = domainsById.get(id)!;
                     const shared = linked.get(id) ?? [];
@@ -120,7 +144,8 @@ export function DomainExplorer() {
                   })}
                 </ul>
               </li>
-            ))}
+              );
+            })}
           </ol>
           <div className="legend" aria-hidden="true">
             <span>

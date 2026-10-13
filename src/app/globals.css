@@ -1763,3 +1763,255 @@ input[type="search"] {
 .dx-control details[open] > summary {
   margin-bottom: 8px;
 }
+
+/* ------------------------------------------------ failure story (FS-04) */
+
+.story {
+  margin: 28px 0 24px;
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+
+.story-cap {
+  font-size: 0.95rem;
+  color: var(--ink-2);
+  margin-bottom: 14px;
+}
+
+.story-tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  margin-right: 6px;
+  border-radius: 3px;
+  background: var(--unknown-soft);
+  color: var(--unknown);
+  border: 1px solid var(--unknown);
+}
+
+.story-stages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.story-stage {
+  position: relative;
+  padding: 12px;
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  border-top: 3px solid var(--path);
+  min-width: 0;
+}
+
+.story-stage + .story-stage::before {
+  content: "↓";
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.85rem;
+  line-height: 1;
+  color: var(--ink-3);
+  background: var(--surface);
+  padding: 0 4px;
+}
+
+.story-decision {
+  background: var(--fail-soft);
+  border-top-color: var(--fail);
+}
+
+.story-head {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  margin: 0 0 6px;
+}
+
+.story-num {
+  color: var(--path);
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+.story-lead {
+  font-size: 0.95rem;
+  margin: 0 0 10px;
+}
+
+.story-state {
+  margin: 4px 0 10px;
+  font-size: 1.05rem;
+}
+
+.story-chain {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.story-chain > li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 6px 8px 6px 10px;
+  margin-bottom: 6px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--path);
+  border-radius: 4px;
+}
+
+.story-chain:not(.story-evidence) > li + li::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 14px;
+  height: 6px;
+  border-left: 2px solid var(--path);
+}
+
+.story-evidence > li {
+  border-left-color: var(--unknown);
+}
+
+.story-chain > li.has-unknown {
+  border-left-color: var(--unknown);
+}
+
+.story-layer {
+  font-size: 0.72rem;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.story-node {
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+.story-ctl {
+  font-size: 0.82rem;
+  color: var(--ink-2);
+}
+
+.story-ctl .state {
+  font-size: 0.72rem;
+}
+
+.story-flag {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--unknown);
+}
+
+.story-meta {
+  margin: 4px 0 0;
+}
+
+.story-stage details {
+  margin-top: 8px;
+  border-top: 1px solid var(--rule);
+  padding-top: 6px;
+}
+
+.story-stage details summary {
+  cursor: pointer;
+  font-size: 0.88rem;
+  color: var(--accent);
+}
+
+.story-stage details p,
+.story-stage details ul {
+  margin: 6px 0 0;
+}
+
+.story-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin: 14px 0 0;
+}
+
+@media (min-width: 960px) {
+  .story-stages {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .story-stage + .story-stage::before {
+    content: "→";
+    top: 50%;
+    left: -15px;
+    transform: translateY(-50%);
+    background: none;
+    padding: 0;
+  }
+}
+
+details.erratum {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--rule);
+}
+
+details.erratum summary {
+  cursor: pointer;
+  font-size: 0.88rem;
+  color: var(--ink-2);
+}
+
+details.erratum p {
+  margin: 6px 0 0;
+}
+
+.ev-gap {
+  margin: 4px 0 0;
+  padding-left: 8px;
+  border-left: 3px solid var(--rule-strong);
+}
+
+.ev-gap.has-gap {
+  border-left-color: var(--fail);
+}
+
+.ev-gap.has-gap strong {
+  color: var(--fail);
+}
+
+.ev-gap.no-gap {
+  border-left-color: var(--pass);
+}
+
+/* Domain clusters fold to one line on phones. */
+.dx-fold {
+  display: none;
+}
+
+@media (max-width: 719px) {
+  .dx-fold {
+    display: inline;
+  }
+
+  .dx-fold:disabled {
+    display: none;
+  }
+
+  .dx-cluster.folded .dx-domains,
+  .dx-cluster.folded .dx-rationale {
+    display: none;
+  }
+}

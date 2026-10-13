@@ -120,6 +120,19 @@ export function CaseExplorer() {
     if (window.matchMedia("(max-width: 719px)").matches) setView("list");
   }, []);
 
+  // /case/#journey (linked from the failure story) opens the guided journey.
+  useEffect(() => {
+    const read = () => {
+      if (window.location.hash !== "#journey") return;
+      setScenarioId((cur) => cur || JOURNEY_DEFAULT);
+      setSelected(null);
+      setJourney(0);
+    };
+    read();
+    window.addEventListener("hashchange", read);
+    return () => window.removeEventListener("hashchange", read);
+  }, []);
+
   const scenario = caseData.scenarios.find((s) => s.id === scenarioId) ?? null;
   const steps = scenario ? journeySteps(scenario) : [];
   const order = scenario ? pathOrder(scenario) : [];
@@ -536,7 +549,7 @@ function JourneyPanel({
         </p>
         <ul>
           {controls.map((c) => (
-            <ControlLine key={c} id={c} evidenceOpen />
+            <ControlLine key={c} id={c} />
           ))}
         </ul>
       </>
@@ -705,30 +718,31 @@ export function EvidenceBlock({ id, open = false }: { id: string; open?: boolean
   const missing = c.requiredClasses.filter((x) => !have.has(x));
   const belowFloor = sLevel(c.sufficiency) < sLevel(c.floor);
   const ev = caseData.evidenceClasses;
+  const gaps = [
+    ...missing.map((x) => `missing ${x} ${ev[x] ?? ""}`.trim()),
+    ...(belowFloor ? [`${c.sufficiency} below the ${c.floor} floor`] : []),
+  ];
   return (
-    <details className="evidence" open={open}>
-      <summary className="small">
-        Evidence: {c.evidence.length} object{c.evidence.length === 1 ? "" : "s"} at {c.sufficiency ?? "unrated"}
-        {c.floor ? `, floor ${c.floor}` : ""}
-        {belowFloor ? " (below floor)" : ""}
-        {missing.length ? `, missing ${missing.join(", ")}` : ""}
-      </summary>
-      <div className="small">
-        <p>
-          Required classes: {c.requiredClasses.map((x) => `${x} ${ev[x] ?? ""}`.trim()).join("; ")}.{" "}
-          {missing.length ? (
-            <strong style={{ color: "var(--fail)" }}>
-              Missing: {missing.map((x) => `${x} ${ev[x] ?? ""}`.trim()).join("; ")}.
-            </strong>
-          ) : (
-            "All present."
-          )}{" "}
-          {belowFloor && (
-            <strong style={{ color: "var(--fail)" }}>
-              Sufficiency {c.sufficiency} is below the floor of {c.floor}.
-            </strong>
-          )}
-        </p>
+    <div className="evidence-block">
+      <p className={`small ev-gap ${gaps.length ? "has-gap" : "no-gap"}`}>
+        {gaps.length ? (
+          <>
+            <strong>Evidence gap:</strong> {gaps.join("; ")}.
+          </>
+        ) : (
+          <>
+            <strong>No evidence gap:</strong> all required classes present at {c.sufficiency ?? "unrated"}
+            {c.floor ? `, floor ${c.floor}` : ""}.
+          </>
+        )}
+      </p>
+      <details className="evidence" open={open}>
+        <summary className="small">
+          Evidence detail: {c.evidence.length} object{c.evidence.length === 1 ? "" : "s"}
+          {c.tests.length ? ` and ${c.tests.length} test${c.tests.length === 1 ? "" : "s"}` : ""}
+        </summary>
+        <div className="small">
+          <p>Required classes: {c.requiredClasses.map((x) => `${x} ${ev[x] ?? ""}`.trim()).join("; ")}.</p>
         {c.methods.length > 0 && <p>Methods: {c.methods.map((m) => humanise(m).toLowerCase()).join(", ")}.</p>}
         <ul>
           {c.evidence.map((e) => (
@@ -758,8 +772,9 @@ export function EvidenceBlock({ id, open = false }: { id: string; open?: boolean
             </li>
           ))}
         </ul>
-      </div>
-    </details>
+        </div>
+      </details>
+    </div>
   );
 }
 

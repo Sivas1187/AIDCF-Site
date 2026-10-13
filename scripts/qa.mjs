@@ -41,6 +41,27 @@ for (const scheme of ["light", "dark"]) {
       const name = `${scheme}-${vpName}${p === "/" ? "-home" : p.replace(/\//g, "-").replace(/-$/, "")}`;
       if (scheme === "light" || p === "/case/") await page.screenshot({ path: `${out}/${name}.png`, fullPage: true });
     }
+    // The failure story: four stages on the homepage and the case page.
+    for (const [p, sel] of [["/", ".story-hero"], ["/case/", ".story-board"]]) {
+      await page.goto(base + p, { waitUntil: "networkidle" });
+      const n = await page.locator(`${sel} .story-stage`).count();
+      const t = await page.locator(sel).innerText();
+      if (n !== 4 || !/Not assured/i.test(t) || !/Inference latency/.test(t)) {
+        console.log(`STORY ${scheme} ${vpName} ${p}: ${n} stages, or decision or outcome missing`);
+        problems++;
+      }
+    }
+    if (vpName === "mobile") {
+      await page.goto(base + "/domains/", { waitUntil: "networkidle" });
+      const folded = await page.locator(".dx-cluster.folded").count();
+      await page.locator(".dx-cluster.folded .dx-fold").first().click();
+      const after = await page.locator(".dx-cluster.folded").count();
+      if (folded !== 6 || after !== 5) {
+        console.log(`DOMAINS ${scheme} mobile: ${folded} folded clusters, ${after} after opening one`);
+        problems++;
+      }
+      await page.screenshot({ path: `${out}/${scheme}-mobile-domains-folded.png`, fullPage: true });
+    }
     // Scripted interaction on the case page.
     await page.goto(base + "/case/", { waitUntil: "networkidle" });
     if (vpName === "desktop") {
@@ -84,7 +105,7 @@ for (const scheme of ["light", "dark"]) {
         await page.getByRole("button", { name: "Next →" }).click();
         const t = await page.locator(".panel").innerText();
         if (/What the evidence showed/.test(t)) {
-          if (!/Evidence: \d+ object/.test(t) && !/Not assessed: no evidence/.test(t)) {
+          if (!/Evidence (gap|detail|: \d+ object)/.test(t) && !/Not assessed: no evidence/.test(t)) {
             console.log(`CASE ${scheme}: journey controls step lacks evidence`);
             problems++;
           }
@@ -157,8 +178,13 @@ for (const scheme of ["light", "dark"]) {
   page.on("pageerror", (e) => errors.push(String(e)));
   for (const p of pages) await page.goto(base + p, { waitUntil: "networkidle" });
   await page.goto(base + "/", { waitUntil: "networkidle" });
-  await page.locator('a.btn.primary[href="/case/"]').first().click();
-  await page.waitForURL("**/case/");
+  await page.locator('a.btn.primary[href="/case/#journey"]').first().click();
+  await page.waitForURL("**/case/#journey");
+  await page.waitForTimeout(300);
+  if (!(await page.locator(".journey-bar").count())) {
+    console.log("CSP pass: the homepage story link did not open the guided journey");
+    problems++;
+  }
   await page.selectOption("#scenario", "FS-05");
   await page.locator(".gate-cell").nth(6).click();
   await page.locator('.nav a[href="/domains/"]').click();

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ChainVisual } from "@/components/ChainVisual";
+import { FailureStory } from "@/components/FailureStory";
 import {
   caseData,
   formatNumber,
@@ -153,9 +154,10 @@ export default function Home() {
             control systems and suppliers it depends on, to the evidence, the critical gates and an accountable,
             bounded decision.
           </p>
+          <FailureStory variant="hero" />
           <div className="actions">
-            <Link className="btn primary" href="/case/">
-              Explore the synthetic case
+            <Link className="btn" href="/domains/">
+              Explore the 15 domains
             </Link>
             <a className="btn" href={sourceUrl(research.whitepaper.pdf)}>
               Read the whitepaper (PDF)

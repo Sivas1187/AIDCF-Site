@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CaseExplorer } from "@/components/CaseExplorer";
+import { FailureStory } from "@/components/FailureStory";
 import { GateResults } from "@/components/GateResults";
 import { caseData, gateName, humanise, manifest, percent, repoUrl, sourceUrl } from "@/lib/data";
 
@@ -14,6 +15,9 @@ export default function CasePage() {
   const sc = caseData.score;
   const ceilings = d.otherCeilings?.replace(/^Ceilings that are not controlling:\s*/, "").replace(/\.$/, "").split("; ") ?? [];
   const datasetDir = "implementation/aidcf-015-v1.3";
+  // A recorded erratum on the decision question: show the corrected wording, keep the released text one click away.
+  const erratum = caseData.errata[0] ?? null;
+  const question = erratum?.correction.match(/"([^"]+)"/)?.[1] ?? d.question;
 
   return (
     <>
@@ -35,6 +39,16 @@ export default function CasePage() {
         </div>
       </section>
 
+      <section className="block" aria-labelledby="story-board-h">
+        <div className="wrap">
+          <FailureStory variant="board" />
+          <p className="small muted">
+            This is one of {caseData.scenarios.length} analysed failure scenarios. The full graph below is the expert
+            view: every element, dependency and scenario.
+          </p>
+        </div>
+      </section>
+
       <section className="block" aria-labelledby="question-h">
         <div className="wrap">
           <div className="section-head">
@@ -42,25 +56,24 @@ export default function CasePage() {
             <h2 id="question-h">The decision question</h2>
           </div>
           <div className="card">
-            <p style={{ fontSize: "1.1rem" }}>{d.question}</p>
+            <p style={{ fontSize: "1.1rem" }}>{question}</p>
             <p className="small muted" style={{ margin: 0 }}>
               Scope: {d.scope}
             </p>
+            {erratum && (
+              <details className="erratum">
+                <summary>Corrected by erratum {erratum.id}; the decision is unchanged.</summary>
+                <p className="small">
+                  <strong>As released:</strong> {d.question}
+                </p>
+                <p className="small">{erratum.erratum}</p>
+                <p className="small">
+                  The released file is fixed by its hash, so the correction is recorded in the{" "}
+                  <a href={sourceUrl("ERRATA.md")}>errata register</a> and applied in the next release.
+                </p>
+              </details>
+            )}
           </div>
-          {caseData.errata.map((e) => (
-            <div key={e.id} className="notice" role="note" style={{ marginTop: 12 }}>
-              <p className="small">
-                <strong>
-                  Erratum {e.id} (recorded {e.found}).
-                </strong>{" "}
-                {e.erratum}
-              </p>
-              <p className="small" style={{ margin: 0 }}>
-                <strong>Correction:</strong> {e.correction}{" "}
-                <a href={sourceUrl("ERRATA.md")}>Errata register</a>
-              </p>
-            </div>
-          ))}
           <h3 style={{ marginTop: 24 }}>Required service outcomes</h3>
           <div className="table-scroll">
             <table className="table stack">
@@ -101,7 +114,9 @@ export default function CasePage() {
               {caseData.faultDomains.length} shared fault domains make apparently redundant equipment fail together.
             </p>
           </div>
-          <CaseExplorer />
+          <div id="journey" className="dx-anchor">
+            <CaseExplorer />
+          </div>
         </div>
       </section>
 
