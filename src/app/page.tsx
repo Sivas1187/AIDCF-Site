@@ -81,6 +81,19 @@ const doctrines = [
 export default function Home() {
   const s = caseData.summary;
   const bt = validation.backTest;
+  const ev = validation.evidence;
+  const pilotPending = bt.comparison.pilot.filter((b) => !b.approved);
+  const shortName: Record<string, string> = {
+    "BL-ENG": "engineering studies",
+    "BL-CX": "commissioning",
+    "BL-OT": "OT security risk assessment",
+  };
+  const spell = (n: number) => ["no", "one", "two", "three", "four", "five", "six"][n] ?? String(n);
+  const listNames = (bs: { id: string; name: string }[]) =>
+    bs
+      .map((b) => shortName[b.id] ?? b.name.toLowerCase())
+      .join(", ")
+      .replace(/, ([^,]*)$/, " and $1");
   const ep = validation.expertPanel;
   const pil = validation.pilot;
   const ir = validation.independentReview;
@@ -123,8 +136,8 @@ export default function Home() {
       text: (
         <>
           Incident back-test (AIDCF-VAL-001): protocol prepared and comparison instruments implemented (v1.1, draft).{" "}
-          {bt.comparison.approved < bt.comparison.baselines
-            ? `Practitioner approval of the comparison baselines is pending (${bt.comparison.approved} of ${bt.comparison.baselines} approved). `
+          {pilotPending.length > 0
+            ? `The ${pilotPending.length === bt.comparison.pilot.length ? spell(pilotPending.length) : pilotPending.length} pilot comparison profiles (${listNames(pilotPending)}) are awaiting practitioner approval. `
             : ""}
           {bt.selected > 0 ? `${bt.selected} incidents selected for coding. ` : "The sample has not been drawn. "}
           No results are available.
@@ -452,6 +465,11 @@ export default function Home() {
             <h2 id="validation-h">Validation status</h2>
             <p>What has been done, what has been prepared, and what is still needed before anyone should rely on AIDCF.</p>
           </div>
+          <p className="evidence-ladder">
+            <b>{ev.libraryScenarios}</b> reference failure patterns in the methodology,{" "}
+            <b>{ev.caseScenarios}</b> instantiated in the synthetic case, and <b>{ev.realWorldCases}</b>{" "}
+            {ev.realWorldCases === 1 ? "real-world case" : "real-world cases"} assessed or validated.
+          </p>
           <ul className="checklist" aria-label="Release status">
             {statusItems.map((item, i) => (
               <li key={i} className={item.state}>
@@ -488,8 +506,11 @@ export default function Home() {
                   <td data-label="State">
                     Protocol v1.0 in force. Draft{" "}
                     <a href={sourceUrl(bt.draftProtocol)}>v1.1</a> adds the comparison with conventional reviews, and its
-                    instruments are implemented. {bt.comparison.approved} of {bt.comparison.baselines} comparison
-                    baselines approved by practitioners. Sampling frame: {bt.logged} incidents logged, {bt.eligible}{" "}
+                    instruments are implemented.{" "}
+                    {pilotPending.length > 0
+                      ? `${pilotPending.length === bt.comparison.pilot.length ? `The ${spell(pilotPending.length)}` : `${pilotPending.length} of the ${bt.comparison.pilot.length}`} pilot comparison profiles await practitioner approval; the other ${spell(bt.comparison.baselines - bt.comparison.pilot.length)} methods are not in the initial pilot.`
+                      : `All ${bt.comparison.pilot.length} pilot comparison profiles are approved.`}{" "}
+                    Sampling frame: {bt.logged} incidents logged, {bt.eligible}{" "}
                     eligible, {bt.excluded} excluded with reasons.{" "}
                     {bt.selected > 0 ? `${bt.selected} selected.` : "Sample not drawn."} No results.
                   </td>

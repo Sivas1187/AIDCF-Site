@@ -647,6 +647,10 @@ const validation = {
     comparison: {
       baselines: comparisonBaselines.length,
       approved: comparisonBaselines.filter((b) => b.approval_status === "APPROVED").length,
+      // the staged pilot evaluates only the baselines marked ACTIVE (VAL-001 v1.1 section 10A)
+      pilot: comparisonBaselines
+        .filter((b) => b.pilot_status === "ACTIVE")
+        .map((b) => ({ id: b.baseline_id, name: b.name, approved: b.approval_status === "APPROVED" })),
       rows: comparativeRows.length,
     },
   },
@@ -793,6 +797,15 @@ const scenarioLibrary = (() => {
   const intro = part.split("\n## ")[0].split("\n\n").map((t) => t.trim()).find((t) => t && !t.startsWith("#"));
   return { source: thfPath, intro, scenarios: items };
 })();
+
+// Reference patterns, instantiated synthetic scenarios and real-world cases, so the
+// site can state the distinction without hard-coded counts. A real-world case is a
+// completed pilot result record (AIDCF-PIL-004), not a template.
+validation.evidence = {
+  libraryScenarios: scenarioLibrary.scenarios.length,
+  caseScenarios: caseData.scenarios.length,
+  realWorldCases: listDir("pilots/pilot-results").filter((f) => f !== "README.md" && !/template/i.test(f)).length,
+};
 
 const outputs = {
   "manifest.json": manifest,
