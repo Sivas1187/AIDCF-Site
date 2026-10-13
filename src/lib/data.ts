@@ -48,6 +48,21 @@ export interface ControlSummary {
   assessment: string | null;
   findings: string[];
   unknowns: string[];
+  methods: string[];
+  floor: string | null;
+  requiredClasses: string[];
+  evidence: {
+    id: string;
+    name: string;
+    class: string;
+    sufficiency: string | null;
+    quality: string | null;
+    period: string | null;
+    states: string[];
+    sha256: string | null;
+    fixture: string | null;
+  }[];
+  tests: { id: string; type: string; name: string; outcome: string | null }[];
 }
 
 export interface CaseData {
@@ -120,6 +135,7 @@ export interface CaseData {
     evaluations: { control: string; role: string; result: string }[];
     criteria: { id: string; outcome: string }[];
   }[];
+  evidenceClasses: Record<string, string>;
   errata: { id: string; release: string; found: string; location: string; erratum: string; correction: string }[];
   decision: {
     question: string;

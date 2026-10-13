@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { DomainExplorer } from "@/components/DomainExplorer";
 import { framework, sourceUrl } from "@/lib/data";
 import { controlDetail } from "@/lib/controls";
@@ -42,8 +43,9 @@ export default function DomainsPage() {
             <p>
               Domains are grouped into the seven clusters of whitepaper section 8, running from direction and the
               subject of assurance, through the physical site and facility engineering, to the AI technology chain,
-              operations, authority and evidence. Select a domain to see the domains it shares critical gates with, or
-              pick a gate to see which domains hold its critical controls.
+              operations, authority and evidence. Select a domain to see which other domains are judged at the same
+              critical gates, or pick a gate to see which domains hold its critical controls. These are assurance
+              links between controls; physical dependencies are traced in the <Link href="/case/">infrastructure graph</Link>.
             </p>
           </div>
           <DomainExplorer />

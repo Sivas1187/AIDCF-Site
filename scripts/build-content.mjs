@@ -399,6 +399,7 @@ for (const d of dependencies) {
 const controlsFromIris = (iris) =>
   (iris ?? []).filter((x) => String(x).includes("/control/")).map(short);
 
+const evidenceById = new Map(ofType("EvidenceObject").map((e) => [e.id, e]));
 const assessmentByControl = new Map();
 for (const a of assessments) for (const c of controlsFromIris(a.governedBy)) assessmentByControl.set(c, a);
 
@@ -417,6 +418,29 @@ const controlSummary = (id) => {
     assessment: a ? short(a.id) : null,
     findings: findings.filter((f) => f.criterionRef === id).map((f) => short(f.id)),
     unknowns: shorts(a?.hasUnknown),
+    methods: a?.assessmentMethods ?? [],
+    floor: c?.sufficiencyFloor ?? null,
+    requiredClasses: split(profiles[id]?.requiredClasses),
+    evidence: (a?.evidencedBy ?? []).map((iri) => {
+      const e = evidenceById.get(iri);
+      if (!e) fail(`evidence ${iri} referenced by ${short(a.id)} not found`);
+      return {
+        id: short(e.id),
+        name: e.name.replace(/^Synthetic (\w)/, (_, ch) => ch.toUpperCase()),
+        class: e.evidenceClass,
+        sufficiency: e.sufficiency ?? null,
+        quality: e.qualityBand ?? null,
+        period: e.periodStart && e.periodEnd ? `${e.periodStart} to ${e.periodEnd}` : null,
+        states: e.operatingStates ?? [],
+        sha256: e.sha256 ?? null,
+        fixture: e.fixturePath ? `implementation/aidcf-015-v1.3/${e.fixturePath}` : null,
+      };
+    }),
+    tests: a
+      ? all
+          .filter((x) => (x.type === "TestRecord" || x.type === "Sample") && (x.resultsIn ?? []).includes(a.id))
+          .map((x) => ({ id: short(x.id), type: x.type, name: x.name.replace(/^Synthetic (\w)/, (_, ch) => ch.toUpperCase()), outcome: x.testOutcome ?? x.selectionMethod ?? null }))
+      : [],
   };
 };
 
@@ -540,6 +564,7 @@ const caseData = {
     }))
     .sort((a, b) => a.gate.localeCompare(b.gate)),
   errata,
+  evidenceClasses: Object.fromEntries(csv("registries/vocabularies/evidence-classes.csv").map((r) => [r.code, r.name])),
   decision: {
     question: decision.decisionQuestion,
     scope: decision.decisionScope,

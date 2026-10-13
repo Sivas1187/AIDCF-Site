@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { caseData, framework, gateName, humanise } from "@/lib/data";
+import { EvidenceBlock } from "./CaseExplorer";
 
 const resultClass = (r: string) => `state s-${r.toLowerCase()}`;
 
@@ -65,6 +66,7 @@ export function GateResults() {
                   <span className="mono">{e.control}</span> {caseData.controls[e.control]?.title}{" "}
                   <span className="muted small">({e.role.toLowerCase()})</span>{" "}
                   <span className={resultClass(e.result)}>{e.result}</span>
+                  <EvidenceBlock id={e.control} />
                 </li>
               ))}
             </ul>

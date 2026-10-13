@@ -82,8 +82,21 @@ for (const scheme of ["light", "dark"]) {
       await page.screenshot({ path: `${out}/${scheme}-desktop-case-journey.png` });
       for (let i = 0; i < 20 && (await page.getByRole("button", { name: "Next →" }).count()); i++) {
         await page.getByRole("button", { name: "Next →" }).click();
+        const t = await page.locator(".panel").innerText();
+        if (/What the evidence showed/.test(t)) {
+          if (!/Evidence: \d+ object/.test(t) && !/Not assessed: no evidence/.test(t)) {
+            console.log(`CASE ${scheme}: journey controls step lacks evidence`);
+            problems++;
+          }
+          await page.screenshot({ path: `${out}/${scheme}-desktop-case-journey-evidence.png` });
+        }
       }
       jp = await page.locator(".panel").innerText();
+      if (!/Traced back: CG-\d+/i.test(jp)) {
+        console.log(`CASE ${scheme}: decision step has no trace to the controlling gate`);
+        problems++;
+      }
+      await page.screenshot({ path: `${out}/${scheme}-desktop-case-journey-decision.png` });
       if (!jp.includes(await page.evaluate(() => document.querySelector(".decision-card .big")?.textContent ?? "?"))) {
         console.log(`CASE ${scheme}: journey does not end on the decision`);
         problems++;
@@ -102,6 +115,14 @@ for (const scheme of ["light", "dark"]) {
         problems++;
       }
       await page.screenshot({ path: `${out}/${scheme}-desktop-domains-gate.png` });
+      await page.goto(base + "/domains/pow/", { waitUntil: "networkidle" });
+      await page.fill("#control-filter", "UPS");
+      await page.waitForTimeout(150);
+      const visible = await page.locator(".dx-control:visible").count();
+      if (!(visible > 0 && visible < 24)) {
+        console.log(`DOMAINS ${scheme}: filter shows ${visible} controls for "UPS"`);
+        problems++;
+      }
     } else if (vpName === "mobile") {
       const listShown = await page.locator(".list-view").count();
       if (!listShown) {
@@ -114,6 +135,10 @@ for (const scheme of ["light", "dark"]) {
       await page.getByRole("button", { name: "Guided journey" }).click();
       await page.getByRole("button", { name: "Next →" }).click();
       await page.waitForTimeout(400);
+      if (!(await page.locator(".journey-path").isVisible())) {
+        console.log(`CASE ${scheme} mobile: compact failure path not shown`);
+        problems++;
+      }
       await page.screenshot({ path: `${out}/${scheme}-mobile-case-journey.png` });
     }
     for (const e of errors) {

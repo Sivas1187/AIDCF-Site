@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
-import { caseData, framework, gateName, humanise, percent, type CaseEdge, type CaseNode, type NodeKind } from "@/lib/data";
+import { caseData, framework, gateName, humanise, percent, sourceUrl, type CaseEdge, type CaseNode, type NodeKind } from "@/lib/data";
 
 // ------------------------------------------------------------- layout
 
@@ -431,6 +431,18 @@ function JourneyPanel({
   const gateStates = caseData.gateResults.filter((g) => gates.has(g.gate));
   const d = caseData.decision;
   const sc = caseData.score;
+  // The gates named in the controlling reasons, with the critical controls that held them back.
+  const trace = [...new Set(d.controllingReasons.flatMap((r) => r.match(/CG-\d+/g) ?? []))].map((gid) => {
+    const g = caseData.gateResults.find((x) => x.gate === gid)!;
+    const crit = g.evaluations.filter((e) => e.role === "CRITICAL");
+    return {
+      gate: gid,
+      state: g.state,
+      weak: crit.filter((e) => !["CONFORMING", "NOT_ASSESSED"].includes(e.result)),
+      notAssessed: crit.filter((e) => e.result === "NOT_ASSESSED").length,
+      unknowns: caseData.unknowns.filter((u) => u.constrains.includes(gid)),
+    };
+  });
 
   let body: React.ReactNode;
   if (step.kind === "node") {
@@ -518,10 +530,13 @@ function JourneyPanel({
           Controls and evidence
         </p>
         <h3>What the evidence showed</h3>
-        <p className="small">Each safeguard is governed by controls. The assessment tested them against evidence:</p>
+        <p className="small">
+          Each safeguard is governed by controls. Here is what the assessment found for each, and the evidence it
+          rested on:
+        </p>
         <ul>
           {controls.map((c) => (
-            <ControlLine key={c} id={c} />
+            <ControlLine key={c} id={c} evidenceOpen />
           ))}
         </ul>
       </>
@@ -557,6 +572,48 @@ function JourneyPanel({
           <strong>Controlling reason:</strong> {d.controllingReasons.join("; ")}. The most restrictive ceiling across all
           gates and UNKNOWNs decides, not this scenario alone.
         </p>
+        {trace.map((t) => (
+          <div key={t.gate} className="trace">
+            <h4>
+              Traced back: {t.gate} {gateName(t.gate)} <span className={resultClass(t.state)}>{t.state}</span>
+            </h4>
+            <ul>
+              {t.weak.map((e) => {
+                const c = caseData.controls[e.control];
+                const have = new Set(c?.evidence.map((x) => x.class) ?? []);
+                const missing = (c?.requiredClasses ?? []).filter((x) => !have.has(x));
+                return (
+                  <li key={e.control} className="small">
+                    <span className="mono">{e.control}</span> {c?.title}{" "}
+                    <span className="muted">({e.role.toLowerCase()})</span> <span className={resultClass(e.result)}>{e.result}</span>
+                    {c?.findings.map((fid) => {
+                      const f = caseData.findings.find((x) => x.id === fid);
+                      return f ? (
+                        <div key={fid}>
+                          {f.id}: {f.condition}
+                        </div>
+                      ) : null;
+                    })}
+                    {missing.length > 0 && <div>Missing evidence: {missing.join(", ")}.</div>}
+                  </li>
+                );
+              })}
+              {t.notAssessed > 0 && (
+                <li className="small muted">
+                  {t.notAssessed} further critical control{t.notAssessed === 1 ? " was" : "s were"} not assessed.
+                </li>
+              )}
+            </ul>
+            {t.unknowns.map((u) => (
+              <p key={u.id} className="small">
+                <span className="state s-unknown">
+                  {u.id} {u.severity}
+                </span>{" "}
+                {u.name}. Evidence needed: {u.evidenceNeeded}
+              </p>
+            ))}
+          </div>
+        ))}
         <p className="small">
           {sc.coverage.assessedCount} of {sc.coverage.inScopeCount} controls assessed; coverage{" "}
           {percent(sc.coverage.coveragePercent, 2)}; score band {sc.band}.
@@ -577,6 +634,18 @@ function JourneyPanel({
       <div className="journey-bar" aria-hidden="true">
         <span style={{ width: `${((index + 1) / total) * 100}%` }} />
       </div>
+      <ol className="journey-path only-narrow" aria-label="Failure path">
+        {order.map((id, i) => {
+          const reachedHere = step.kind !== "node" || i <= order.indexOf(step.id);
+          const isCurrent = step.kind === "node" && step.id === id;
+          return (
+            <li key={id} className={isCurrent ? "current" : reachedHere ? "reached" : undefined} aria-current={isCurrent ? "step" : undefined}>
+              {nodesById.get(id)?.domain && <span className="mono">{nodesById.get(id)?.domain} </span>}
+              {nodesById.get(id)?.name ?? id}
+            </li>
+          );
+        })}
+      </ol>
       {body}
       <div className="journey-nav">
         <button type="button" className="btn" disabled={index === 0} onClick={() => onMove(index - 1)}>
@@ -623,7 +692,78 @@ function IntroPanel() {
   );
 }
 
-function ControlLine({ id }: { id: string }) {
+const sLevel = (s: string | null) => (s ? Number(s.replace(/\D/g, "")) : -1);
+
+// What the assessment of one control rested on: evidence objects, tests and samples, and the gap to its profile.
+export function EvidenceBlock({ id, open = false }: { id: string; open?: boolean }) {
+  const c = caseData.controls[id];
+  if (!c) return null;
+  if (c.result === "NOT_ASSESSED") {
+    return <div className="small muted">Not assessed: no evidence was collected, so this control cannot support its gates.</div>;
+  }
+  const have = new Set(c.evidence.map((e) => e.class));
+  const missing = c.requiredClasses.filter((x) => !have.has(x));
+  const belowFloor = sLevel(c.sufficiency) < sLevel(c.floor);
+  const ev = caseData.evidenceClasses;
+  return (
+    <details className="evidence" open={open}>
+      <summary className="small">
+        Evidence: {c.evidence.length} object{c.evidence.length === 1 ? "" : "s"} at {c.sufficiency ?? "unrated"}
+        {c.floor ? `, floor ${c.floor}` : ""}
+        {belowFloor ? " (below floor)" : ""}
+        {missing.length ? `, missing ${missing.join(", ")}` : ""}
+      </summary>
+      <div className="small">
+        <p>
+          Required classes: {c.requiredClasses.map((x) => `${x} ${ev[x] ?? ""}`.trim()).join("; ")}.{" "}
+          {missing.length ? (
+            <strong style={{ color: "var(--fail)" }}>
+              Missing: {missing.map((x) => `${x} ${ev[x] ?? ""}`.trim()).join("; ")}.
+            </strong>
+          ) : (
+            "All present."
+          )}{" "}
+          {belowFloor && (
+            <strong style={{ color: "var(--fail)" }}>
+              Sufficiency {c.sufficiency} is below the floor of {c.floor}.
+            </strong>
+          )}
+        </p>
+        {c.methods.length > 0 && <p>Methods: {c.methods.map((m) => humanise(m).toLowerCase()).join(", ")}.</p>}
+        <ul>
+          {c.evidence.map((e) => (
+            <li key={e.id}>
+              <span className="mono">{e.id}</span> {e.class} {ev[e.class] ?? ""} · {e.sufficiency} · quality {e.quality}
+              {e.period ? ` · ${e.period}` : ""}
+              {e.states.length ? ` · ${e.states.join(", ")}` : ""}
+              {e.sha256 && (
+                <div className="muted">
+                  SHA-256 <span className="mono">{e.sha256.slice(0, 16)}…</span>
+                  {e.fixture && (
+                    <>
+                      {" "}
+                      <a href={sourceUrl(e.fixture)}>
+                        fixture<span className="visually-hidden"> {e.id}</span>
+                      </a>
+                    </>
+                  )}
+                </div>
+              )}
+            </li>
+          ))}
+          {c.tests.map((t) => (
+            <li key={t.id}>
+              <span className="mono">{t.id}</span> {humanise(t.type)}: {t.name}
+              {t.outcome ? ` (${t.outcome.replace(/^Synthetic: /, "")})` : ""}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </details>
+  );
+}
+
+function ControlLine({ id, evidenceOpen = false }: { id: string; evidenceOpen?: boolean }) {
   const c = caseData.controls[id];
   if (!c) return <li className="mono">{id}</li>;
   return (
@@ -641,6 +781,7 @@ function ControlLine({ id }: { id: string }) {
         </div>
       )}
       {c.rationale && <div className="small">{c.rationale}</div>}
+      <EvidenceBlock id={id} open={evidenceOpen} />
       {c.findings.map((fid) => {
         const f = caseData.findings.find((x) => x.id === fid);
         return f ? (

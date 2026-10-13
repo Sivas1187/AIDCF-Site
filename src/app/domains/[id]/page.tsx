@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { framework, gateName, humanise, research, sourceUrl } from "@/lib/data";
 import { controlDetail } from "@/lib/controls";
 import { domainIndex } from "@/lib/domains";
+import { ControlFilter } from "@/components/ControlFilter";
 
 export const dynamicParams = false;
 
@@ -71,6 +72,7 @@ export default async function DomainPage({ params }: Props) {
 
       <section className="block" aria-label="Families and controls">
         <div className="wrap">
+          <ControlFilter total={d.controls} />
           <nav aria-label="Families" className="dx-toc">
             <ul>
               {domainIndex[code].map((f) => (
@@ -110,14 +112,15 @@ export default async function DomainPage({ params }: Props) {
                     <p>
                       <strong>Objective.</strong> {x.objective}
                     </p>
-                    <p>
-                      <strong>Requirement.</strong> {x.requirement}
-                    </p>
-                    <p className="small muted">
+                    <details>
+                      <summary>Requirement and evidence</summary>
+                      <p>{x.requirement}</p>
+                      <p className="small muted">
                       Evidence required: {x.requiredClasses.map((e) => `${e} ${v.evidenceClasses[e] ?? ""}`.trim()).join("; ")}
                       {x.optionalClasses.length ? `. Optional: ${x.optionalClasses.join(", ")}` : ""}. Operating states:{" "}
                       {x.stateCoverage.join(", ")}.
-                    </p>
+                      </p>
+                    </details>
                   </article>
                 );
               })}

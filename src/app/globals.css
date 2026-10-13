@@ -1660,3 +1660,106 @@ details.dx-family ul {
   list-style: none;
   padding-left: 0;
 }
+
+details.evidence {
+  margin-top: 4px;
+}
+
+details.evidence > summary {
+  cursor: pointer;
+  color: var(--ink-2);
+}
+
+details.evidence > div {
+  margin: 6px 0 4px;
+  padding: 8px 10px;
+  background: var(--surface-2);
+  border-radius: var(--radius);
+}
+
+details.evidence p {
+  margin: 0 0 6px;
+}
+
+.trace {
+  border-left: 3px solid var(--fail);
+  padding-left: 10px;
+  margin: 12px 0;
+}
+
+.trace h4 {
+  margin-top: 0;
+}
+
+.journey-path {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+  font-size: 0.85rem;
+  border-left: 2px solid var(--rule);
+}
+
+.journey-path li {
+  position: relative;
+  padding: 2px 0 2px 14px;
+  color: var(--ink-3);
+}
+
+.journey-path li::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: 0.65em;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--rule-strong);
+}
+
+.journey-path li.reached {
+  color: var(--ink);
+}
+
+.journey-path li.reached::before {
+  border-color: var(--path);
+}
+
+.journey-path li.current {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.journey-path li.current::before {
+  background: var(--path);
+  border-color: var(--path);
+}
+
+input[type="search"] {
+  font: inherit;
+  font-size: 0.94rem;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  padding: 7px 10px;
+  width: min(100%, 340px);
+}
+
+.dx-filter {
+  position: sticky;
+  top: 57px;
+  z-index: 5;
+  background: var(--bg);
+  padding: 8px 0;
+}
+
+.dx-control details > summary {
+  cursor: pointer;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.dx-control details[open] > summary {
+  margin-bottom: 8px;
+}

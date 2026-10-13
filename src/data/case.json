@@ -1323,7 +1323,61 @@
       "rationale": "Synthetic capability register entry with owner, lifecycle and approval; configuration extract and traceability analysis cover all three required classes at S3.",
       "assessment": "CA-001",
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [
+        "RECONCILIATION",
+        "INSPECTION",
+        "DOCUMENT_REVIEW",
+        "ANALYSIS"
+      ],
+      "floor": "S3",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E7"
+      ],
+      "evidence": [
+        {
+          "id": "EV-001",
+          "name": "Documentary evidence for MCF-CAP-001",
+          "class": "E1",
+          "sufficiency": "S3",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "6a984eaa3a9168512238edfc5f658766ec5598779e8a772793778343d535ca11",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-001.txt"
+        },
+        {
+          "id": "EV-013",
+          "name": "Configuration evidence for MCF-CAP-001",
+          "class": "E2",
+          "sufficiency": "S3",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "4cef85e73bac50eea2b075a4e1e86c345edcad3fc3e685a9460b480745c9c70d",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-013.txt"
+        },
+        {
+          "id": "EV-014",
+          "name": "Analytical evidence for MCF-CAP-001",
+          "class": "E7",
+          "sufficiency": "S3",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "fceeb78003cd529faae29810d45eeaf38575d3ddf3b8f9fcb5bc257096ca61a0",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-014.txt"
+        }
+      ],
+      "tests": []
     },
     "MCF-CAP-002": {
       "id": "MCF-CAP-002",
@@ -1345,7 +1399,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S3",
+      "requiredClasses": [
+        "E1",
+        "E6"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-CAP-004": {
       "id": "MCF-CAP-004",
@@ -1371,7 +1433,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S3",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E7"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-CAP-005": {
       "id": "MCF-CAP-005",
@@ -1389,7 +1460,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S3",
+      "requiredClasses": [
+        "E1",
+        "E7"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-CAP-006": {
       "id": "MCF-CAP-006",
@@ -1411,7 +1490,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S3",
+      "requiredClasses": [
+        "E1",
+        "E7"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-CAP-007": {
       "id": "MCF-CAP-007",
@@ -1433,7 +1520,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S3",
+      "requiredClasses": [
+        "E1",
+        "E2"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-CAP-008": {
       "id": "MCF-CAP-008",
@@ -1455,7 +1550,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S3",
+      "requiredClasses": [
+        "E1",
+        "E2"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-CAP-010": {
       "id": "MCF-CAP-010",
@@ -1473,7 +1576,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S3",
+      "requiredClasses": [
+        "E1",
+        "E7"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-CAP-023": {
       "id": "MCF-CAP-023",
@@ -1495,7 +1606,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-CMP-001": {
       "id": "MCF-CMP-001",
@@ -1517,7 +1637,47 @@
       "rationale": "Accelerator architecture design and analysis evidence meet the DESIGN claim at S3.",
       "assessment": "CA-005",
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [
+        "DOCUMENT_REVIEW",
+        "ANALYSIS",
+        "INQUIRY",
+        "RECONCILIATION"
+      ],
+      "floor": "S3",
+      "requiredClasses": [
+        "E1",
+        "E7"
+      ],
+      "evidence": [
+        {
+          "id": "EV-005",
+          "name": "Documentary evidence for MCF-CMP-001",
+          "class": "E1",
+          "sufficiency": "S3",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "7e1f888a762a21a2ea270666e8bf40bbddb0939f4c0790523286647908c029cd",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-005.txt"
+        },
+        {
+          "id": "EV-020",
+          "name": "Analytical evidence for MCF-CMP-001",
+          "class": "E7",
+          "sufficiency": "S3",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "55a59f4bc8a5372ec2ff54052925042d0a78a2eb520b9c2d5738c536aa3b1bc3",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-020.txt"
+        }
+      ],
+      "tests": []
     },
     "MCF-CMP-006": {
       "id": "MCF-CMP-006",
@@ -1539,7 +1699,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-CMP-008": {
       "id": "MCF-CMP-008",
@@ -1565,7 +1734,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-CMP-009": {
       "id": "MCF-CMP-009",
@@ -1587,7 +1766,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E2",
+        "E3",
+        "E7"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-CMP-013": {
       "id": "MCF-CMP-013",
@@ -1613,7 +1801,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-CMP-015": {
       "id": "MCF-CMP-015",
@@ -1639,7 +1836,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-CMP-019": {
       "id": "MCF-CMP-019",
@@ -1657,7 +1864,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-CMP-023": {
       "id": "MCF-CMP-023",
@@ -1679,7 +1895,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-DEP-001": {
       "id": "MCF-DEP-001",
@@ -1703,7 +1929,54 @@
       "findings": [
         "F-001"
       ],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [
+        "DOCUMENT_REVIEW",
+        "RECONCILIATION",
+        "INSPECTION",
+        "SAMPLING"
+      ],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2"
+      ],
+      "evidence": [
+        {
+          "id": "EV-002",
+          "name": "Documentary evidence for MCF-DEP-001",
+          "class": "E1",
+          "sufficiency": "S4",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "0ffd34236f20eb21387e5b7036b3e7bb626f7cbec119fcd367d7b31cbec91635",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-002.txt"
+        },
+        {
+          "id": "EV-015",
+          "name": "Configuration evidence for MCF-DEP-001",
+          "class": "E2",
+          "sufficiency": "S4",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "d83466b987b0ee104cf56608195d24aecaaca5b233eb04080ce254b5ae2ac525",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-015.txt"
+        }
+      ],
+      "tests": [
+        {
+          "id": "SMP-001",
+          "type": "Sample",
+          "name": "Sample of required functions for MCF-DEP-001",
+          "outcome": "Whole population"
+        }
+      ]
     },
     "MCF-DEP-002": {
       "id": "MCF-DEP-002",
@@ -1725,7 +1998,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-DEP-005": {
       "id": "MCF-DEP-005",
@@ -1755,7 +2036,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-DEP-007": {
       "id": "MCF-DEP-007",
@@ -1777,7 +2066,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-DEP-009": {
       "id": "MCF-DEP-009",
@@ -1799,7 +2096,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-DEP-010": {
       "id": "MCF-DEP-010",
@@ -1821,7 +2126,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-DEP-012": {
       "id": "MCF-DEP-012",
@@ -1847,7 +2160,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-DEP-017": {
       "id": "MCF-DEP-017",
@@ -1869,7 +2190,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-DEP-018": {
       "id": "MCF-DEP-018",
@@ -1891,7 +2220,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S3",
+      "requiredClasses": [
+        "E1",
+        "E2"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-ENV-018": {
       "id": "MCF-ENV-018",
@@ -1909,7 +2246,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E3",
+        "E4",
+        "E5"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-EVA-009": {
       "id": "MCF-EVA-009",
@@ -1927,7 +2274,14 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S3",
+      "requiredClasses": [
+        "E1"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-EVA-010": {
       "id": "MCF-EVA-010",
@@ -1945,7 +2299,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S3",
+      "requiredClasses": [
+        "E1",
+        "E7"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-EVA-017": {
       "id": "MCF-EVA-017",
@@ -1960,7 +2322,45 @@
       "findings": [
         "F-006"
       ],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [
+        "DOCUMENT_REVIEW",
+        "RECONCILIATION"
+      ],
+      "floor": "S3",
+      "requiredClasses": [
+        "E1",
+        "E7"
+      ],
+      "evidence": [
+        {
+          "id": "EV-012",
+          "name": "Documentary evidence for MCF-EVA-017",
+          "class": "E1",
+          "sufficiency": "S3",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "9c0e9cdfc26f29cd5a75698a93dd1da929005d21bf553a058759a64263c0ccd1",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-012.txt"
+        },
+        {
+          "id": "EV-030",
+          "name": "Analytical evidence for MCF-EVA-017",
+          "class": "E7",
+          "sufficiency": "S3",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "0a355eda707ccc7a7b1b5fe2ba6f5a19a753fb742cc868420e09907fe1e540da",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-030.txt"
+        }
+      ],
+      "tests": []
     },
     "MCF-GOV-002": {
       "id": "MCF-GOV-002",
@@ -1978,7 +2378,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S3",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-GOV-005": {
       "id": "MCF-GOV-005",
@@ -1996,7 +2405,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S3",
+      "requiredClasses": [
+        "E1",
+        "E6"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-GOV-006": {
       "id": "MCF-GOV-006",
@@ -2018,7 +2435,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S3",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E7"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-GOV-007": {
       "id": "MCF-GOV-007",
@@ -2036,7 +2462,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E3"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-NET-001": {
       "id": "MCF-NET-001",
@@ -2060,7 +2494,62 @@
       "findings": [],
       "unknowns": [
         "U-002"
-      ]
+      ],
+      "methods": [
+        "DOCUMENT_REVIEW",
+        "RECONCILIATION",
+        "ANALYSIS",
+        "SAMPLING",
+        "INSPECTION"
+      ],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3"
+      ],
+      "evidence": [
+        {
+          "id": "EV-007",
+          "name": "Documentary evidence for MCF-NET-001",
+          "class": "E1",
+          "sufficiency": "S4",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "0add3f9486537d277a5eeeb2c0803e9ddc6e018d43e773e12c4191b133e09ef1",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-007.txt"
+        },
+        {
+          "id": "EV-023",
+          "name": "Configuration evidence for MCF-NET-001",
+          "class": "E2",
+          "sufficiency": "S4",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "ed0005f2bd0a3b61d995787c764b30cc8457d17faf996f6c30c79c3bab2b9ba9",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-023.txt"
+        },
+        {
+          "id": "EV-024",
+          "name": "Operational evidence for MCF-NET-001",
+          "class": "E3",
+          "sufficiency": "S4",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "daa80804ad1641917f1dbe5a02efbdce2b64df7b8599d512ef46747619e0500d",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-024.txt"
+        }
+      ],
+      "tests": []
     },
     "MCF-NET-002": {
       "id": "MCF-NET-002",
@@ -2086,7 +2575,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-NET-004": {
       "id": "MCF-NET-004",
@@ -2112,7 +2610,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-NET-007": {
       "id": "MCF-NET-007",
@@ -2134,7 +2642,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-NET-008": {
       "id": "MCF-NET-008",
@@ -2152,7 +2669,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-NET-009": {
       "id": "MCF-NET-009",
@@ -2174,7 +2700,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-NET-015": {
       "id": "MCF-NET-015",
@@ -2200,7 +2735,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-NET-022": {
       "id": "MCF-NET-022",
@@ -2226,7 +2771,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E2",
+        "E3"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-OPS-002": {
       "id": "MCF-OPS-002",
@@ -2248,7 +2801,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S3",
+      "requiredClasses": [
+        "E1",
+        "E2"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-OPS-004": {
       "id": "MCF-OPS-004",
@@ -2270,7 +2831,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E2",
+        "E3"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-OPS-006": {
       "id": "MCF-OPS-006",
@@ -2292,7 +2861,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E2",
+        "E3"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-OPS-007": {
       "id": "MCF-OPS-007",
@@ -2310,7 +2887,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E2",
+        "E3"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-OPS-008": {
       "id": "MCF-OPS-008",
@@ -2328,7 +2913,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E2",
+        "E3"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-OPS-013": {
       "id": "MCF-OPS-013",
@@ -2356,7 +2949,47 @@
       "findings": [
         "F-003"
       ],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [
+        "DOCUMENT_REVIEW",
+        "ANALYSIS",
+        "SAMPLING",
+        "OBSERVATION"
+      ],
+      "floor": "S4",
+      "requiredClasses": [
+        "E2",
+        "E3"
+      ],
+      "evidence": [
+        {
+          "id": "EV-008",
+          "name": "Configuration evidence for MCF-OPS-013",
+          "class": "E2",
+          "sufficiency": "S4",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "aa887ca9f675d5bf8b4a6bcd7bfd1553b1a6d07a4b90a399313e879389783fa9",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-008.txt"
+        },
+        {
+          "id": "EV-025",
+          "name": "Operational evidence for MCF-OPS-013",
+          "class": "E3",
+          "sufficiency": "S4",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "b3542a9bc10c3723dccfe65c5946bb317fdc0f2bf2a9eb82514f5709f0624565",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-025.txt"
+        }
+      ],
+      "tests": []
     },
     "MCF-OPS-017": {
       "id": "MCF-OPS-017",
@@ -2382,7 +3015,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-OPS-018": {
       "id": "MCF-OPS-018",
@@ -2404,7 +3045,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E2",
+        "E3"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-OPS-020": {
       "id": "MCF-OPS-020",
@@ -2426,7 +3075,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-PHY-010": {
       "id": "MCF-PHY-010",
@@ -2448,7 +3106,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-PHY-021": {
       "id": "MCF-PHY-021",
@@ -2470,7 +3137,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E4",
+        "E5"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-PHY-022": {
       "id": "MCF-PHY-022",
@@ -2496,7 +3172,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E4",
+        "E5"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-PHY-023": {
       "id": "MCF-PHY-023",
@@ -2514,7 +3200,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E3",
+        "E4",
+        "E5"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-PHY-024": {
       "id": "MCF-PHY-024",
@@ -2540,7 +3236,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E4",
+        "E5"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-POW-001": {
       "id": "MCF-POW-001",
@@ -2562,7 +3268,74 @@
       "rationale": "Utility capacity evidenced by documentary, configuration, operational metering and analytical evidence at S5.",
       "assessment": "CA-003",
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [
+        "DOCUMENT_REVIEW",
+        "ANALYSIS",
+        "RECONCILIATION"
+      ],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E7"
+      ],
+      "evidence": [
+        {
+          "id": "EV-003",
+          "name": "Documentary evidence for MCF-POW-001",
+          "class": "E1",
+          "sufficiency": "S5",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "e3ec453ad2158a69f27c606e7624eeb182eccb1705c37f2abc2800df92f2cf16",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-003.txt"
+        },
+        {
+          "id": "EV-016",
+          "name": "Configuration evidence for MCF-POW-001",
+          "class": "E2",
+          "sufficiency": "S5",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "da1159436b9d59ec0447d9e3e759767352f7531ff4ff49d3b0c339257525e644",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-016.txt"
+        },
+        {
+          "id": "EV-017",
+          "name": "Operational evidence for MCF-POW-001",
+          "class": "E3",
+          "sufficiency": "S5",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "e38bde77c2595aaf31183e5feea7bd2aad98d4c00b52ced828ec2fa8e3168131",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-017.txt"
+        },
+        {
+          "id": "EV-018",
+          "name": "Analytical evidence for MCF-POW-001",
+          "class": "E7",
+          "sufficiency": "S5",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "186e1e87b0eb88c9e0772c1c33df81b39087c4ea26fc95bd523fe90078bf0581",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-018.txt"
+        }
+      ],
+      "tests": []
     },
     "MCF-POW-005": {
       "id": "MCF-POW-005",
@@ -2580,7 +3353,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-POW-006": {
       "id": "MCF-POW-006",
@@ -2602,7 +3385,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-POW-007": {
       "id": "MCF-POW-007",
@@ -2620,7 +3413,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-POW-009": {
       "id": "MCF-POW-009",
@@ -2646,7 +3449,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E7"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-POW-010": {
       "id": "MCF-POW-010",
@@ -2668,7 +3481,18 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-POW-011": {
       "id": "MCF-POW-011",
@@ -2686,7 +3510,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-POW-013": {
       "id": "MCF-POW-013",
@@ -2708,7 +3542,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E3",
+        "E4",
+        "E5"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-POW-014": {
       "id": "MCF-POW-014",
@@ -2730,7 +3574,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-POW-016": {
       "id": "MCF-POW-016",
@@ -2752,7 +3606,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E3",
+        "E4",
+        "E5"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-POW-019": {
       "id": "MCF-POW-019",
@@ -2774,7 +3638,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-POW-020": {
       "id": "MCF-POW-020",
@@ -2796,7 +3670,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-POW-021": {
       "id": "MCF-POW-021",
@@ -2822,7 +3706,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-POW-023": {
       "id": "MCF-POW-023",
@@ -2848,7 +3742,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E3",
+        "E5"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-POW-024": {
       "id": "MCF-POW-024",
@@ -2874,7 +3777,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-RES-005": {
       "id": "MCF-RES-005",
@@ -2900,7 +3813,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-RES-007": {
       "id": "MCF-RES-007",
@@ -2922,7 +3844,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E7"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-RES-008": {
       "id": "MCF-RES-008",
@@ -2944,7 +3875,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-RES-013": {
       "id": "MCF-RES-013",
@@ -2966,7 +3907,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-RES-014": {
       "id": "MCF-RES-014",
@@ -2992,7 +3942,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-RES-016": {
       "id": "MCF-RES-016",
@@ -3014,7 +3974,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-RES-017": {
       "id": "MCF-RES-017",
@@ -3042,7 +4012,33 @@
       "findings": [],
       "unknowns": [
         "U-001"
-      ]
+      ],
+      "methods": [
+        "SAMPLING",
+        "DOCUMENT_REVIEW",
+        "ANALYSIS"
+      ],
+      "floor": "S3",
+      "requiredClasses": [
+        "E3",
+        "E4"
+      ],
+      "evidence": [
+        {
+          "id": "EV-009",
+          "name": "Operational evidence for MCF-RES-017",
+          "class": "E3",
+          "sufficiency": "S2",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "98e81f65c863d0b87c3afca011c3b93f1722deccc1a937f098dbf876945da9e3",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-009.txt"
+        }
+      ],
+      "tests": []
     },
     "MCF-RES-018": {
       "id": "MCF-RES-018",
@@ -3072,7 +4068,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-SEC-003": {
       "id": "MCF-SEC-003",
@@ -3094,7 +4100,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-SEC-005": {
       "id": "MCF-SEC-005",
@@ -3126,7 +4141,83 @@
       "findings": [
         "F-005"
       ],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [
+        "DOCUMENT_REVIEW",
+        "INSPECTION",
+        "ANALYSIS",
+        "TEST",
+        "RECONCILIATION"
+      ],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [
+        {
+          "id": "EV-011",
+          "name": "Documentary evidence for MCF-SEC-005",
+          "class": "E1",
+          "sufficiency": "S4",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "2aa3f765215621db8dc7e38a4c6c1a55163cd566093f61d6161327a132364c94",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-011.txt"
+        },
+        {
+          "id": "EV-027",
+          "name": "Configuration evidence for MCF-SEC-005",
+          "class": "E2",
+          "sufficiency": "S4",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "b1fd6a14a815c0c338e71fd90ea093c0b217e464de5196558f7c883752180e60",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-027.txt"
+        },
+        {
+          "id": "EV-028",
+          "name": "Operational evidence for MCF-SEC-005",
+          "class": "E3",
+          "sufficiency": "S4",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "ce2262ceb07f3fc234fb85d889495b84bfd457b787837cb5fab3a8d7a8de6c6f",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-028.txt"
+        },
+        {
+          "id": "EV-029",
+          "name": "Test evidence for MCF-SEC-005",
+          "class": "E4",
+          "sufficiency": "S4",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "c5d9dc2c90adb22d821b22f7250129ad9c4ba8e67c6a732f96575147fc723bae",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-029.txt"
+        }
+      ],
+      "tests": [
+        {
+          "id": "TST-002",
+          "type": "TestRecord",
+          "name": "BMS write-authority test",
+          "outcome": "Synthetic: failed criterion"
+        }
+      ]
     },
     "MCF-SEC-006": {
       "id": "MCF-SEC-006",
@@ -3148,7 +4239,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-SEC-009": {
       "id": "MCF-SEC-009",
@@ -3174,7 +4274,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-SEC-010": {
       "id": "MCF-SEC-010",
@@ -3196,7 +4305,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-SEC-012": {
       "id": "MCF-SEC-012",
@@ -3218,7 +4336,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-SEC-021": {
       "id": "MCF-SEC-021",
@@ -3240,7 +4367,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E7"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-SEC-023": {
       "id": "MCF-SEC-023",
@@ -3262,7 +4399,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-STO-005": {
       "id": "MCF-STO-005",
@@ -3280,7 +4427,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-STO-009": {
       "id": "MCF-STO-009",
@@ -3298,7 +4454,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-STO-010": {
       "id": "MCF-STO-010",
@@ -3320,7 +4485,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-STO-015": {
       "id": "MCF-STO-015",
@@ -3342,7 +4516,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E4",
+        "E7"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-STO-016": {
       "id": "MCF-STO-016",
@@ -3364,7 +4548,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-STO-017": {
       "id": "MCF-STO-017",
@@ -3386,7 +4580,67 @@
       "rationale": "Checkpoint durability shown by configuration, operational logs and a synthetic restore test (TST-001) at S4.",
       "assessment": "CA-006",
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [
+        "TEST",
+        "REPERFORMANCE",
+        "SAMPLING"
+      ],
+      "floor": "S4",
+      "requiredClasses": [
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [
+        {
+          "id": "EV-006",
+          "name": "Configuration evidence for MCF-STO-017",
+          "class": "E2",
+          "sufficiency": "S4",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "b817b417d6a868aec53fd68a7ce266e9ee5d59e5dad368da06fe12f22539cb3a",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-006.txt"
+        },
+        {
+          "id": "EV-021",
+          "name": "Operational evidence for MCF-STO-017",
+          "class": "E3",
+          "sufficiency": "S4",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "913f2cc48aa3387a1f4589c4f436b113342833596ba589eb4fdc6a6b236d6b58",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-021.txt"
+        },
+        {
+          "id": "EV-022",
+          "name": "Test evidence for MCF-STO-017",
+          "class": "E4",
+          "sufficiency": "S4",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "2b0862753b76f59b489459a7f853858524c1625c97027ab05afb224a69249156",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-022.txt"
+        }
+      ],
+      "tests": [
+        {
+          "id": "TST-001",
+          "type": "TestRecord",
+          "name": "Checkpoint restore test",
+          "outcome": "Synthetic: passed"
+        }
+      ]
     },
     "MCF-STO-018": {
       "id": "MCF-STO-018",
@@ -3404,7 +4658,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-STO-020": {
       "id": "MCF-STO-020",
@@ -3422,7 +4686,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-SUP-004": {
       "id": "MCF-SUP-004",
@@ -3440,7 +4714,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-SUP-021": {
       "id": "MCF-SUP-021",
@@ -3464,7 +4746,47 @@
       "findings": [
         "F-004"
       ],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [
+        "DOCUMENT_REVIEW",
+        "INSPECTION",
+        "RECONCILIATION",
+        "SAMPLING"
+      ],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2"
+      ],
+      "evidence": [
+        {
+          "id": "EV-010",
+          "name": "Documentary evidence for MCF-SUP-021",
+          "class": "E1",
+          "sufficiency": "S4",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "2a5cd9b408b3c60f6e7bde4b8bf66cc704fd36ef0e2edcf39bbc0a27f14c86fc",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-010.txt"
+        },
+        {
+          "id": "EV-026",
+          "name": "Configuration evidence for MCF-SUP-021",
+          "class": "E2",
+          "sufficiency": "S4",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "b875285198414b11a727142e4dc8b3a59e8f331d88efe2abb7156dcfd71743f9",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-026.txt"
+        }
+      ],
+      "tests": []
     },
     "MCF-SUP-022": {
       "id": "MCF-SUP-022",
@@ -3486,7 +4808,15 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E2",
+        "E3"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-THM-002": {
       "id": "MCF-THM-002",
@@ -3508,7 +4838,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-THM-003": {
       "id": "MCF-THM-003",
@@ -3534,7 +4874,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-THM-004": {
       "id": "MCF-THM-004",
@@ -3556,7 +4906,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E2",
+        "E3",
+        "E7"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-THM-009": {
       "id": "MCF-THM-009",
@@ -3576,7 +4935,46 @@
       "findings": [
         "F-002"
       ],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [
+        "DOCUMENT_REVIEW",
+        "ANALYSIS",
+        "INQUIRY"
+      ],
+      "floor": "S3",
+      "requiredClasses": [
+        "E1",
+        "E7"
+      ],
+      "evidence": [
+        {
+          "id": "EV-004",
+          "name": "Documentary evidence for MCF-THM-009",
+          "class": "E1",
+          "sufficiency": "S3",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "319e02480e9e1174819a9e10c4df15af8a6e50df711bbd4fbd49fa2c03b0dd68",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-004.txt"
+        },
+        {
+          "id": "EV-019",
+          "name": "Analytical evidence for MCF-THM-009",
+          "class": "E7",
+          "sufficiency": "S3",
+          "quality": "Q3",
+          "period": "2026-07-01 to 2026-09-30",
+          "states": [
+            "NORMAL"
+          ],
+          "sha256": "ef2ecad410485ef7c639b7cddedbd8d6ce873e58c6abf43fae277271004ae2fc",
+          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-019.txt"
+        }
+      ],
+      "tests": []
     },
     "MCF-THM-010": {
       "id": "MCF-THM-010",
@@ -3598,7 +4996,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-THM-011": {
       "id": "MCF-THM-011",
@@ -3620,7 +5028,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-THM-013": {
       "id": "MCF-THM-013",
@@ -3642,7 +5060,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-THM-015": {
       "id": "MCF-THM-015",
@@ -3664,7 +5091,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-THM-018": {
       "id": "MCF-THM-018",
@@ -3686,7 +5123,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E3",
+        "E4",
+        "E5"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-THM-019": {
       "id": "MCF-THM-019",
@@ -3712,7 +5159,16 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-THM-020": {
       "id": "MCF-THM-020",
@@ -3738,7 +5194,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-THM-021": {
       "id": "MCF-THM-021",
@@ -3764,7 +5230,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S4",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     },
     "MCF-THM-024": {
       "id": "MCF-THM-024",
@@ -3786,7 +5262,17 @@
       "rationale": null,
       "assessment": null,
       "findings": [],
-      "unknowns": []
+      "unknowns": [],
+      "methods": [],
+      "floor": "S5",
+      "requiredClasses": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence": [],
+      "tests": []
     }
   },
   "findings": [
@@ -5142,6 +6628,15 @@
       "correction": "The question should read: \"Can the synthetic AI training and inference capability CI-001 be relied on to meet SO-01 to SO-03, as far as they apply in NORMAL and MAINTENANCE states, as at 2026-10-10? SO-02 (RECOVERY only) and the DEGRADED state of SO-03 are outside the assessed scope.\" The computed decision, gate results, score and coverage do not change. Corrected in the next release of AIDCF-015."
     }
   ],
+  "evidenceClasses": {
+    "E1": "Documentary and declarative",
+    "E2": "Configuration and technical state",
+    "E3": "Operational and observational",
+    "E4": "Validation and test",
+    "E5": "Independent and third-party",
+    "E6": "Human and experiential",
+    "E7": "Derived and analytical"
+  },
   "decision": {
     "question": "Can the synthetic AI training and inference capability CI-001 be relied on to meet SO-01 to SO-03 in NORMAL and MAINTENANCE states, as at 2026-10-10?",
     "scope": "Synthetic capability CI-001 within snapshot SNAP-001; NORMAL and MAINTENANCE states.",

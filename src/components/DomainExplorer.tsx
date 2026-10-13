@@ -127,7 +127,7 @@ export function DomainExplorer() {
               <i className="sw sel" /> selected domain
             </span>
             <span>
-              <i className="sw link" /> shares a critical gate with it
+              <i className="sw link" /> judged at a shared critical gate (not a physical dependency)
             </span>
           </div>
         </div>
@@ -194,9 +194,11 @@ export function DomainExplorer() {
                 <p className="small">None.</p>
               )}
 
-              <h4>Connected domains</h4>
+              <h4>Domains judged at the same gates</h4>
               <p className="small" style={{ marginBottom: 6 }}>
-                Domains that hold critical controls for the same gates. A failure here is judged together with them.
+                These domains hold critical controls for the same gates, so their results are judged together. This is
+                an assurance link, not a physical dependency: for what relies on what, see the{" "}
+                <Link href="/case/">infrastructure graph</Link>.
               </p>
               <ul className="plain">
                 {partners.slice(0, 8).map(([id, g]) => (
