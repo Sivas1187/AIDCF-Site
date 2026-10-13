@@ -2,12 +2,12 @@
   "backTest": {
     "protocol": "research/back-testing/AIDCF-VAL-001_Incident_Back-Testing_Protocol_v1.0.md",
     "logged": 221,
-    "eligible": 140,
-    "excluded": 81,
+    "eligible": 137,
+    "excluded": 84,
     "eligibleByStratum": {
-      "CONTROL_PLANE_OT": 16,
-      "CHANGE_HUMAN": 62,
-      "NETWORK_FABRIC": 22,
+      "CONTROL_PLANE_OT": 15,
+      "CHANGE_HUMAN": 61,
+      "NETWORK_FABRIC": 21,
       "EXTERNAL_DEPENDENCY": 13,
       "POWER": 12,
       "COOLING": 10,
@@ -17,12 +17,19 @@
       "EX-05": 5,
       "EX-02": 51,
       "EX-04": 8,
+      "EX-09": 3,
       "EX-01": 8,
       "EX-06": 8,
       "EX-03": 1
     },
     "selected": 0,
-    "coded": 0
+    "coded": 0,
+    "draftProtocol": "research/back-testing/AIDCF-VAL-001_Incident_Back-Testing_Protocol_v1.1.md",
+    "comparison": {
+      "baselines": 6,
+      "approved": 0,
+      "rows": 0
+    }
   },
   "expertPanel": {
     "protocol": "validation/expert-panel/AIDCF-VAL-002_Expert_Panel_Content_Validation_Protocol_v1.0.md",

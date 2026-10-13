@@ -625,6 +625,8 @@ const eligible = register.filter((r) => r.eligibility_status === "ELIGIBLE");
 const excluded = register.filter((r) => r.eligibility_status === "EXCLUDED");
 const panelControls = csv("validation/expert-panel/control-sample.csv");
 const panelGates = csv("validation/expert-panel/gate-sample.csv");
+const comparisonBaselines = csv("research/back-testing/baselines.csv").filter((b) => b.baseline_id !== "AIDCF");
+const comparativeRows = csv("research/back-testing/comparative-sheet.csv");
 const starter = csv("pilots/pilot-framework/starter-profile.csv");
 const evidenceRequests = csv("pilots/pilot-authorisation/evidence-request-list.csv");
 const dispositions = listDir("validation/reviewer-dispositions").filter((f) => f !== "README.md");
@@ -640,6 +642,13 @@ const validation = {
     excludedByCode: by(excluded, "exclusion_code"),
     selected: register.filter((r) => /SELECTED/.test(r.eligibility_status)).length,
     coded: register.filter((r) => r.coding_status && r.coding_status !== "NOT_STARTED").length,
+    // v1.1 is a draft that adds the comparison with conventional reviews (section 10A); v1.0 stays in force.
+    draftProtocol: "research/back-testing/AIDCF-VAL-001_Incident_Back-Testing_Protocol_v1.1.md",
+    comparison: {
+      baselines: comparisonBaselines.length,
+      approved: comparisonBaselines.filter((b) => b.approval_status === "APPROVED").length,
+      rows: comparativeRows.length,
+    },
   },
   expertPanel: {
     protocol: "validation/expert-panel/AIDCF-VAL-002_Expert_Panel_Content_Validation_Protocol_v1.0.md",
