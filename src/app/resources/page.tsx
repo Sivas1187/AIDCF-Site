@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { framework, manifest, repoUrl, research, shortCommit, sourceUrl } from "@/lib/data";
+import { caseData, framework, manifest, repoUrl, research, shortCommit, sourceUrl } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Resources",
@@ -24,7 +24,7 @@ export default function ResourcesPage() {
   const guides = framework.domains.map((d) => ({ d, path: research.artifacts.find((a) => a.id === `AIDCF-018-${d.id}`)?.path }));
   const author = research.citation.authors[0];
   const authorName = author ? `${author.given} ${author.family}` : "";
-  const impl = "implementation/aidcf-015-v1.3";
+  const impl = caseData.package.dir;
 
   return (
     <>
@@ -148,7 +148,7 @@ export default function ResourcesPage() {
               </p>
             </div>
             <div className="card">
-              <h3>Reference implementation (AIDCF-015 v1.3)</h3>
+              <h3>Reference implementation (AIDCF-015 v{caseData.package.version})</h3>
               <p>
                 A synthetic dataset that instantiates the full assurance chain, with schemas, SHACL shapes and a
                 validation suite. It is what the <Link href="/case/">infrastructure graph</Link> is built from.

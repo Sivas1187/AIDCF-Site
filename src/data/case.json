@@ -1,5 +1,11 @@
 {
-  "source": "implementation/aidcf-015-v1.3/dataset",
+  "source": "implementation/aidcf-015-v1.4/dataset",
+  "package": {
+    "dir": "implementation/aidcf-015-v1.4",
+    "version": "1.4",
+    "release": "AIDCF-REL-2026.10.2",
+    "status": "Draft for controlled review"
+  },
   "capability": {
     "id": "CI-001",
     "name": "Synthetic AI training and inference capability",
@@ -55,7 +61,9 @@
       "tolerance": null,
       "operatingStates": [],
       "unknowns": [],
-      "exposedTo": []
+      "exposedTo": [
+        "HZ-05"
+      ]
     },
     {
       "id": "RES-WATER",
@@ -109,7 +117,9 @@
       "tolerance": null,
       "operatingStates": [],
       "unknowns": [],
-      "exposedTo": []
+      "exposedTo": [
+        "FM-07"
+      ]
     },
     {
       "id": "AST-UPS-B",
@@ -148,7 +158,9 @@
       "tolerance": null,
       "operatingStates": [],
       "unknowns": [],
-      "exposedTo": []
+      "exposedTo": [
+        "FM-04"
+      ]
     },
     {
       "id": "AST-CDU-2",
@@ -161,7 +173,9 @@
       "tolerance": null,
       "operatingStates": [],
       "unknowns": [],
-      "exposedTo": []
+      "exposedTo": [
+        "FM-04"
+      ]
     },
     {
       "id": "AST-BMS-CTRL",
@@ -217,7 +231,8 @@
       "operatingStates": [],
       "unknowns": [],
       "exposedTo": [
-        "FM-03"
+        "FM-03",
+        "FM-05"
       ]
     },
     {
@@ -231,7 +246,9 @@
       "tolerance": null,
       "operatingStates": [],
       "unknowns": [],
-      "exposedTo": []
+      "exposedTo": [
+        "FM-06"
+      ]
     },
     {
       "id": "SYS-POW",
@@ -262,7 +279,8 @@
         "U-003"
       ],
       "exposedTo": [
-        "HZ-02"
+        "HZ-02",
+        "HZ-04"
       ]
     },
     {
@@ -276,7 +294,9 @@
       "tolerance": null,
       "operatingStates": [],
       "unknowns": [],
-      "exposedTo": []
+      "exposedTo": [
+        "HZ-03"
+      ]
     },
     {
       "id": "SYS-CTL",
@@ -289,7 +309,9 @@
       "tolerance": null,
       "operatingStates": [],
       "unknowns": [],
-      "exposedTo": []
+      "exposedTo": [
+        "FM-08"
+      ]
     },
     {
       "id": "SYS-CMP",
@@ -651,11 +673,31 @@
       "dependency": "DEP-05"
     },
     {
+      "from": "SYS-THM",
+      "to": "SYS-CMP",
+      "kind": "depends",
+      "label": "THERMAL",
+      "dependency": "DEP-10"
+    },
+    {
       "from": "AST-SWB-01",
       "to": "AST-UPS-B",
       "kind": "depends",
       "label": "ELECTRICAL",
       "dependency": "DEP-03"
+    },
+    {
+      "from": "SYS-NET",
+      "to": "SYS-CMP",
+      "kind": "propagates",
+      "label": null
+    },
+    {
+      "from": "SYS-POW",
+      "to": "SYS-CMP",
+      "kind": "depends",
+      "label": "ELECTRICAL",
+      "dependency": "DEP-09"
     },
     {
       "from": "AST-SWB-01",
@@ -670,6 +712,12 @@
       "kind": "depends",
       "label": "CONTROL",
       "dependency": "DEP-06"
+    },
+    {
+      "from": "SYS-CTL",
+      "to": "AST-SWB-01",
+      "kind": "propagates",
+      "label": null
     },
     {
       "from": "AST-FAB-SPINE",
@@ -700,6 +748,12 @@
       "dependency": "DEP-11"
     },
     {
+      "from": "SYS-FWS",
+      "to": "AST-CDU-2",
+      "kind": "propagates",
+      "label": null
+    },
+    {
       "from": "AST-BMS-CTRL",
       "to": "AST-CDU-2",
       "kind": "depends",
@@ -712,6 +766,13 @@
       "kind": "depends",
       "label": "UTILITY",
       "dependency": "DEP-01"
+    },
+    {
+      "from": "SYS-NET",
+      "to": "SYS-STO",
+      "kind": "depends",
+      "label": "NETWORK",
+      "dependency": "DEP-08"
     },
     {
       "from": "SYS-FWS",
@@ -727,18 +788,16 @@
       "dependency": "DEP-12"
     },
     {
-      "from": "SYS-THM",
-      "to": "SYS-CMP",
-      "kind": "depends",
-      "label": "THERMAL",
-      "dependency": "DEP-10"
+      "from": "SYS-CMP",
+      "to": "SYS-THM",
+      "kind": "propagates",
+      "label": null
     },
     {
-      "from": "SYS-NET",
-      "to": "SYS-STO",
-      "kind": "depends",
-      "label": "NETWORK",
-      "dependency": "DEP-08"
+      "from": "SYS-FWS",
+      "to": "AST-CDU-1",
+      "kind": "propagates",
+      "label": null
     },
     {
       "from": "AST-CHL",
@@ -755,11 +814,28 @@
       "dependency": "DEP-17"
     },
     {
+      "from": "AST-UTILITY",
+      "to": "SYS-CTL",
+      "kind": "propagates",
+      "label": null
+    },
+    {
+      "from": "SYS-THM",
+      "to": "SYS-POW",
+      "kind": "propagates",
+      "label": null
+    },
+    {
+      "from": "SYS-STO",
+      "to": "SYS-NET",
+      "kind": "propagates",
+      "label": null
+    },
+    {
       "from": "SYS-POW",
-      "to": "SYS-CMP",
-      "kind": "depends",
-      "label": "ELECTRICAL",
-      "dependency": "DEP-09"
+      "to": "SYS-THM",
+      "kind": "propagates",
+      "label": null
     }
   ],
   "faultDomains": [
@@ -945,6 +1021,67 @@
       ]
     },
     {
+      "id": "FM-04",
+      "type": "FailureMode",
+      "name": "CDU controller firmware fault",
+      "mechanism": "A CDU firmware release, deployed to every CDU through the vendor management tool, mishandles a failed differential-pressure sensor and stops the duty and standby pumps",
+      "scenarios": [
+        "FS-06"
+      ],
+      "exposed": [
+        "AST-CDU-1",
+        "AST-CDU-2"
+      ]
+    },
+    {
+      "id": "FM-05",
+      "type": "FailureMode",
+      "name": "Lossless-class misconfiguration on a fabric switch",
+      "mechanism": "Inconsistent priority mapping makes one port generate PFC pause frames continuously",
+      "scenarios": [
+        "FS-07"
+      ],
+      "exposed": [
+        "AST-FAB-SPINE"
+      ]
+    },
+    {
+      "id": "FM-06",
+      "type": "FailureMode",
+      "name": "Checkpoint tier read storm on mass restart",
+      "mechanism": "Every interrupted job restarts at once; read demand and metadata operations exceed the tier, which retention had already filled",
+      "scenarios": [
+        "FS-08"
+      ],
+      "exposed": [
+        "AST-STO-ARRAY"
+      ]
+    },
+    {
+      "id": "FM-07",
+      "type": "FailureMode",
+      "name": "Rack cord misallocation exposed by A-path maintenance",
+      "mechanism": "Racks with both cords on the A path lose power when it is isolated; the B path then carries all remaining load at peak",
+      "scenarios": [
+        "FS-11"
+      ],
+      "exposed": [
+        "AST-UPS-A"
+      ]
+    },
+    {
+      "id": "FM-08",
+      "type": "FailureMode",
+      "name": "Operator mis-switching under an alarm flood",
+      "mechanism": "The alarm flood masks the root alarm and the operator opens the breaker on the healthy side",
+      "scenarios": [
+        "FS-12"
+      ],
+      "exposed": [
+        "SYS-CTL"
+      ]
+    },
+    {
       "id": "HZ-01",
       "type": "Hazard",
       "name": "Utility voltage sag",
@@ -967,6 +1104,42 @@
       "exposed": [
         "CI-001",
         "SYS-FWS"
+      ]
+    },
+    {
+      "id": "HZ-03",
+      "type": "Hazard",
+      "name": "Coolant leak at a rack manifold quick-disconnect",
+      "mechanism": "FLUID",
+      "scenarios": [
+        "FS-09"
+      ],
+      "exposed": [
+        "SYS-THM"
+      ]
+    },
+    {
+      "id": "HZ-04",
+      "type": "Hazard",
+      "name": "Facility water chemistry excursion",
+      "mechanism": "CHEMICAL",
+      "scenarios": [
+        "FS-10"
+      ],
+      "exposed": [
+        "SYS-FWS"
+      ]
+    },
+    {
+      "id": "HZ-05",
+      "type": "Hazard",
+      "name": "Medium-voltage feed fault",
+      "mechanism": "UTILITY_DISTURBANCE",
+      "scenarios": [
+        "FS-12"
+      ],
+      "exposed": [
+        "AST-UTILITY"
       ]
     },
     {
@@ -1024,7 +1197,9 @@
           "exceedsTolerance": true
         }
       ],
-      "restricted": false
+      "restricted": false,
+      "library": null,
+      "note": null
     },
     {
       "id": "FS-02",
@@ -1070,7 +1245,9 @@
           "exceedsTolerance": true
         }
       ],
-      "restricted": true
+      "restricted": true,
+      "library": null,
+      "note": null
     },
     {
       "id": "FS-03",
@@ -1114,7 +1291,9 @@
           "exceedsTolerance": true
         }
       ],
-      "restricted": false
+      "restricted": false,
+      "library": null,
+      "note": null
     },
     {
       "id": "FS-04",
@@ -1166,7 +1345,9 @@
           "exceedsTolerance": true
         }
       ],
-      "restricted": false
+      "restricted": false,
+      "library": null,
+      "note": null
     },
     {
       "id": "FS-05",
@@ -1201,7 +1382,354 @@
           "exceedsTolerance": true
         }
       ],
-      "restricted": false
+      "restricted": false,
+      "library": null,
+      "note": null
+    },
+    {
+      "id": "FS-06",
+      "name": "CDU controller firmware fault stops both CDUs",
+      "preState": "NORMAL",
+      "residualState": "FAILED",
+      "confidence": "CONF-2",
+      "initiatedBy": [
+        "FM-04"
+      ],
+      "steps": [
+        {
+          "from": "AST-CDU-1",
+          "to": "SYS-THM"
+        },
+        {
+          "from": "AST-CDU-2",
+          "to": "SYS-THM"
+        },
+        {
+          "from": "SYS-THM",
+          "to": "SYS-CMP"
+        },
+        {
+          "from": "SYS-CMP",
+          "to": "RF-03"
+        },
+        {
+          "from": "RF-03",
+          "to": "SO-01"
+        }
+      ],
+      "safeguards": [
+        "SAF-THROTTLE",
+        "SAF-CKPT"
+      ],
+      "effects": [
+        {
+          "outcome": "SO-01",
+          "effect": "Illustrative: outcome breaches tolerance without the expected safeguards.",
+          "exceedsTolerance": true
+        }
+      ],
+      "restricted": false,
+      "library": "X02",
+      "note": "One firmware release defeats CDU redundancy: the standby pump depends on the same controller, so CDU failover does not help."
+    },
+    {
+      "id": "FS-07",
+      "name": "PFC storm from a misconfigured fabric switch",
+      "preState": "NORMAL",
+      "residualState": "DEGRADED",
+      "confidence": "CONF-2",
+      "initiatedBy": [
+        "FM-05"
+      ],
+      "steps": [
+        {
+          "from": "AST-FAB-SPINE",
+          "to": "SYS-NET"
+        },
+        {
+          "from": "SYS-NET",
+          "to": "SYS-CMP"
+        },
+        {
+          "from": "SYS-NET",
+          "to": "SYS-STO"
+        },
+        {
+          "from": "SYS-CMP",
+          "to": "RF-03"
+        },
+        {
+          "from": "SYS-STO",
+          "to": "RF-04"
+        },
+        {
+          "from": "RF-03",
+          "to": "SO-01"
+        },
+        {
+          "from": "RF-04",
+          "to": "SO-02"
+        }
+      ],
+      "safeguards": [
+        "SAF-FAB-RR",
+        "SAF-CKPT"
+      ],
+      "effects": [
+        {
+          "outcome": "SO-01",
+          "effect": "Illustrative: outcome breaches tolerance without the expected safeguards.",
+          "exceedsTolerance": true
+        },
+        {
+          "outcome": "SO-02",
+          "effect": "Illustrative: outcome breaches tolerance without the expected safeguards.",
+          "exceedsTolerance": true
+        }
+      ],
+      "restricted": false,
+      "library": "X03",
+      "note": "Pause frames spread hop by hop, so collectives stall across the cluster and checkpoint writes stall while links still report healthy."
+    },
+    {
+      "id": "FS-08",
+      "name": "Checkpoint storage saturation during recovery",
+      "preState": "RECOVERY",
+      "residualState": "RECOVERY",
+      "confidence": "CONF-2",
+      "initiatedBy": [
+        "FM-06"
+      ],
+      "steps": [
+        {
+          "from": "AST-STO-ARRAY",
+          "to": "SYS-STO"
+        },
+        {
+          "from": "SYS-STO",
+          "to": "SYS-NET"
+        },
+        {
+          "from": "SYS-STO",
+          "to": "RF-04"
+        },
+        {
+          "from": "RF-04",
+          "to": "SO-02"
+        }
+      ],
+      "safeguards": [
+        "SAF-CKPT"
+      ],
+      "effects": [
+        {
+          "outcome": "SO-02",
+          "effect": "Illustrative: outcome breaches tolerance without the expected safeguards.",
+          "exceedsTolerance": true
+        }
+      ],
+      "restricted": false,
+      "library": "X04",
+      "note": "Starts in recovery after a facility event such as FS-03; the restore storm congests the fabric and recovery exceeds tolerance."
+    },
+    {
+      "id": "FS-09",
+      "name": "Coolant leak at a rack manifold",
+      "preState": "NORMAL",
+      "residualState": "FAILED",
+      "confidence": "CONF-2",
+      "initiatedBy": [
+        "HZ-03"
+      ],
+      "steps": [
+        {
+          "from": "SYS-THM",
+          "to": "SYS-POW"
+        },
+        {
+          "from": "SYS-POW",
+          "to": "SYS-CMP"
+        },
+        {
+          "from": "SYS-CMP",
+          "to": "RF-03"
+        },
+        {
+          "from": "RF-03",
+          "to": "SO-01"
+        }
+      ],
+      "safeguards": [
+        "SAF-LEAK"
+      ],
+      "effects": [
+        {
+          "outcome": "SO-01",
+          "effect": "Illustrative: outcome breaches tolerance without the expected safeguards.",
+          "exceedsTolerance": true
+        }
+      ],
+      "restricted": false,
+      "library": "X07",
+      "note": "CDU make-up masks the leak until coolant reaches rack power. The library's primary outcome, electrical safety, has no outcome in this case and is not recorded."
+    },
+    {
+      "id": "FS-10",
+      "name": "Facility water contamination fouls CDU heat exchangers",
+      "preState": "NORMAL",
+      "residualState": "DEGRADED",
+      "confidence": "CONF-2",
+      "initiatedBy": [
+        "HZ-04"
+      ],
+      "steps": [
+        {
+          "from": "SYS-FWS",
+          "to": "AST-CDU-1"
+        },
+        {
+          "from": "SYS-FWS",
+          "to": "AST-CDU-2"
+        },
+        {
+          "from": "AST-CDU-1",
+          "to": "SYS-THM"
+        },
+        {
+          "from": "AST-CDU-2",
+          "to": "SYS-THM"
+        },
+        {
+          "from": "SYS-THM",
+          "to": "SYS-CMP"
+        },
+        {
+          "from": "SYS-CMP",
+          "to": "RF-03"
+        },
+        {
+          "from": "RF-03",
+          "to": "SO-01"
+        }
+      ],
+      "safeguards": [
+        "SAF-THROTTLE"
+      ],
+      "effects": [
+        {
+          "outcome": "SO-01",
+          "effect": "Illustrative: outcome breaches tolerance without the expected safeguards.",
+          "exceedsTolerance": true
+        }
+      ],
+      "restricted": false,
+      "library": "X08",
+      "note": "Fouling raises the approach temperature on both CDUs fed by the same loop (common cause); accelerators throttle at peak load."
+    },
+    {
+      "id": "FS-11",
+      "name": "Concurrent maintenance exposes a shared electrical path",
+      "preState": "MAINTENANCE",
+      "residualState": "DEGRADED",
+      "confidence": "CONF-2",
+      "initiatedBy": [
+        "FM-07"
+      ],
+      "steps": [
+        {
+          "from": "AST-UPS-A",
+          "to": "SYS-POW"
+        },
+        {
+          "from": "SYS-POW",
+          "to": "SYS-CMP"
+        },
+        {
+          "from": "SYS-CMP",
+          "to": "SYS-THM"
+        },
+        {
+          "from": "SYS-CMP",
+          "to": "RF-03"
+        },
+        {
+          "from": "RF-03",
+          "to": "SO-01"
+        }
+      ],
+      "safeguards": [
+        "SAF-UPS-RT",
+        "SAF-CKPT"
+      ],
+      "effects": [
+        {
+          "outcome": "SO-01",
+          "effect": "Illustrative: outcome breaches tolerance without the expected safeguards.",
+          "exceedsTolerance": true
+        }
+      ],
+      "restricted": false,
+      "library": "X11",
+      "note": "Starts in maintenance with UPS A isolated; the load drop and restart surge then disturb cooling control."
+    },
+    {
+      "id": "FS-12",
+      "name": "Alarm flood and operator mis-switching",
+      "preState": "NORMAL",
+      "residualState": "FAILED",
+      "confidence": "CONF-2",
+      "initiatedBy": [
+        "FM-08",
+        "HZ-05"
+      ],
+      "steps": [
+        {
+          "from": "AST-UTILITY",
+          "to": "SYS-CTL"
+        },
+        {
+          "from": "SYS-CTL",
+          "to": "AST-SWB-01"
+        },
+        {
+          "from": "AST-SWB-01",
+          "to": "SYS-POW"
+        },
+        {
+          "from": "SYS-POW",
+          "to": "SYS-THM"
+        },
+        {
+          "from": "SYS-POW",
+          "to": "SYS-CMP"
+        },
+        {
+          "from": "SYS-THM",
+          "to": "SYS-CMP"
+        },
+        {
+          "from": "SYS-CMP",
+          "to": "RF-03"
+        },
+        {
+          "from": "RF-03",
+          "to": "SO-01"
+        }
+      ],
+      "safeguards": [
+        "SAF-UPS-RT",
+        "SAF-CKPT"
+      ],
+      "effects": [
+        {
+          "outcome": "SO-01",
+          "effect": "Illustrative: outcome breaches tolerance without the expected safeguards.",
+          "exceedsTolerance": true
+        }
+      ],
+      "restricted": false,
+      "library": "X16",
+      "note": "The feed fault floods supervisory alarms; the operator opens the healthy-side breaker at the switchboard, stopping CDUs and compute on that block."
     }
   ],
   "safeguards": [
@@ -1347,8 +1875,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "6a984eaa3a9168512238edfc5f658766ec5598779e8a772793778343d535ca11",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-001.txt"
+          "sha256": "9a2ae9d7398dae7b2ce734f4721c80a0ef31da28f7f69814458ba53c9cff63f9",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-001.txt"
         },
         {
           "id": "EV-013",
@@ -1360,8 +1888,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "4cef85e73bac50eea2b075a4e1e86c345edcad3fc3e685a9460b480745c9c70d",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-013.txt"
+          "sha256": "9520065727c083eeca9ab7ad1b432af58481bcd375655b2fceb32c7c4efa3fe3",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-013.txt"
         },
         {
           "id": "EV-014",
@@ -1373,8 +1901,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "fceeb78003cd529faae29810d45eeaf38575d3ddf3b8f9fcb5bc257096ca61a0",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-014.txt"
+          "sha256": "458d4fa49d004ef41ee11432b0133f7836594c82219ede2e6729dce646c30521",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-014.txt"
         }
       ],
       "tests": []
@@ -1660,8 +2188,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "7e1f888a762a21a2ea270666e8bf40bbddb0939f4c0790523286647908c029cd",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-005.txt"
+          "sha256": "76c682c3a5f52237f6d6cf97f1280c12f1cb40894fae2152fe17442882cc6faa",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-005.txt"
         },
         {
           "id": "EV-020",
@@ -1673,8 +2201,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "55a59f4bc8a5372ec2ff54052925042d0a78a2eb520b9c2d5738c536aa3b1bc3",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-020.txt"
+          "sha256": "299985ec090d416b58656001390b9a2ad81f125d33dfb8398e6e609125c032c4",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-020.txt"
         }
       ],
       "tests": []
@@ -1952,8 +2480,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "0ffd34236f20eb21387e5b7036b3e7bb626f7cbec119fcd367d7b31cbec91635",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-002.txt"
+          "sha256": "88d4a879ebf6951d99e541190cd7372a4203641cdeb20fb980516fcae68cb94d",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-002.txt"
         },
         {
           "id": "EV-015",
@@ -1965,8 +2493,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "d83466b987b0ee104cf56608195d24aecaaca5b233eb04080ce254b5ae2ac525",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-015.txt"
+          "sha256": "c915f2708431fecc905a78ac4e4261a040aa504998dbd9ad48396c6965632344",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-015.txt"
         }
       ],
       "tests": [
@@ -2343,8 +2871,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "9c0e9cdfc26f29cd5a75698a93dd1da929005d21bf553a058759a64263c0ccd1",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-012.txt"
+          "sha256": "aa63b613e3ed6f90c9d3c8e4fec2d84685dfbdf92e3fd9949426eebfc20b8013",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-012.txt"
         },
         {
           "id": "EV-030",
@@ -2356,8 +2884,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "0a355eda707ccc7a7b1b5fe2ba6f5a19a753fb742cc868420e09907fe1e540da",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-030.txt"
+          "sha256": "89bbab1d68b4c019651bd81a4ecde653680dfbd74cee9d1d0dc088705c0974cb",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-030.txt"
         }
       ],
       "tests": []
@@ -2519,8 +3047,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "0add3f9486537d277a5eeeb2c0803e9ddc6e018d43e773e12c4191b133e09ef1",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-007.txt"
+          "sha256": "cb1e01cd623e6b792841055088e9645f2599839ef6ee3aacb73407446055c422",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-007.txt"
         },
         {
           "id": "EV-023",
@@ -2532,8 +3060,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "ed0005f2bd0a3b61d995787c764b30cc8457d17faf996f6c30c79c3bab2b9ba9",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-023.txt"
+          "sha256": "bd057e045468c2574722bb70bd39448bc17032564d79f831dceec6f14cf44a10",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-023.txt"
         },
         {
           "id": "EV-024",
@@ -2545,8 +3073,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "daa80804ad1641917f1dbe5a02efbdce2b64df7b8599d512ef46747619e0500d",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-024.txt"
+          "sha256": "8028ee58c165fc5ad99e15233f62ea352bde1acfb589836d4fb5ced236585d0a",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-024.txt"
         }
       ],
       "tests": []
@@ -2972,8 +3500,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "aa887ca9f675d5bf8b4a6bcd7bfd1553b1a6d07a4b90a399313e879389783fa9",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-008.txt"
+          "sha256": "06b688deff0bbbb7b3d99eba36bf911bd310184c1aa5b126f56efc47cedadd53",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-008.txt"
         },
         {
           "id": "EV-025",
@@ -2985,8 +3513,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "b3542a9bc10c3723dccfe65c5946bb317fdc0f2bf2a9eb82514f5709f0624565",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-025.txt"
+          "sha256": "5d924aa10f4318c512eba57491f3928199672aeed8f42ea7142672420288b927",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-025.txt"
         }
       ],
       "tests": []
@@ -3292,8 +3820,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "e3ec453ad2158a69f27c606e7624eeb182eccb1705c37f2abc2800df92f2cf16",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-003.txt"
+          "sha256": "b8f4dae1acbaf7f21fddb318af6c77cc140cb01e982837c10712a7ff14c3424f",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-003.txt"
         },
         {
           "id": "EV-016",
@@ -3305,8 +3833,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "da1159436b9d59ec0447d9e3e759767352f7531ff4ff49d3b0c339257525e644",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-016.txt"
+          "sha256": "78768a5984a2dda628978661a719dbd441df07f611afa00db4aa2b01c09cdeee",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-016.txt"
         },
         {
           "id": "EV-017",
@@ -3318,8 +3846,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "e38bde77c2595aaf31183e5feea7bd2aad98d4c00b52ced828ec2fa8e3168131",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-017.txt"
+          "sha256": "5c9f749bea5d4fba03113dec138e0867fb710e4d0e3c6d1e15653dc922e52d23",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-017.txt"
         },
         {
           "id": "EV-018",
@@ -3331,8 +3859,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "186e1e87b0eb88c9e0772c1c33df81b39087c4ea26fc95bd523fe90078bf0581",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-018.txt"
+          "sha256": "008c40d6c9f50bb747aa3982b0a1b41ed5312e68674e1ae12ff5d2ad5a872ccf",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-018.txt"
         }
       ],
       "tests": []
@@ -4034,8 +4562,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "98e81f65c863d0b87c3afca011c3b93f1722deccc1a937f098dbf876945da9e3",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-009.txt"
+          "sha256": "f32fc25533ff9e823d421b511685c895dddfa5c353933ad328eb9977eed6ff5b",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-009.txt"
         }
       ],
       "tests": []
@@ -4167,8 +4695,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "2aa3f765215621db8dc7e38a4c6c1a55163cd566093f61d6161327a132364c94",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-011.txt"
+          "sha256": "1e0ccc89cb586492fd114aa799afab94cab74df0dbbeee2304be4d36264ff184",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-011.txt"
         },
         {
           "id": "EV-027",
@@ -4180,8 +4708,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "b1fd6a14a815c0c338e71fd90ea093c0b217e464de5196558f7c883752180e60",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-027.txt"
+          "sha256": "a679b78052ed1970a080df0a84eed035026daa39bedb60eea400f08a8de0acae",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-027.txt"
         },
         {
           "id": "EV-028",
@@ -4193,8 +4721,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "ce2262ceb07f3fc234fb85d889495b84bfd457b787837cb5fab3a8d7a8de6c6f",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-028.txt"
+          "sha256": "bf1460308e36510411a11ed666811969be6dfb7bc0496d15ce94b8663990a8f9",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-028.txt"
         },
         {
           "id": "EV-029",
@@ -4206,8 +4734,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "c5d9dc2c90adb22d821b22f7250129ad9c4ba8e67c6a732f96575147fc723bae",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-029.txt"
+          "sha256": "5793661c30236a758ee20667ff7a3deb4239ed828ac1c66b4d54630298bb674e",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-029.txt"
         }
       ],
       "tests": [
@@ -4603,8 +5131,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "b817b417d6a868aec53fd68a7ce266e9ee5d59e5dad368da06fe12f22539cb3a",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-006.txt"
+          "sha256": "3be5659f1e70c79a2a034facb35ef3f19d251fbca9d546f2faa96898dcdb3074",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-006.txt"
         },
         {
           "id": "EV-021",
@@ -4616,8 +5144,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "913f2cc48aa3387a1f4589c4f436b113342833596ba589eb4fdc6a6b236d6b58",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-021.txt"
+          "sha256": "ed193f869b9e40340f007de7f6afb2557aa05052891ae9cf63077c66fcce5939",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-021.txt"
         },
         {
           "id": "EV-022",
@@ -4629,8 +5157,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "2b0862753b76f59b489459a7f853858524c1625c97027ab05afb224a69249156",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-022.txt"
+          "sha256": "9f470e669576e9b1ea79ae57cd60381a34708f78aced96c0b597f44d9f44305e",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-022.txt"
         }
       ],
       "tests": [
@@ -4769,8 +5297,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "2a5cd9b408b3c60f6e7bde4b8bf66cc704fd36ef0e2edcf39bbc0a27f14c86fc",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-010.txt"
+          "sha256": "bb11d2bec4430460a879563919277e6c5b78c219435dff3ec2cafa71bf2371be",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-010.txt"
         },
         {
           "id": "EV-026",
@@ -4782,8 +5310,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "b875285198414b11a727142e4dc8b3a59e8f331d88efe2abb7156dcfd71743f9",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-026.txt"
+          "sha256": "6cb4e87a6649446159ca161f2c0cf00a478b179010e48ccbbd5be11dcdd852e7",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-026.txt"
         }
       ],
       "tests": []
@@ -4957,8 +5485,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "319e02480e9e1174819a9e10c4df15af8a6e50df711bbd4fbd49fa2c03b0dd68",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-004.txt"
+          "sha256": "83226369e6544f72423e6115dcada9ff8660f6f6537141c23e89775dc97dd351",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-004.txt"
         },
         {
           "id": "EV-019",
@@ -4970,8 +5498,8 @@
           "states": [
             "NORMAL"
           ],
-          "sha256": "ef2ecad410485ef7c639b7cddedbd8d6ce873e58c6abf43fae277271004ae2fc",
-          "fixture": "implementation/aidcf-015-v1.3/evidence-fixtures/EV-019.txt"
+          "sha256": "11d679946646af01abcb43d1f5f4e941011a3ab83011b229c0ea5b40c33777dd",
+          "fixture": "implementation/aidcf-015-v1.4/evidence-fixtures/EV-019.txt"
         }
       ],
       "tests": []
@@ -6618,16 +7146,7 @@
       ]
     }
   ],
-  "errata": [
-    {
-      "id": "E-001",
-      "release": "AIDCF-REL-2026.10.1",
-      "found": "2026-10-13",
-      "location": "AIDCF-015 v1.3 synthetic case: the decision question in dataset/decision.jsonld and dataset/assessment.jsonld (built by tools/build_dataset.py); whitepaper v3.1 section on the synthetic case",
-      "erratum": "The decision question asks whether CI-001 meets SO-01 to SO-03 in NORMAL and MAINTENANCE states. Those are the states the assessment covers, but they do not match the outcomes: SO-02 applies only in RECOVERY, and SO-03 applies in NORMAL and DEGRADED. Within the assessed scope, SO-02 is not assessed at all and SO-03 is assessed only in NORMAL.",
-      "correction": "The question should read: \"Can the synthetic AI training and inference capability CI-001 be relied on to meet SO-01 to SO-03, as far as they apply in NORMAL and MAINTENANCE states, as at 2026-10-10? SO-02 (RECOVERY only) and the DEGRADED state of SO-03 are outside the assessed scope.\" The computed decision, gate results, score and coverage do not change. Corrected in the next release of AIDCF-015."
-    }
-  ],
+  "errata": [],
   "evidenceClasses": {
     "E1": "Documentary and declarative",
     "E2": "Configuration and technical state",
@@ -6638,7 +7157,7 @@
     "E7": "Derived and analytical"
   },
   "decision": {
-    "question": "Can the synthetic AI training and inference capability CI-001 be relied on to meet SO-01 to SO-03 in NORMAL and MAINTENANCE states, as at 2026-10-10?",
+    "question": "Can the synthetic AI training and inference capability CI-001 be relied on to meet SO-01 to SO-03, as far as they apply in NORMAL and MAINTENANCE states, as at 2026-10-10? SO-02 (RECOVERY only) and the DEGRADED state of SO-03 are outside the assessed scope.",
     "scope": "Synthetic capability CI-001 within snapshot SNAP-001; NORMAL and MAINTENANCE states.",
     "state": "NOT_ASSURED",
     "recommended": "NOT_ASSURED",

@@ -346,8 +346,8 @@
     }
   ],
   "conformance": {
-    "release": "AIDCF-REL-2026.10.1",
-    "executedAt": "2026-10-10T14:39:12Z",
+    "release": "AIDCF-REL-2026.10.2",
+    "executedAt": "2026-10-13T07:01:15Z",
     "independent": false,
     "note": "Self-validation by the package author's tooling; no independent execution.",
     "layers": [
@@ -365,13 +365,13 @@
       },
       {
         "layer": "SCHEMA",
-        "checks": 3378,
+        "checks": 3450,
         "failed": 0,
         "outcome": "PASS"
       },
       {
         "layer": "SHACL",
-        "checks": 3318,
+        "checks": 3390,
         "failed": 0,
         "outcome": "PASS"
       },
@@ -383,7 +383,7 @@
       },
       {
         "layer": "TRACEABILITY",
-        "checks": 473,
+        "checks": 491,
         "failed": 0,
         "outcome": "PASS"
       },
@@ -419,7 +419,7 @@
       },
       {
         "layer": "EXPORT",
-        "checks": 5375,
+        "checks": 5504,
         "failed": 0,
         "outcome": "PASS"
       },
@@ -430,7 +430,7 @@
         "outcome": "PASS"
       }
     ],
-    "checks": 15166,
+    "checks": 15457,
     "allPass": true
   }
 }

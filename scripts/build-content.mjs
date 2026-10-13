@@ -261,7 +261,9 @@ for (const d of domains) delete d.familyList;
 
 // ------------------------------------------------------- synthetic case
 
-const ds = "implementation/aidcf-015-v1.3/dataset";
+// The AIDCF-015 package the case is built from. Its README names the version and status.
+const pkgDir = "implementation/aidcf-015-v1.4";
+const ds = `${pkgDir}/dataset`;
 const all = [
   "capability",
   "architecture",
@@ -310,7 +312,8 @@ const errata = read("ERRATA.md")
     erratum: m[5].trim(),
     correction: m[6].trim(),
   }))
-  .filter((e) => e.location.includes("decision question"));
+  // only errata against the package release shown; a later release carries its own correction
+  .filter((e) => e.location.includes("decision question") && e.release === decision.releaseRef);
 const recommendation = ofType("DecisionRecommendation")[0];
 const score = ofType("ScoreSnapshot")[0];
 
@@ -433,7 +436,7 @@ const controlSummary = (id) => {
         period: e.periodStart && e.periodEnd ? `${e.periodStart} to ${e.periodEnd}` : null,
         states: e.operatingStates ?? [],
         sha256: e.sha256 ?? null,
-        fixture: e.fixturePath ? `implementation/aidcf-015-v1.3/${e.fixturePath}` : null,
+        fixture: e.fixturePath ? `${pkgDir}/${e.fixturePath}` : null,
       };
     }),
     tests: a
@@ -450,8 +453,11 @@ for (const a of assessments) controlsFromIris(a.governedBy).forEach((c) => refer
 for (const g of gateResults)
   for (const e of g.controlEvaluations ?? []) referencedControls.add(short(e.controlRef));
 
+const pkgReadme = read(`${pkgDir}/README.md`).toString("utf8");
+const pkgField = (f) => pkgReadme.match(new RegExp(`^\\| ${f} \\| ([^|]+) \\|$`, "m"))?.[1].trim() ?? fail(`${pkgDir}/README.md: no ${f} field`);
 const caseData = {
   source: ds,
+  package: { dir: pkgDir, version: pkgField("Package version"), release: pkgField("Release identifier"), status: pkgField("Status") },
   capability: {
     id: short(capability.id),
     name: capability.name,
@@ -513,6 +519,9 @@ const caseData = {
         exceedsTolerance: Boolean(e.exceedsTolerance),
       })),
       restricted: Boolean(s.distributionControlRef),
+      // set when the scenario instantiates an AIDCF-004 library scenario (sourceRecord "<file>#X02")
+      library: s.sourceRecord?.match(/#(X\d{2})$/)?.[1] ?? null,
+      note: s.description?.replace(/^Instantiates AIDCF-004 library scenario X\d{2} in the synthetic case\.\s*/, "") || null,
     };
   }),
   safeguards: safeguards.map((s) => ({
@@ -686,7 +695,7 @@ const research = {
 };
 if (!research.name) fail("framework name not found in README");
 
-const conformance = JSON.parse(track("implementation/aidcf-015-v1.3/outputs/validation-results.json"));
+const conformance = JSON.parse(track(`${pkgDir}/outputs/validation-results.json`));
 research.conformance = {
   release: conformance.release,
   executedAt: conformance.executedAt,
