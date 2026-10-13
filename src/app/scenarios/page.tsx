@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ScenarioFilter } from "@/components/ScenarioFilter";
-import { caseData, framework, gateName, sourceUrl } from "@/lib/data";
+import { caseData, framework, gateName, sourceUrl, validation } from "@/lib/data";
 import { scenarioLibrary } from "@/lib/scenarios";
 
 export const metadata: Metadata = {
@@ -35,7 +35,9 @@ export default function ScenariosPage() {
             <p>
               <strong>Reference patterns, not incidents or assessed cases.</strong> {scenarioLibrary.intro} The{" "}
               <Link href="/case/">synthetic case</Link> shows {caseData.scenarios.length} scenarios instantiated and
-              assessed end to end.
+              assessed end to end. {validation.evidence.completedAssessments === 0
+                ? "No completed real-world assessment has been recorded yet."
+                : `${validation.evidence.completedAssessments} completed real-world assessment(s) recorded, ${validation.evidence.independentlyReviewed} independently reviewed.`}
             </p>
           </div>
         </div>

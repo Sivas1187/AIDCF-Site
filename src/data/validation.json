@@ -28,6 +28,23 @@
     "comparison": {
       "baselines": 6,
       "approved": 0,
+      "pilot": [
+        {
+          "id": "BL-CX",
+          "name": "Commissioning and integrated systems testing",
+          "approved": false
+        },
+        {
+          "id": "BL-ENG",
+          "name": "Engineering and reliability studies",
+          "approved": false
+        },
+        {
+          "id": "BL-OT",
+          "name": "OT security risk assessment",
+          "approved": false
+        }
+      ],
       "rows": 0
     }
   },
@@ -44,5 +61,12 @@
   "independentReview": {
     "reviews": 0,
     "dispositions": 0
+  },
+  "evidence": {
+    "libraryScenarios": 20,
+    "caseScenarios": 12,
+    "pilotRecords": 0,
+    "completedAssessments": 0,
+    "independentlyReviewed": 0
   }
 }

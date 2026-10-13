@@ -647,6 +647,10 @@ const validation = {
     comparison: {
       baselines: comparisonBaselines.length,
       approved: comparisonBaselines.filter((b) => b.approval_status === "APPROVED").length,
+      // the staged pilot evaluates only the baselines marked ACTIVE (VAL-001 v1.1 section 10A)
+      pilot: comparisonBaselines
+        .filter((b) => b.pilot_status === "ACTIVE")
+        .map((b) => ({ id: b.baseline_id, name: b.name, approved: b.approval_status === "APPROVED" })),
       rows: comparativeRows.length,
     },
   },
@@ -793,6 +797,32 @@ const scenarioLibrary = (() => {
   const intro = part.split("\n## ")[0].split("\n\n").map((t) => t.trim()).find((t) => t && !t.startsWith("#"));
   return { source: thfPath, intro, scenarios: items };
 })();
+
+// Reference patterns, instantiated synthetic scenarios and real-world assessments, so
+// the site can state the distinction without hard-coded counts. A real-world
+// assessment counts only from the explicit status fields of an AIDCF-PIL-004 result
+// record, and fails closed: a missing, placeholder or unrecognised value counts as
+// not completed. Completed means Execution COMPLETED and record status ISSUED or
+// CORRECTED; independently reviewed additionally needs the independent reviewer's
+// acceptance SIGNED.
+const pilotRecords = listDir("pilots/pilot-results")
+  .filter((f) => f.endsWith(".md") && f !== "README.md" && !/template/i.test(f))
+  .map((f) => {
+    const field = (label) => {
+      const re = new RegExp(`^\\|\\s*(?:\\*\\*)?${label}(?:\\*\\*)?\\s*\\|([^|]*)\\|`, "m");
+      return track(`pilots/pilot-results/${f}`).match(re)?.[1].trim() ?? "";
+    };
+    const completed =
+      field("Execution") === "COMPLETED" && /;\s*(ISSUED|CORRECTED)$/.test(field("Record version and status"));
+    return { completed, independentlyReviewed: completed && /^SIGNED\b/.test(field("Independent reviewer acceptance")) };
+  });
+validation.evidence = {
+  libraryScenarios: scenarioLibrary.scenarios.length,
+  caseScenarios: caseData.scenarios.length,
+  pilotRecords: pilotRecords.length,
+  completedAssessments: pilotRecords.filter((r) => r.completed).length,
+  independentlyReviewed: pilotRecords.filter((r) => r.independentlyReviewed).length,
+};
 
 const outputs = {
   "manifest.json": manifest,
