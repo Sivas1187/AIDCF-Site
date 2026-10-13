@@ -116,6 +116,10 @@ export function CaseExplorer() {
   const [view, setView] = useState<"graph" | "list">("graph");
   const [journey, setJourney] = useState<number | null>(null);
 
+  useEffect(() => {
+    if (window.matchMedia("(max-width: 719px)").matches) setView("list");
+  }, []);
+
   // /case/#journey (linked from the failure story) opens the guided journey.
   useEffect(() => {
     const read = () => {

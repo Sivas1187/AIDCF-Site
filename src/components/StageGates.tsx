@@ -1,5 +1,7 @@
-// The AIDCF-009 Part A assessment lifecycle as a stage-gate track: each phase ends at
-// its stage gate, and reassessment loops back to SG0 or SG1. Wording follows section 0.6 and A6.
+// A simplified view of the eight-phase AIDCF-009 Part A lifecycle (section 0.6) and its stage
+// gates SG0 to SG7 (A6). Phases 1 to 7 are drawn as a track with the gate(s) listed against each;
+// SG6 and SG7 share phase 7, and phase 8, Reassess, is drawn as the loop back to SG0 or SG1. It is
+// not a one-to-one mapping of phases to gates. Phase wording follows the handbook.
 export const phases = [
   { name: "Initiate", gate: "SG0", gateName: "Authorise", what: "Charter the decision question, sponsor, decision authority and intended users." },
   { name: "Profile, scope and tailor", gate: "SG1", gateName: "Scope", what: "Define the capability, its boundary and dependencies, and which controls apply." },
@@ -15,9 +17,10 @@ export function StageGates() {
     <figure className="sg">
       <p className="matrix-cap">
         <span className="tag-structure">Method structure</span>
-        Each phase closes at a stage gate with defined review and approval responsibilities.
+        Simplified view of the eight-phase lifecycle governed by stage gates SG0 to SG7. Phases 1 to 7 are shown
+        with their gates (SG6 and SG7 both sit in phase 7); phase 8, Reassess, is the loop below.
       </p>
-      <ol className="sg-track" aria-label="Assessment lifecycle, SG0 to SG7">
+      <ol className="sg-track" aria-label="Simplified assessment lifecycle: phases 1 to 7 and their stage gates">
         {phases.map((p, i) => (
           <li key={p.gate}>
             <span className="sg-num" aria-hidden="true">
@@ -38,8 +41,8 @@ export function StageGates() {
           ↺
         </span>
         <span>
-          <b>Reassess.</b> Changes, incidents, evidence expiry and gate result changes re-enter the lifecycle at SG0 or
-          SG1, as a delta or full reassessment.
+          <b>Phase 8, Reassess.</b> Changes, incidents, evidence expiry and gate result changes trigger a delta or full
+          reassessment, with re-entry at <span className="mono">SG0</span> or <span className="mono">SG1</span>.
         </span>
       </p>
     </figure>

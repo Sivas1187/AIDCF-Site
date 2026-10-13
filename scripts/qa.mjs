@@ -159,10 +159,9 @@ for (const scheme of ["light", "dark"]) {
         problems++;
       }
     } else if (vpName === "mobile") {
-      // Phones get the graph too: it scrolls sideways inside its frame, not the page.
-      const frame = await page.locator(".graph-frame").evaluate((el) => el.scrollWidth > el.clientWidth).catch(() => false);
-      if (!frame) {
-        console.log(`CASE ${scheme} mobile: graph view not default, or it does not scroll inside its frame`);
+      const listShown = await page.locator(".list-view").count();
+      if (!listShown) {
+        console.log(`CASE ${scheme} mobile: list view not default`);
         problems++;
       }
       await page.selectOption("#scenario", "FS-04");
