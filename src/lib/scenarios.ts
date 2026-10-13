@@ -8,7 +8,7 @@ export interface LibraryScenario {
   preconditions: string;
   operatingStates: string;
   states: string[];
-  path: { domains: string[]; text: string }[];
+  path: { domains: string[]; stages: string[][]; text: string }[];
   requiredFunctions: string;
   serviceOutcomes: string;
   safeguards: string[];

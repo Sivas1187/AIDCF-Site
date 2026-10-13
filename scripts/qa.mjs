@@ -150,6 +150,19 @@ for (const scheme of ["light", "dark"]) {
         console.log(`SCENARIOS ${scheme}: ${all} cards, ${net} for NET and CG-08, ${none} for a non-match`);
         problems++;
       }
+      // Scenario graphs: one path graph per card; the crossing map selects a domain and lists its crossings.
+      await page.goto(base + "/scenarios/", { waitUntil: "networkidle" });
+      const graphs = await page.locator(".sc-card .sp svg").count();
+      const nodes = await page.locator(".sm-node").count();
+      const edges = await page.locator(".sm-edge").count();
+      await page.locator('.sm-node[aria-label^="POW "]').press("Enter");
+      const outLinks = await page.locator(".sm-panel h4 + ul a").count();
+      const pressed = await page.locator('.sm-node[aria-pressed="true"]').count();
+      if (graphs !== 20 || nodes !== 15 || edges < 20 || outLinks === 0 || pressed !== 1) {
+        console.log(`SCENARIO GRAPHS ${scheme}: ${graphs} path graphs, ${nodes} map nodes, ${edges} crossings, ${outLinks} links for POW, ${pressed} selected`);
+        problems++;
+      }
+      await page.screenshot({ path: `${out}/${scheme}-desktop-scenarios-map.png` });
       await page.goto(base + "/domains/pow/", { waitUntil: "networkidle" });
       await page.fill("#control-filter", "UPS");
       await page.waitForTimeout(150);

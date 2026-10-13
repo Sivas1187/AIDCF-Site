@@ -746,7 +746,9 @@ const scenarioLibrary = (() => {
     const path = listOf(raw.path).map((l) => {
       const m = l.match(/^([A-Z]{3}(?:\s*(?:→|\/)\s*[A-Z]{3})*)\s+—\s+([\s\S]+)$/);
       const domains = m ? m[1].split(/\s*(?:→|\/)\s*/).filter((d) => domainIds.has(d)) : [];
-      return { domains, text: m ? m[2] : l };
+      // "A → B": the step moves from A to B; "A/B": the step sits in both at once.
+      const stages = m ? m[1].split(/\s*→\s*/).map((g) => g.split(/\s*\/\s*/).filter((d) => domainIds.has(d))) : [];
+      return { domains, stages, text: m ? m[2] : l };
     });
     const families = [...raw.families.matchAll(/\b([A-Z]{3}-\d{2})\b/g)].map((m) => m[1]);
     const gates = [...raw.gates.matchAll(/\b(CG-\d{2})\b/g)].map((m) => m[1]).filter((g) => gateIds.has(g));

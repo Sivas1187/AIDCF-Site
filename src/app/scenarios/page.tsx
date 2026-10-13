@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ScenarioFilter } from "@/components/ScenarioFilter";
+import { ScenarioMap } from "@/components/ScenarioMap";
+import { ScenarioPathGraph } from "@/components/ScenarioPathGraph";
+import { crossings } from "@/lib/scenarioGraph";
 import { caseData, framework, gateName, sourceUrl } from "@/lib/data";
 import { scenarioLibrary } from "@/lib/scenarios";
 
@@ -19,6 +22,16 @@ export default function ScenariosPage() {
   const domains = framework.domains.filter((d) => used.has(d.id)).map((d) => ({ value: d.id, label: `${d.id} ${d.name}` }));
   const gates = framework.gates.filter((g) => usedGates.has(g.id)).map((g) => ({ value: g.id, label: `${g.id} ${g.name}` }));
   const states = STATE_ORDER.filter((s) => lib.some((x) => x.states.includes(s)));
+  const cross = crossings(lib);
+  const into = (id: string) => cross.filter((c) => c.to === id);
+  const topId = [...new Set(cross.map((c) => c.to))].sort(
+    (a, b) => into(b).reduce((n, c) => n + c.scenarios.length, 0) - into(a).reduce((n, c) => n + c.scenarios.length, 0),
+  )[0];
+  const top = { id: topId, n: into(topId).reduce((n, c) => n + c.scenarios.length, 0), from: into(topId).length };
+  const order = framework.clusters.flatMap((c) => c.domains);
+  const mapDomains = order
+    .map((id) => framework.domains.find((d) => d.id === id)!)
+    .map((d) => ({ id: d.id, name: d.name, scenarios: lib.filter((s) => s.domains.includes(d.id)).map((s) => s.id) }));
 
   return (
     <>
@@ -38,6 +51,45 @@ export default function ScenariosPage() {
               assessed end to end.
             </p>
           </div>
+        </div>
+      </section>
+
+      <section className="block" aria-labelledby="sm-h">
+        <div className="wrap">
+          <h2 id="sm-h">Where failures cross domains</h2>
+          <p>
+            Each line is a path step that AIDCF-004 marks as moving from one domain to another, across all{" "}
+            {lib.length} scenarios: {cross.length} different crossings in{" "}
+            {cross.reduce((n, c) => n + c.scenarios.length, 0)} steps. {framework.domains.find((d) => d.id === top.id)?.name} ({top.id}) receives the most:{" "}
+            {top.n} of them, from {top.from} other domains.
+          </p>
+          <ScenarioMap domains={mapDomains} crossings={cross} />
+          <details className="sc-more">
+            <summary>All {cross.length} crossings as a list</summary>
+            <ul className="sm-list">
+              {cross.map((c) => (
+                <li key={`${c.from}${c.to}`}>
+                  <span className="mono">
+                    {c.from} → {c.to}
+                  </span>{" "}
+                  · {c.scenarios.length}:{" "}
+                  {c.scenarios.map((x, i) => (
+                    <span key={x}>
+                      {i > 0 && " "}
+                      <a href={`#${x}`} className="mono">
+                        {x}
+                      </a>
+                    </span>
+                  ))}
+                </li>
+              ))}
+            </ul>
+          </details>
+          <p className="caption">
+            A reading aid, not a dependency model: it shows how the reference scenarios describe failure moving between
+            domains, not how any facility is built. Steps written &quot;A/B&quot; sit in both domains and draw no
+            line.
+          </p>
         </div>
       </section>
 
@@ -76,7 +128,8 @@ export default function ScenariosPage() {
                   <strong>Service outcomes affected.</strong> {s.serviceOutcomes}.
                 </p>
                 <details className="sc-more">
-                  <summary>Propagation path ({s.path.length} steps)</summary>
+                  <summary>Failure path ({s.path.length} steps)</summary>
+                  <ScenarioPathGraph s={s} />
                   <ol className="sc-path" aria-label={`Propagation path of ${s.id}`}>
                     {s.path.map((p, i) => (
                       <li key={i}>

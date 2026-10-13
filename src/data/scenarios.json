@@ -20,11 +20,21 @@
           "domains": [
             "POW"
           ],
+          "stages": [
+            [
+              "POW"
+            ]
+          ],
           "text": "Sag TRIGGERS UPS transfer from mains or high-efficiency mode to inverter; batteries carry the full IT load including the swing (EXTERNAL_EVENT)."
         },
         {
           "domains": [
             "POW"
+          ],
+          "stages": [
+            [
+              "POW"
+            ]
           ],
           "text": "Utility interruption TRIGGERS generator start; UPS battery energy DELAYS consequence for the battery runtime at current state of health (WITHIN the runtime parameter)."
         },
@@ -33,17 +43,35 @@
             "CAP",
             "POW"
           ],
+          "stages": [
+            [
+              "CAP"
+            ],
+            [
+              "POW"
+            ]
+          ],
           "text": "When generators close onto the bus and UPS rectifiers walk in, the training load swing CONTRIBUTES_TO repeated large load steps on the generators; synchronous phase alignment across the job AMPLIFIES the step (DEMAND_SURGE)."
         },
         {
           "domains": [
             "POW"
           ],
+          "stages": [
+            [
+              "POW"
+            ]
+          ],
           "text": "Generator governor and AVR response produces frequency and voltage excursions; UPS rectifiers reject the generator source when frequency leaves their input window and return to battery, which CONTRIBUTES_TO further battery depletion (CONTROL_ACTION, AND with step 3)."
         },
         {
           "domains": [
             "POW"
+          ],
+          "stages": [
+            [
+              "POW"
+            ]
           ],
           "text": "Repeated rejection AND reduced battery state of health lead to battery exhaustion on one or more UPS blocks before stable generator supply is accepted (SEQUENCE)."
         },
@@ -52,6 +80,14 @@
             "POW",
             "CMP"
           ],
+          "stages": [
+            [
+              "POW"
+            ],
+            [
+              "CMP"
+            ]
+          ],
           "text": "Loss of output on those blocks PROPAGATES_TO the racks they serve; dual-corded racks whose second feed is on a surviving block ride through; single-path rack-scale systems drop."
         },
         {
@@ -59,17 +95,35 @@
             "CMP",
             "STO"
           ],
+          "stages": [
+            [
+              "CMP"
+            ],
+            [
+              "STO"
+            ]
+          ],
           "text": "Node loss in any participant TRIGGERS failure of the whole synchronous job (CASCADE); training progress since the last durable checkpoint is lost."
         },
         {
           "domains": [
             "THM"
           ],
+          "stages": [
+            [
+              "THM"
+            ]
+          ],
           "text": "If CDU pumps or chilled-water pumps are on the affected blocks or are not UPS-backed, loss of flow PROPAGATES_TO surviving racks as a thermal transient (SHARED_RESOURCE)."
         },
         {
           "domains": [
             "RES"
+          ],
+          "stages": [
+            [
+              "RES"
+            ]
           ],
           "text": "Restart of all affected jobs at once creates a restore demand on checkpoint storage (links to X04)."
         }
@@ -132,11 +186,24 @@
             "SUP",
             "THM"
           ],
+          "stages": [
+            [
+              "SUP"
+            ],
+            [
+              "THM"
+            ]
+          ],
           "text": "Defective release, deployed through the CDU management tool, is a LATENT condition in all CDUs (COMMON_CAUSE)."
         },
         {
           "domains": [
             "THM"
+          ],
+          "stages": [
+            [
+              "THM"
+            ]
           ],
           "text": "Sensor fault TRIGGERS incorrect controller action; both pumps stop (M09 then M01 on RF-THM-02); because the standby depends on the same controller, redundancy is DEFEATED."
         },
@@ -145,11 +212,24 @@
             "THM",
             "CMP"
           ],
+          "stages": [
+            [
+              "THM"
+            ],
+            [
+              "CMP"
+            ]
+          ],
           "text": "Loss of TCS flow PROPAGATES_TO cold plates; low thermal inertia means accelerators reach thermal limits within the TCS ride-through time (a capability-profile parameter, illustratively tens of seconds)."
         },
         {
           "domains": [
             "CMP"
+          ],
+          "stages": [
+            [
+              "CMP"
+            ]
           ],
           "text": "Accelerators throttle and then hardware thermal protection shuts them down (M23 on RF-CMP-01)."
         },
@@ -158,11 +238,24 @@
             "CMP",
             "STO"
           ],
+          "stages": [
+            [
+              "CMP"
+            ],
+            [
+              "STO"
+            ]
+          ],
           "text": "The synchronous job fails (CASCADE); progress since the last checkpoint is lost."
         },
         {
           "domains": [
             "THM"
+          ],
+          "stages": [
+            [
+              "THM"
+            ]
           ],
           "text": "Further CDUs with the same sensor condition fail the same way; failures CORRELATE_WITH the firmware release."
         },
@@ -170,6 +263,14 @@
           "domains": [
             "SUP",
             "RES"
+          ],
+          "stages": [
+            [
+              "SUP"
+            ],
+            [
+              "RES"
+            ]
           ],
           "text": "Diagnosis waits for OEM remote support (DELAYS recovery); manual pump override may be the only immediate recovery."
         }
@@ -231,11 +332,21 @@
           "domains": [
             "NET"
           ],
+          "stages": [
+            [
+              "NET"
+            ]
+          ],
           "text": "Misconfiguration or faulty NIC TRIGGERS persistent pause generation on one port (CONFIG_DRIFT or HUMAN_ACTION)."
         },
         {
           "domains": [
             "NET"
+          ],
+          "stages": [
+            [
+              "NET"
+            ]
           ],
           "text": "Pause PROPAGATES_VIA inter-switch links hop by hop; head-of-line blocking spreads to unrelated flows sharing the priority; cyclic buffer dependencies can create PFC deadlock (SHARED_RESOURCE, AMPLIFIES)."
         },
@@ -244,11 +355,24 @@
             "NET",
             "CMP"
           ],
+          "stages": [
+            [
+              "NET"
+            ],
+            [
+              "CMP"
+            ]
+          ],
           "text": "Collective operations (all-reduce, all-gather) stall cluster-wide because every rank waits for the slowest (CASCADE)."
         },
         {
           "domains": [
             "CMP"
+          ],
+          "stages": [
+            [
+              "CMP"
+            ]
           ],
           "text": "Collective timeouts TRIGGER job failures across many jobs, not only the job on the faulty port."
         },
@@ -257,11 +381,24 @@
             "NET",
             "STO"
           ],
+          "stages": [
+            [
+              "NET"
+            ],
+            [
+              "STO"
+            ]
+          ],
           "text": "If storage traffic shares the fabric or priority, checkpoint writes stall (MASKS the last-good checkpoint state)."
         },
         {
           "domains": [
             "OPS"
+          ],
+          "stages": [
+            [
+              "OPS"
+            ]
           ],
           "text": "Telemetry shows link-level health as normal (links up), which MASKS the cause and DELAYS diagnosis."
         }
@@ -320,11 +457,24 @@
             "RES",
             "CMP"
           ],
+          "stages": [
+            [
+              "RES"
+            ],
+            [
+              "CMP"
+            ]
+          ],
           "text": "Simultaneous restart TRIGGERS a read storm against the checkpoint tier (DEMAND_SURGE)."
         },
         {
           "domains": [
             "STO"
+          ],
+          "stages": [
+            [
+              "STO"
+            ]
           ],
           "text": "Read demand exceeds tier throughput; metadata operations from many ranks opening shards create a metadata hotspot (M15 on RF-STO-03) which AMPLIFIES latency."
         },
@@ -332,11 +482,21 @@
           "domains": [
             "STO"
           ],
+          "stages": [
+            [
+              "STO"
+            ]
+          ],
           "text": "Before the event, retention had filled the tier so recent checkpoint writes failed silently or were truncated; the last verified checkpoint is older than expected (LATENT, CONTRIBUTES_TO progress loss)."
         },
         {
           "domains": [
             "NET"
+          ],
+          "stages": [
+            [
+              "NET"
+            ]
           ],
           "text": "Storage fabric congestion from the storm PROPAGATES_TO other tenants and to provisioning traffic (SHARED_RESOURCE)."
         },
@@ -345,11 +505,24 @@
             "STO",
             "CAP"
           ],
+          "stages": [
+            [
+              "STO"
+            ],
+            [
+              "CAP"
+            ]
+          ],
           "text": "Restore time across the cluster exceeds the recovery tolerance; accelerators sit idle (DELAYS recovery)."
         },
         {
           "domains": [
             "CMP"
+          ],
+          "stages": [
+            [
+              "CMP"
+            ]
           ],
           "text": "Timeouts during restore cause repeated restart attempts that AMPLIFY the storm (positive feedback)."
         }
@@ -409,6 +582,14 @@
             "SUP",
             "SEC"
           ],
+          "stages": [
+            [
+              "SUP"
+            ],
+            [
+              "SEC"
+            ]
+          ],
           "text": "Compromised vendor credential BYPASSES perimeter controls through the vendor conduit (HUMAN_ACTION by adversary)."
         },
         {
@@ -416,11 +597,24 @@
             "SEC",
             "THM"
           ],
+          "stages": [
+            [
+              "SEC"
+            ],
+            [
+              "THM"
+            ]
+          ],
           "text": "Attacker raises chilled-water supply setpoint and widens alarm limits; alarm suppression MASKS the change (M09, M19)."
         },
         {
           "domains": [
             "THM"
+          ],
+          "stages": [
+            [
+              "THM"
+            ]
           ],
           "text": "Facility water supply temperature rises gradually; CDU approach temperature consumes margin (DEGRADATION driven by adversary)."
         },
@@ -429,6 +623,14 @@
             "THM",
             "CMP"
           ],
+          "stages": [
+            [
+              "THM"
+            ],
+            [
+              "CMP"
+            ]
+          ],
           "text": "TCS supply temperature rises; accelerators throttle (M07 on RF-CMP-01); throughput degrades without obvious alarm."
         },
         {
@@ -436,17 +638,35 @@
             "SEC",
             "THM"
           ],
+          "stages": [
+            [
+              "SEC"
+            ],
+            [
+              "THM"
+            ]
+          ],
           "text": "Attacker optionally disables chiller staging or commands CDU valve closure, which ESCALATES to loss of heat rejection."
         },
         {
           "domains": [
             "CMP"
           ],
+          "stages": [
+            [
+              "CMP"
+            ]
+          ],
           "text": "Thermal shutdown of accelerators; jobs fail; possible equipment stress."
         },
         {
           "domains": [
             "EVA"
+          ],
+          "stages": [
+            [
+              "EVA"
+            ]
           ],
           "text": "BMS audit logs altered, causing evidence and attribution loss."
         }
@@ -507,6 +727,11 @@
           "domains": [
             "POW"
           ],
+          "stages": [
+            [
+              "POW"
+            ]
+          ],
           "text": "Cell runaway releases flammable and toxic off-gas before visible fire (M25 on RF-POW-03)."
         },
         {
@@ -514,17 +739,35 @@
             "POW",
             "PHY"
           ],
+          "stages": [
+            [
+              "POW"
+            ],
+            [
+              "PHY"
+            ]
+          ],
           "text": "Off-gas accumulates; without detection and ventilation the room atmosphere can reach deflagration conditions (ESCALATION; CG-04)."
         },
         {
           "domains": [
             "POW"
           ],
+          "stages": [
+            [
+              "POW"
+            ]
+          ],
           "text": "Heat PROPAGATES_TO adjacent cells and modules unless module design and spacing CONTAIN it."
         },
         {
           "domains": [
             "PHY"
+          ],
+          "stages": [
+            [
+              "PHY"
+            ]
           ],
           "text": "Fire detection and suppression act; suppression may not stop cell-level runaway (re-ignition risk); smoke PROPAGATES_VIA shared ventilation to adjacent spaces."
         },
@@ -533,6 +776,14 @@
             "PHY",
             "POW"
           ],
+          "stages": [
+            [
+              "PHY"
+            ],
+            [
+              "POW"
+            ]
+          ],
           "text": "Emergency response requires de-energising the UPS and its battery; the UPS block loses ride-through, so the load is either transferred to bypass (exposed to utility disturbances) or shut down (CONTROL_ACTION or HUMAN_ACTION)."
         },
         {
@@ -540,11 +791,24 @@
             "POW",
             "CMP"
           ],
+          "stages": [
+            [
+              "POW"
+            ],
+            [
+              "CMP"
+            ]
+          ],
           "text": "Racks on that block operate without ride-through or are lost; synchronous jobs fail if any participant is affected."
         },
         {
           "domains": [
             "ENV"
+          ],
+          "stages": [
+            [
+              "ENV"
+            ]
           ],
           "text": "Electrolyte, combustion products and suppressant residue contaminate equipment; environmental release reporting."
         },
@@ -552,6 +816,14 @@
           "domains": [
             "SUP",
             "RES"
+          ],
+          "stages": [
+            [
+              "SUP"
+            ],
+            [
+              "RES"
+            ]
           ],
           "text": "Replacement battery modules and cabinet repair have long lead times (DELAYS recovery to NORMAL)."
         }
@@ -614,11 +886,21 @@
           "domains": [
             "THM"
           ],
+          "stages": [
+            [
+              "THM"
+            ]
+          ],
           "text": "Pressure transient TRIGGERS seal failure at a degraded quick-disconnect (DEGRADATION, CONTRIBUTES_TO); coolant escapes (M25 on RF-THM-06)."
         },
         {
           "domains": [
             "THM"
+          ],
+          "stages": [
+            [
+              "THM"
+            ]
           ],
           "text": "Automatic make-up maintains loop pressure, which MASKS the leak at the CDU and sustains the leak volume."
         },
@@ -627,11 +909,24 @@
             "THM",
             "POW"
           ],
+          "stages": [
+            [
+              "THM"
+            ],
+            [
+              "POW"
+            ]
+          ],
           "text": "Coolant reaches power shelves or busbar connections; ESCALATION to electrical fault, arc or tracking (CG-04)."
         },
         {
           "domains": [
             "POW"
+          ],
+          "stages": [
+            [
+              "POW"
+            ]
           ],
           "text": "Rack power protection trips; if protection is slow or the fault involves the busway, upstream protection clears a larger section (M05 if miscoordinated)."
         },
@@ -640,11 +935,24 @@
             "POW",
             "CMP"
           ],
+          "stages": [
+            [
+              "POW"
+            ],
+            [
+              "CMP"
+            ]
+          ],
           "text": "Rack and possibly row loss; synchronous jobs fail."
         },
         {
           "domains": [
             "PHY"
+          ],
+          "stages": [
+            [
+              "PHY"
+            ]
           ],
           "text": "Coolant spreads under or between racks to adjacent equipment; floor-level detection alarms only after pooling (DELAYS detection)."
         },
@@ -652,6 +960,14 @@
           "domains": [
             "OPS",
             "RES"
+          ],
+          "stages": [
+            [
+              "OPS"
+            ],
+            [
+              "RES"
+            ]
           ],
           "text": "Isolation, drying, inspection and requalification of affected equipment before re-energisation (RECOVERY); risk that re-energising wet equipment REINTRODUCES the fault."
         }
@@ -714,11 +1030,22 @@
             "ENV",
             "THM"
           ],
+          "stages": [
+            [
+              "ENV",
+              "THM"
+            ]
+          ],
           "text": "Chemistry excursion or debris CAUSES fouling and biological growth in the facility loop (DEGRADATION; M07 on RF-THM-07)."
         },
         {
           "domains": [
             "THM"
+          ],
+          "stages": [
+            [
+              "THM"
+            ]
           ],
           "text": "Fouling of CDU heat-exchanger plates increases approach temperature (M07 on RF-THM-03) across many CDUs fed by the same loop (COMMON_CAUSE)."
         },
@@ -727,11 +1054,24 @@
             "THM",
             "CMP"
           ],
+          "stages": [
+            [
+              "THM"
+            ],
+            [
+              "CMP"
+            ]
+          ],
           "text": "TCS supply temperature rises at a given load; accelerators throttle at peak load (M07 on RF-CMP-01)."
         },
         {
           "domains": [
             "THM"
+          ],
+          "stages": [
+            [
+              "THM"
+            ]
           ],
           "text": "If TCS is contaminated (HX breach, improper fill or material incompatibility), cold-plate microchannels foul or corrode, which ESCALATES to localised overheating and possible leaks."
         },
@@ -740,11 +1080,22 @@
             "PHY",
             "ENV"
           ],
+          "stages": [
+            [
+              "PHY",
+              "ENV"
+            ]
+          ],
           "text": "Biological growth in cooling towers creates a water-borne pathogen hazard (ESCALATION to CG-04)."
         },
         {
           "domains": [
             "OPS"
+          ],
+          "stages": [
+            [
+              "OPS"
+            ]
           ],
           "text": "Cleaning requires taking CDUs out of service, which reduces resilient capacity (MAINTENANCE state)."
         }
@@ -803,11 +1154,22 @@
             "PHY",
             "DEP"
           ],
+          "stages": [
+            [
+              "PHY",
+              "DEP"
+            ]
+          ],
           "text": "External excavation TRIGGERS a cut of the shared duct (EXTERNAL_EVENT; COMMON_CAUSE through the shared route)."
         },
         {
           "domains": [
             "NET"
+          ],
+          "stages": [
+            [
+              "NET"
+            ]
           ],
           "text": "Both carriers' circuits fail; diversity DEFEATED (M01 on RF-NET-03 frontend and WAN)."
         },
@@ -816,12 +1178,28 @@
             "NET",
             "CAP"
           ],
+          "stages": [
+            [
+              "NET"
+            ],
+            [
+              "CAP"
+            ]
+          ],
           "text": "Inference ingress lost; inference Service Outcome breached immediately."
         },
         {
           "domains": [
             "NET",
             "STO"
+          ],
+          "stages": [
+            [
+              "NET"
+            ],
+            [
+              "STO"
+            ]
           ],
           "text": "Inter-site checkpoint replication stops; recovery-point exposure grows (DELAYS replication)."
         },
@@ -830,6 +1208,14 @@
             "NET",
             "SEC"
           ],
+          "stages": [
+            [
+              "NET"
+            ],
+            [
+              "SEC"
+            ]
+          ],
           "text": "Cloud-hosted identity or MFA unreachable; operators cannot authenticate to some systems (links to X15)."
         },
         {
@@ -837,11 +1223,24 @@
             "NET",
             "SUP"
           ],
+          "stages": [
+            [
+              "NET"
+            ],
+            [
+              "SUP"
+            ]
+          ],
           "text": "Remote vendor support unavailable during any concurrent incident (SHARED_RESOURCE)."
         },
         {
           "domains": [
             "EVA"
+          ],
+          "stages": [
+            [
+              "EVA"
+            ]
           ],
           "text": "Remote monitoring of the site lost; site-local evidence must be retained."
         }
@@ -900,11 +1299,24 @@
             "SUP",
             "CMP"
           ],
+          "stages": [
+            [
+              "SUP"
+            ],
+            [
+              "CMP"
+            ]
+          ],
           "text": "Defective release is deployed to the fleet; signature validation passes, so authenticity checks do not interrupt it (LATENT, COMMON_CAUSE)."
         },
         {
           "domains": [
             "CMP"
+          ],
+          "stages": [
+            [
+              "CMP"
+            ]
           ],
           "text": "Under the triggering power state, some accelerators compute incorrect results without error indication (M16 / M09 on RF-CMP-01)."
         },
@@ -913,11 +1325,24 @@
             "CMP",
             "STO"
           ],
+          "stages": [
+            [
+              "CMP"
+            ],
+            [
+              "STO"
+            ]
+          ],
           "text": "Corrupted gradients are incorporated into model state; checkpoints written after onset are corrupted (PROPAGATES_TO RF-STO-04)."
         },
         {
           "domains": [
             "CAP"
+          ],
+          "stages": [
+            [
+              "CAP"
+            ]
           ],
           "text": "Training loss anomalies appear later; detection lag means older good checkpoints may already have been rotated out (DELAYS detection; ESCALATION of progress loss)."
         },
@@ -925,11 +1350,21 @@
           "domains": [
             "CMP"
           ],
+          "stages": [
+            [
+              "CMP"
+            ]
+          ],
           "text": "Uncorrectable errors on other devices cause node failures and job restarts that CORRELATE_WITH the release."
         },
         {
           "domains": [
             "RES"
+          ],
+          "stages": [
+            [
+              "RES"
+            ]
           ],
           "text": "Recovery requires rollback of firmware across the fleet and re-training from the last verified checkpoint; rollback package availability and compatibility determine duration."
         }
@@ -988,17 +1423,32 @@
           "domains": [
             "OPS"
           ],
+          "stages": [
+            [
+              "OPS"
+            ]
+          ],
           "text": "Planned isolation of the A path (HUMAN_ACTION, ENABLING)."
         },
         {
           "domains": [
             "POW"
           ],
+          "stages": [
+            [
+              "POW"
+            ]
+          ],
           "text": "Racks whose both cords are on A lose power (M29 misallocation, LATENT; CAUSES M01 on RF-POW-05 for those racks)."
         },
         {
           "domains": [
             "POW"
+          ],
+          "stages": [
+            [
+              "POW"
+            ]
           ],
           "text": "B path carries all remaining load; at peak training load B-side PDUs or busway taps exceed rating and trip (M14), which CASCADES to further rack loss."
         },
@@ -1007,6 +1457,14 @@
             "POW",
             "CMP"
           ],
+          "stages": [
+            [
+              "POW"
+            ],
+            [
+              "CMP"
+            ]
+          ],
           "text": "Synchronous jobs on affected racks fail; job loss extends to all jobs with any participant on those racks."
         },
         {
@@ -1014,12 +1472,28 @@
             "CMP",
             "THM"
           ],
+          "stages": [
+            [
+              "CMP"
+            ],
+            [
+              "THM"
+            ]
+          ],
           "text": "Sudden load drop and then restart surge cause cooling-plant control transients (AMPLIFIES)."
         },
         {
           "domains": [
             "OPS",
             "RES"
+          ],
+          "stages": [
+            [
+              "OPS"
+            ],
+            [
+              "RES"
+            ]
           ],
           "text": "Maintenance must be aborted and A path restored under time pressure, raising the risk of switching error (links to X16)."
         }
@@ -1077,6 +1551,11 @@
           "domains": [
             "ENV"
           ],
+          "stages": [
+            [
+              "ENV"
+            ]
+          ],
           "text": "Ambient exceedance (EXTERNAL_EVENT) CAUSES reduced heat-rejection capacity (M07 on RF-THM-04)."
         },
         {
@@ -1084,11 +1563,22 @@
             "ENV",
             "DEP"
           ],
+          "stages": [
+            [
+              "ENV",
+              "DEP"
+            ]
+          ],
           "text": "Water restriction CONTRIBUTES_TO further capacity loss as evaporative duty cannot be sustained (AND with step 1; M14 on RF-ENV-02)."
         },
         {
           "domains": [
             "THM"
+          ],
+          "stages": [
+            [
+              "THM"
+            ]
           ],
           "text": "Chillers operate at high condensing pressure; some trip on high-pressure protection (M24 if spurious, M01 if genuine), consuming redundancy."
         },
@@ -1097,6 +1587,14 @@
             "THM",
             "CMP"
           ],
+          "stages": [
+            [
+              "THM"
+            ],
+            [
+              "CMP"
+            ]
+          ],
           "text": "Facility water and TCS supply temperatures rise; accelerators throttle; at the limit, load must be shed."
         },
         {
@@ -1104,11 +1602,22 @@
             "POW",
             "DEP"
           ],
+          "stages": [
+            [
+              "POW",
+              "DEP"
+            ]
+          ],
           "text": "Grid demand-response obligations and higher cooling power CONFLICT_WITH sustaining full IT load."
         },
         {
           "domains": [
             "RES"
+          ],
+          "stages": [
+            [
+              "RES"
+            ]
           ],
           "text": "Load shedding by priority (graceful degradation) must be executed; if not pre-planned, ad hoc decisions DELAY response."
         }
@@ -1166,12 +1675,25 @@
           "domains": [
             "NET"
           ],
+          "stages": [
+            [
+              "NET"
+            ]
+          ],
           "text": "GNSS loss TRIGGERS holdover; drift accumulates; or a rogue clock is selected (M09 on RF-NET-05)."
         },
         {
           "domains": [
             "NET",
             "SEC"
+          ],
+          "stages": [
+            [
+              "NET"
+            ],
+            [
+              "SEC"
+            ]
           ],
           "text": "Clock offset beyond tolerance causes certificate and token validation failures; operators and services fail to authenticate (PROPAGATES_TO RF-SEC-01)."
         },
@@ -1180,6 +1702,14 @@
             "NET",
             "STO"
           ],
+          "stages": [
+            [
+              "NET"
+            ],
+            [
+              "STO"
+            ]
+          ],
           "text": "Distributed storage leases and consensus behave incorrectly; possible metadata inconsistency (M27)."
         },
         {
@@ -1187,12 +1717,28 @@
             "NET",
             "CMP"
           ],
+          "stages": [
+            [
+              "NET"
+            ],
+            [
+              "CMP"
+            ]
+          ],
           "text": "Scheduler timeouts and job failures from skewed heartbeats."
         },
         {
           "domains": [
             "NET",
             "EVA"
+          ],
+          "stages": [
+            [
+              "NET"
+            ],
+            [
+              "EVA"
+            ]
           ],
           "text": "Logs and EPMS sequence-of-events records lose correlation, causing evidence and attribution loss for any concurrent event (MASKS causal reconstruction)."
         }
@@ -1245,6 +1791,11 @@
           "domains": [
             "RES"
           ],
+          "stages": [
+            [
+              "RES"
+            ]
+          ],
           "text": "Recovery selects the latest backup (HUMAN_ACTION under time pressure)."
         },
         {
@@ -1254,6 +1805,16 @@
             "CMP",
             "THM"
           ],
+          "stages": [
+            [
+              "RES"
+            ],
+            [
+              "NET",
+              "CMP",
+              "THM"
+            ]
+          ],
           "text": "Restore REINTRODUCES the defective configuration or image (RECOVERY_INDUCED)."
         },
         {
@@ -1261,11 +1822,22 @@
             "NET",
             "CMP"
           ],
+          "stages": [
+            [
+              "NET",
+              "CMP"
+            ]
+          ],
           "text": "Original failure recurs; or an older BMS backup removes interlocks added after an earlier incident (M16 on RF-SEC-05 or RF-THM-08)."
         },
         {
           "domains": [
             "RES"
+          ],
+          "stages": [
+            [
+              "RES"
+            ]
           ],
           "text": "Repeated failure extends recovery time beyond tolerance and erodes confidence in recovery (DELAYS)."
         }
@@ -1318,6 +1890,11 @@
           "domains": [
             "SEC"
           ],
+          "stages": [
+            [
+              "SEC"
+            ]
+          ],
           "text": "Identity service failure (M01 on RF-SEC-01), possibly CASCADING from a power or network event."
         },
         {
@@ -1325,11 +1902,24 @@
             "SEC",
             "OPS"
           ],
+          "stages": [
+            [
+              "SEC"
+            ],
+            [
+              "OPS"
+            ]
+          ],
           "text": "Operators cannot log in to BMS, EPMS or cluster managers (SHARED_RESOURCE)."
         },
         {
           "domains": [
             "SEC"
+          ],
+          "stages": [
+            [
+              "SEC"
+            ]
           ],
           "text": "Break-glass procedure depends on the same service or fault domain; break-glass is DEFEATED."
         },
@@ -1340,11 +1930,26 @@
             "POW",
             "CMP"
           ],
+          "stages": [
+            [
+              "OPS"
+            ],
+            [
+              "THM",
+              "POW",
+              "CMP"
+            ]
+          ],
           "text": "Response to any concurrent incident is DELAYED; automated systems continue unsupervised."
         },
         {
           "domains": [
             "RES"
+          ],
+          "stages": [
+            [
+              "RES"
+            ]
           ],
           "text": "Recovery of the identity service may itself require privileged access that depends on the identity service (circular recovery dependency)."
         }
@@ -1401,11 +2006,21 @@
           "domains": [
             "POW"
           ],
+          "stages": [
+            [
+              "POW"
+            ]
+          ],
           "text": "Fault TRIGGERS protection and transfers; alarm flood follows (M20 on RF-OPS-01; DEMAND_SURGE on operators)."
         },
         {
           "domains": [
             "OPS"
+          ],
+          "stages": [
+            [
+              "OPS"
+            ]
           ],
           "text": "Alarm flood MASKS the root alarm; operator misidentifies which side is healthy (HUMAN_ACTION; systemic contributors: interface, alarm load, staffing)."
         },
@@ -1413,6 +2028,14 @@
           "domains": [
             "OPS",
             "POW"
+          ],
+          "stages": [
+            [
+              "OPS"
+            ],
+            [
+              "POW"
+            ]
           ],
           "text": "Operator opens the wrong breaker during a manual transfer, dropping the remaining healthy side (M09 on RF-OPS-02)."
         },
@@ -1422,11 +2045,25 @@
             "THM",
             "CMP"
           ],
+          "stages": [
+            [
+              "POW"
+            ],
+            [
+              "THM",
+              "CMP"
+            ]
+          ],
           "text": "Load lost across the affected block; cooling pumps and CDUs on that block stop; synchronous jobs fail."
         },
         {
           "domains": [
             "RES"
+          ],
+          "stages": [
+            [
+              "RES"
+            ]
           ],
           "text": "Recovery sequence executed under stress; risk of further error."
         }
@@ -1483,6 +2120,11 @@
           "domains": [
             "PHY"
           ],
+          "stages": [
+            [
+              "PHY"
+            ]
+          ],
           "text": "Cable fault ignites cables (M25); smoke PROPAGATES_VIA the shared compartment."
         },
         {
@@ -1491,12 +2133,29 @@
             "POW",
             "NET"
           ],
+          "stages": [
+            [
+              "PHY"
+            ],
+            [
+              "POW",
+              "NET"
+            ]
+          ],
           "text": "Both A and B routes are damaged (COMMON_CAUSE through shared compartment; redundancy DEFEATED)."
         },
         {
           "domains": [
             "PHY",
             "THM"
+          ],
+          "stages": [
+            [
+              "PHY"
+            ],
+            [
+              "THM"
+            ]
           ],
           "text": "Fire-alarm interface shuts down air handlers in the adjacent hall (CONTROL_ACTION; CONFLICTS_WITH continuity cooling)."
         },
@@ -1505,6 +2164,14 @@
             "PHY",
             "POW"
           ],
+          "stages": [
+            [
+              "PHY"
+            ],
+            [
+              "POW"
+            ]
+          ],
           "text": "EPO initiated over a wider area than the fire zone (M24 spurious extent; M05)."
         },
         {
@@ -1512,11 +2179,22 @@
             "CMP",
             "STO"
           ],
+          "stages": [
+            [
+              "CMP",
+              "STO"
+            ]
+          ],
           "text": "Large-scale loss of compute and storage; unclean shutdown of storage systems."
         },
         {
           "domains": [
             "RES"
+          ],
+          "stages": [
+            [
+              "RES"
+            ]
           ],
           "text": "Re-entry, damage assessment and cable replacement extend recovery; contamination cleaning of equipment."
         }
@@ -1576,11 +2254,22 @@
             "EVA",
             "CMP"
           ],
+          "stages": [
+            [
+              "EVA",
+              "CMP"
+            ]
+          ],
           "text": "Telemetry defect produces false indications (M18 on RF-CMP-05)."
         },
         {
           "domains": [
             "SEC"
+          ],
+          "stages": [
+            [
+              "SEC"
+            ]
           ],
           "text": "Automation acts on the false indications at fleet scale (CONTROL_ACTION; M08 excess output on RF-SEC-03)."
         },
@@ -1589,12 +2278,28 @@
             "SEC",
             "CMP"
           ],
+          "stages": [
+            [
+              "SEC"
+            ],
+            [
+              "CMP"
+            ]
+          ],
           "text": "Mass drain and reboot terminates many jobs (CASCADE)."
         },
         {
           "domains": [
             "CMP",
             "POW"
+          ],
+          "stages": [
+            [
+              "CMP"
+            ],
+            [
+              "POW"
+            ]
           ],
           "text": "Sudden load drop followed by restart surge creates large load steps at UPS and, if on generator, at the generators (DEMAND_SURGE; links to X01)."
         },
@@ -1603,12 +2308,28 @@
             "CMP",
             "THM"
           ],
+          "stages": [
+            [
+              "CMP"
+            ],
+            [
+              "THM"
+            ]
+          ],
           "text": "Cooling-plant control responds to rapid load change; overshoot or undershoot of supply temperature (M13 on RF-THM-08)."
         },
         {
           "domains": [
             "CMP",
             "STO"
+          ],
+          "stages": [
+            [
+              "CMP"
+            ],
+            [
+              "STO"
+            ]
           ],
           "text": "Restart storm on provisioning and checkpoint storage (links to X04)."
         }
@@ -1666,11 +2387,21 @@
           "domains": [
             "CAP"
           ],
+          "stages": [
+            [
+              "CAP"
+            ]
+          ],
           "text": "Tenant load-profile change (DEMAND_SURGE in peak terms) CONTRIBUTES_TO loss of provider headroom (M14 on RF-CAP-02), LATENT because contracted kW are not exceeded."
         },
         {
           "domains": [
             "DEP"
+          ],
+          "stages": [
+            [
+              "DEP"
+            ]
           ],
           "text": "Responsibility gap: neither party analyses the combined effect (M17 on RF-DEP-02)."
         },
@@ -1678,11 +2409,21 @@
           "domains": [
             "THM"
           ],
+          "stages": [
+            [
+              "THM"
+            ]
+          ],
           "text": "Provider takes one chiller out for maintenance assuming N+1 exists (ENABLING; HUMAN_ACTION)."
         },
         {
           "domains": [
             "THM"
+          ],
+          "stages": [
+            [
+              "THM"
+            ]
           ],
           "text": "At peak load, facility water supply temperature exceeds the tenant CDU's band (M07 on RF-THM-04)."
         },
@@ -1691,12 +2432,26 @@
             "THM",
             "CMP"
           ],
+          "stages": [
+            [
+              "THM"
+            ],
+            [
+              "CMP"
+            ]
+          ],
           "text": "Tenant accelerators throttle; jobs slow or fail."
         },
         {
           "domains": [
             "GOV",
             "DEP"
+          ],
+          "stages": [
+            [
+              "GOV",
+              "DEP"
+            ]
           ],
           "text": "Contractual dispute over responsibility; evidence missing on both sides, producing evidence and attribution loss."
         }
@@ -1753,17 +2508,33 @@
             "PHY",
             "ENV"
           ],
+          "stages": [
+            [
+              "PHY",
+              "ENV"
+            ]
+          ],
           "text": "Flood threatens switchgear and fuel-system equipment (EXTERNAL_EVENT)."
         },
         {
           "domains": [
             "POW"
           ],
+          "stages": [
+            [
+              "POW"
+            ]
+          ],
           "text": "Grid loss (EXTERNAL_EVENT, CORRELATES_WITH step 1) TRIGGERS generator operation for an extended period."
         },
         {
           "domains": [
             "POW"
+          ],
+          "stages": [
+            [
+              "POW"
+            ]
           ],
           "text": "Extended running reveals fuel contamination or filter blockage (LATENT; M21 on RF-POW-02); one or more generators fail; K_OF_N redundancy at risk."
         },
@@ -1772,11 +2543,22 @@
             "DEP",
             "SUP"
           ],
+          "stages": [
+            [
+              "DEP",
+              "SUP"
+            ]
+          ],
           "text": "Road closures and regional demand prevent fuel replenishment (M10 on RF-SUP-02 and RF-DEP-02; DELAYS replenishment beyond autonomy)."
         },
         {
           "domains": [
             "NET"
+          ],
+          "stages": [
+            [
+              "NET"
+            ]
           ],
           "text": "Public telecom loss removes WAN and remote support (links to X09, X15)."
         },
@@ -1784,11 +2566,21 @@
           "domains": [
             "OPS"
           ],
+          "stages": [
+            [
+              "OPS"
+            ]
+          ],
           "text": "Staff fatigue and inability to relieve shifts (HUMAN_ACTION contributors)."
         },
         {
           "domains": [
             "RES"
+          ],
+          "stages": [
+            [
+              "RES"
+            ]
           ],
           "text": "Decision to degrade to minimum Service Outcome, migrate workloads or execute a controlled shutdown before fuel exhaustion; if not pre-decided, decision delay increases the probability of uncontrolled shutdown (M23)."
         }
