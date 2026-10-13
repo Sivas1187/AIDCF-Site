@@ -35,9 +35,9 @@ export default function ScenariosPage() {
             <p>
               <strong>Reference patterns, not incidents or assessed cases.</strong> {scenarioLibrary.intro} The{" "}
               <Link href="/case/">synthetic case</Link> shows {caseData.scenarios.length} scenarios instantiated and
-              assessed end to end. {validation.evidence.realWorldCases === 0
-                ? "No real-world case has been assessed or validated yet."
-                : `${validation.evidence.realWorldCases} real-world case(s) assessed in a pilot.`}
+              assessed end to end. {validation.evidence.completedAssessments === 0
+                ? "No completed real-world assessment has been recorded yet."
+                : `${validation.evidence.completedAssessments} completed real-world assessment(s) recorded, ${validation.evidence.independentlyReviewed} independently reviewed.`}
             </p>
           </div>
         </div>

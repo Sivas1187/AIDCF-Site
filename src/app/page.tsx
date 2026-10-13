@@ -467,8 +467,16 @@ export default function Home() {
           </div>
           <p className="evidence-ladder">
             <b>{ev.libraryScenarios}</b> reference failure patterns in the methodology,{" "}
-            <b>{ev.caseScenarios}</b> instantiated in the synthetic case, and <b>{ev.realWorldCases}</b>{" "}
-            {ev.realWorldCases === 1 ? "real-world case" : "real-world cases"} assessed or validated.
+            <b>{ev.caseScenarios}</b> instantiated in the synthetic case,{" "}
+            {ev.completedAssessments === 0 ? (
+              <>and no completed real-world assessment recorded.</>
+            ) : (
+              <>
+                <b>{ev.completedAssessments}</b> completed real-world{" "}
+                {ev.completedAssessments === 1 ? "assessment" : "assessments"} recorded, and{" "}
+                <b>{ev.independentlyReviewed}</b> of them independently reviewed.
+              </>
+            )}
           </p>
           <ul className="checklist" aria-label="Release status">
             {statusItems.map((item, i) => (

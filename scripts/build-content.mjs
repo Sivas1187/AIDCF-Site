@@ -798,13 +798,30 @@ const scenarioLibrary = (() => {
   return { source: thfPath, intro, scenarios: items };
 })();
 
-// Reference patterns, instantiated synthetic scenarios and real-world cases, so the
-// site can state the distinction without hard-coded counts. A real-world case is a
-// completed pilot result record (AIDCF-PIL-004), not a template.
+// Reference patterns, instantiated synthetic scenarios and real-world assessments, so
+// the site can state the distinction without hard-coded counts. A real-world
+// assessment counts only from the explicit status fields of an AIDCF-PIL-004 result
+// record, and fails closed: a missing, placeholder or unrecognised value counts as
+// not completed. Completed means Execution COMPLETED and record status ISSUED or
+// CORRECTED; independently reviewed additionally needs the independent reviewer's
+// acceptance SIGNED.
+const pilotRecords = listDir("pilots/pilot-results")
+  .filter((f) => f.endsWith(".md") && f !== "README.md" && !/template/i.test(f))
+  .map((f) => {
+    const field = (label) => {
+      const re = new RegExp(`^\\|\\s*(?:\\*\\*)?${label}(?:\\*\\*)?\\s*\\|([^|]*)\\|`, "m");
+      return track(`pilots/pilot-results/${f}`).match(re)?.[1].trim() ?? "";
+    };
+    const completed =
+      field("Execution") === "COMPLETED" && /;\s*(ISSUED|CORRECTED)$/.test(field("Record version and status"));
+    return { completed, independentlyReviewed: completed && /^SIGNED\b/.test(field("Independent reviewer acceptance")) };
+  });
 validation.evidence = {
   libraryScenarios: scenarioLibrary.scenarios.length,
   caseScenarios: caseData.scenarios.length,
-  realWorldCases: listDir("pilots/pilot-results").filter((f) => f !== "README.md" && !/template/i.test(f)).length,
+  pilotRecords: pilotRecords.length,
+  completedAssessments: pilotRecords.filter((r) => r.completed).length,
+  independentlyReviewed: pilotRecords.filter((r) => r.independentlyReviewed).length,
 };
 
 const outputs = {

@@ -65,6 +65,8 @@
   "evidence": {
     "libraryScenarios": 20,
     "caseScenarios": 12,
-    "realWorldCases": 0
+    "pilotRecords": 0,
+    "completedAssessments": 0,
+    "independentlyReviewed": 0
   }
 }
