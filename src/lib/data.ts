@@ -66,6 +66,7 @@ export interface ControlSummary {
 }
 
 export interface CaseData {
+  package: { dir: string; version: string; release: string; status: string };
   capability: {
     id: string;
     name: string;
@@ -92,6 +93,8 @@ export interface CaseData {
     safeguards: string[];
     effects: { outcome: string; effect: string; exceedsTolerance: boolean }[];
     restricted: boolean;
+    library: string | null;
+    note: string | null;
   }[];
   safeguards: {
     id: string;

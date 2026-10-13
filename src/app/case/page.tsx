@@ -15,7 +15,7 @@ export default function CasePage() {
   const d = caseData.decision;
   const sc = caseData.score;
   const ceilings = d.otherCeilings?.replace(/^Ceilings that are not controlling:\s*/, "").replace(/\.$/, "").split("; ") ?? [];
-  const datasetDir = "implementation/aidcf-015-v1.3";
+  const datasetDir = caseData.package.dir;
   // A recorded erratum on the decision question: show the corrected wording, keep the released text one click away.
   const erratum = caseData.errata[0] ?? null;
   const question = erratum?.correction.match(/"([^"]+)"/)?.[1] ?? d.question;
@@ -24,7 +24,10 @@ export default function CasePage() {
     <>
       <section className="hero">
         <div className="wrap">
-          <p className="eyebrow">Synthetic case · AIDCF-015 reference implementation v1.3</p>
+          <p className="eyebrow">
+            Synthetic case · AIDCF-015 reference implementation v{caseData.package.version}
+            {/^draft/i.test(caseData.package.status) ? " (draft)" : ""}
+          </p>
           <h1>One AI capability, traced end to end</h1>
           <p className="lede">
             A synthetic AI training and inference capability, assessed with the AIDCF method. Follow a failure from

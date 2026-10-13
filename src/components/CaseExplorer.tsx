@@ -841,6 +841,15 @@ function ScenarioPanel({
         Failure scenario {scenario.id}
       </p>
       <h3>{scenario.name}</h3>
+      {scenario.library && (
+        <p className="small">
+          From library scenario{" "}
+          <a href={`/scenarios/#${scenario.library}`} className="mono">
+            {scenario.library}
+          </a>{" "}
+          of AIDCF-004, traced through this case. {scenario.note}
+        </p>
+      )}
       {initiators.map((i) => (
         <p key={i.id} className="small">
           <strong>{humanise(i.type)}:</strong> {i.name}
