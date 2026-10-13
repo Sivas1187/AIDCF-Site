@@ -75,9 +75,7 @@ export default function Home() {
   const registryProposed = /PROPOSED/.test(research.baseline ?? "");
   const domainGuide = (code: string) =>
     research.artifacts.find((a) => a.id === `AIDCF-018-${code}`)?.path ?? null;
-  const coreArtifacts = research.artifacts.filter((a) => !/^AIDCF-018-/.test(a.id));
   const author = research.citation.authors[0];
-  const authorName = author ? `${author.given} ${author.family}` : "";
   const year = research.citation.released?.slice(0, 4) ?? "";
 
   const statusItems: { state: "done" | "progress" | "open"; text: React.ReactNode }[] = [
@@ -298,7 +296,10 @@ export default function Home() {
               const guide = domainGuide(d.id);
               return (
                 <li className="domain" key={d.id}>
-                  <span className="code">{d.id}</span>
+                  <Link className="code" href={`/domains/${d.id.toLowerCase()}/`}>
+                    {d.id}
+                    <span className="visually-hidden"> controls</span>
+                  </Link>
                   <span>{d.name}</span>
                   <span className="meta">
                     {d.families} families · {d.controls} controls · gates {d.gates.join(", ") || "none"}
@@ -312,6 +313,11 @@ export default function Home() {
               );
             })}
           </ul>
+          <p className="actions" style={{ marginTop: 16 }}>
+            <Link className="btn primary" href="/domains/">
+              Open the domain explorer
+            </Link>
+          </p>
         </div>
       </section>
 
@@ -524,98 +530,14 @@ export default function Home() {
               </details>
             </div>
           </div>
-          <h3 style={{ marginTop: 28 }}>Framework artifacts</h3>
-          <div className="table-scroll">
-            <table className="table stack">
-              <caption className="visually-hidden">AIDCF artifacts with version and status</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Artifact</th>
-                  <th scope="col">Covers</th>
-                  <th scope="col">Version</th>
-                  <th scope="col">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {coreArtifacts.map((a) => (
-                  <tr key={a.path}>
-                    <td data-label="Artifact">
-                      <a href={sourceUrl(a.path)}>
-                        <span className="mono">{a.id}</span> {a.title}
-                      </a>
-                      {coreArtifacts.filter((b) => b.id === a.id).length > 1 && (
-                        <div className="small muted mono">{a.path.split("/").pop()}</div>
-                      )}
-                    </td>
-                    <td data-label="Covers">{a.summary}</td>
-                    <td data-label="Version" className="mono">
-                      {a.version || "–"}
-                    </td>
-                    <td data-label="Status">{a.status}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <p className="caption">
-            The {framework.counts.domains} domain guides (AIDCF-018) are linked from the domain list above. Machine
-            readable schemas, registries and the reference implementation are in the{" "}
-            <a href={`${repoUrl}/tree/${manifest.commit}`}>repository</a>.
+          <p className="actions" style={{ marginTop: 20 }}>
+            <Link className="btn" href="/resources/">
+              All documents, data and resources
+            </Link>
           </p>
         </div>
       </section>
 
-      <section className="block" id="about" aria-labelledby="about-h">
-        <div className="wrap">
-          <div className="section-head">
-            <span className="num">09</span>
-            <h2 id="about-h">About</h2>
-          </div>
-          <div className="grid-2">
-            <div className="card">
-              <h3>Author</h3>
-              <p>
-                AIDCF is written and maintained by {authorName}. It is published openly so that it can be challenged,
-                tested and improved before anyone relies on it.
-              </p>
-              <p>
-                <a href={repoUrl}>GitHub</a>
-              </p>
-            </div>
-            <div className="card">
-              <h3>Companion project</h3>
-              <p>
-                <a href="https://aitrustgraph.org">AI Trust Graph</a> reasons about trust, authority and evidence in AI
-                systems. AIDCF covers the infrastructure those systems run on. The{" "}
-                <a href={sourceUrl(research.artifacts.find((a) => a.id === "AIDCF-005")?.path ?? "")}>
-                  AIDCF-005 integration standard
-                </a>{" "}
-                defines how the two exchange references, evidence and decisions.
-              </p>
-            </div>
-            <div className="card">
-              <h3>Review and contribute</h3>
-              <p>
-                Specialists in power, cooling, HPC and AI infrastructure, OT security and assurance are invited to
-                review the framework. Open an issue using the review-finding template, or read the{" "}
-                <a href={`${repoUrl}/blob/main/CONTRIBUTING.md`}>contributing guide</a>.
-              </p>
-              <p>
-                <a className="btn" href={`${repoUrl}/issues/new/choose`}>
-                  Submit a review finding
-                </a>
-              </p>
-            </div>
-            <div className="card">
-              <h3>What AIDCF is not</h3>
-              <p>
-                It is not a certification scheme, a standard issued by a standards body, or a product. It does not
-                issue badges, and its decisions are bounded statements about a defined capability, evidence and date.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
     </>
   );
 }

@@ -1,8 +1,10 @@
 import type { MetadataRoute } from "next";
+import { framework } from "@/lib/data";
 
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://aidcf.org";
-  return ["/", "/case/", "/privacy/", "/accessibility/"].map((p) => ({ url: `${base}${p}` }));
+  const domains = framework.domains.map((d) => `/domains/${d.id.toLowerCase()}/`);
+  return ["/", "/domains/", ...domains, "/case/", "/resources/", "/privacy/", "/accessibility/"].map((p) => ({ url: `${base}${p}` }));
 }

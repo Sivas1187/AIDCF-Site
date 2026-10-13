@@ -7,7 +7,10 @@
       "controls": 24,
       "gates": [
         "CG-13"
-      ]
+      ],
+      "cluster": "Direction and subject",
+      "criticalMappings": 4,
+      "supportingMappings": 14
     },
     {
       "id": "CAP",
@@ -19,7 +22,10 @@
         "CG-02",
         "CG-13",
         "CG-14"
-      ]
+      ],
+      "cluster": "Direction and subject",
+      "criticalMappings": 9,
+      "supportingMappings": 34
     },
     {
       "id": "DEP",
@@ -30,7 +36,10 @@
         "CG-02",
         "CG-03",
         "CG-13"
-      ]
+      ],
+      "cluster": "Dependency and place",
+      "criticalMappings": 10,
+      "supportingMappings": 38
     },
     {
       "id": "PHY",
@@ -40,7 +49,10 @@
       "gates": [
         "CG-04",
         "CG-09"
-      ]
+      ],
+      "cluster": "Dependency and place",
+      "criticalMappings": 5,
+      "supportingMappings": 27
     },
     {
       "id": "POW",
@@ -53,7 +65,10 @@
         "CG-07",
         "CG-09",
         "CG-10"
-      ]
+      ],
+      "cluster": "Facility engineering",
+      "criticalMappings": 15,
+      "supportingMappings": 32
     },
     {
       "id": "THM",
@@ -66,7 +81,10 @@
         "CG-07",
         "CG-09",
         "CG-10"
-      ]
+      ],
+      "cluster": "Facility engineering",
+      "criticalMappings": 11,
+      "supportingMappings": 39
     },
     {
       "id": "ENV",
@@ -75,7 +93,10 @@
       "controls": 24,
       "gates": [
         "CG-04"
-      ]
+      ],
+      "cluster": "Facility engineering",
+      "criticalMappings": 1,
+      "supportingMappings": 20
     },
     {
       "id": "CMP",
@@ -87,7 +108,10 @@
         "CG-09",
         "CG-10",
         "CG-14"
-      ]
+      ],
+      "cluster": "AI technology chain",
+      "criticalMappings": 7,
+      "supportingMappings": 40
     },
     {
       "id": "STO",
@@ -98,7 +122,10 @@
         "CG-08",
         "CG-09",
         "CG-10"
-      ]
+      ],
+      "cluster": "AI technology chain",
+      "criticalMappings": 8,
+      "supportingMappings": 27
     },
     {
       "id": "NET",
@@ -110,7 +137,10 @@
         "CG-09",
         "CG-10",
         "CG-14"
-      ]
+      ],
+      "cluster": "AI technology chain",
+      "criticalMappings": 7,
+      "supportingMappings": 41
     },
     {
       "id": "OPS",
@@ -122,7 +152,10 @@
         "CG-07",
         "CG-13",
         "CG-14"
-      ]
+      ],
+      "cluster": "Operation and recovery",
+      "criticalMappings": 9,
+      "supportingMappings": 37
     },
     {
       "id": "RES",
@@ -132,7 +165,10 @@
       "gates": [
         "CG-09",
         "CG-10"
-      ]
+      ],
+      "cluster": "Operation and recovery",
+      "criticalMappings": 7,
+      "supportingMappings": 44
     },
     {
       "id": "SUP",
@@ -142,7 +178,10 @@
       "gates": [
         "CG-03",
         "CG-15"
-      ]
+      ],
+      "cluster": "Ecosystem and authority",
+      "criticalMappings": 3,
+      "supportingMappings": 38
     },
     {
       "id": "SEC",
@@ -152,7 +191,10 @@
       "gates": [
         "CG-07",
         "CG-15"
-      ]
+      ],
+      "cluster": "Ecosystem and authority",
+      "criticalMappings": 8,
+      "supportingMappings": 48
     },
     {
       "id": "EVA",
@@ -162,9 +204,72 @@
       "gates": [
         "CG-01",
         "CG-02"
-      ]
+      ],
+      "cluster": "Assurance integrity",
+      "criticalMappings": 2,
+      "supportingMappings": 4
     }
   ],
+  "clusters": [
+    {
+      "name": "Direction and subject",
+      "domains": [
+        "GOV",
+        "CAP"
+      ],
+      "rationale": "Separate governance and decision rights from the capability being assured."
+    },
+    {
+      "name": "Dependency and place",
+      "domains": [
+        "DEP",
+        "PHY"
+      ],
+      "rationale": "Make hidden reliance and physical boundary explicit."
+    },
+    {
+      "name": "Facility engineering",
+      "domains": [
+        "POW",
+        "THM",
+        "ENV"
+      ],
+      "rationale": "Different mechanisms, expertise, telemetry and failure modes."
+    },
+    {
+      "name": "AI technology chain",
+      "domains": [
+        "CMP",
+        "STO",
+        "NET"
+      ],
+      "rationale": "Distinct but tightly coupled compute, data and communication functions."
+    },
+    {
+      "name": "Operation and recovery",
+      "domains": [
+        "OPS",
+        "RES"
+      ],
+      "rationale": "Separate routine control from continuity, crisis and restoration."
+    },
+    {
+      "name": "Ecosystem and authority",
+      "domains": [
+        "SUP",
+        "SEC"
+      ],
+      "rationale": "Separate supplier/lifecycle reliance from digital and OT authority."
+    },
+    {
+      "name": "Assurance integrity",
+      "domains": [
+        "EVA"
+      ],
+      "rationale": "Independently govern evidence, assessment, gates and decision integrity."
+    }
+  ],
+  "whitepaperMd": "whitepaper/current/AIDCF_Technical_Whitepaper_v3.1_Validation_Candidate.md",
   "counts": {
     "domains": 15,
     "families": 90,

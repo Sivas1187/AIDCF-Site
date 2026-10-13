@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
-import { caseData, gateName, humanise, type CaseEdge, type CaseNode, type NodeKind } from "@/lib/data";
+import { caseData, framework, gateName, humanise, percent, type CaseEdge, type CaseNode, type NodeKind } from "@/lib/data";
 
 // ------------------------------------------------------------- layout
 
@@ -73,18 +73,60 @@ const edgeVerb: Record<CaseEdge["kind"], [string, string]> = {
 
 const resultClass = (r: string) => `state s-${r.toLowerCase()}`;
 
+// ------------------------------------------------------ guided journey
+
+const JOURNEY_DEFAULT = "FS-04";
+const clusterOf = new Map(framework.clusters.flatMap((c) => c.domains.map((d) => [d, c.name] as const)));
+
+function layerOf(n: CaseNode): string {
+  if (n.kind === "function") return "AI service: required function";
+  if (n.kind === "outcome") return "AI service: service outcome";
+  const cluster = n.domain ? clusterOf.get(n.domain) : null;
+  if (n.kind === "external") return cluster ? `External supply · ${cluster}` : "External supply";
+  return cluster ?? humanise(n.kind);
+}
+
+type Scenario = (typeof caseData.scenarios)[number];
+type JourneyStep = { kind: "node"; id: string } | { kind: "safeguards" } | { kind: "controls" } | { kind: "gates" } | { kind: "decision" };
+
+function pathOrder(scenario: Scenario): string[] {
+  const order: string[] = [];
+  for (const st of scenario.steps) {
+    if (!order.includes(st.from)) order.push(st.from);
+    if (!order.includes(st.to)) order.push(st.to);
+  }
+  return order;
+}
+
+function journeySteps(scenario: Scenario): JourneyStep[] {
+  return [
+    ...pathOrder(scenario).map((id) => ({ kind: "node", id }) as JourneyStep),
+    { kind: "safeguards" },
+    { kind: "controls" },
+    { kind: "gates" },
+    { kind: "decision" },
+  ];
+}
+
 // --------------------------------------------------------- component
 
 export function CaseExplorer() {
   const [selected, setSelected] = useState<string | null>(null);
   const [scenarioId, setScenarioId] = useState<string>("");
   const [view, setView] = useState<"graph" | "list">("graph");
+  const [journey, setJourney] = useState<number | null>(null);
 
   useEffect(() => {
     if (window.matchMedia("(max-width: 719px)").matches) setView("list");
   }, []);
 
   const scenario = caseData.scenarios.find((s) => s.id === scenarioId) ?? null;
+  const steps = scenario ? journeySteps(scenario) : [];
+  const order = scenario ? pathOrder(scenario) : [];
+  const step = journey !== null ? steps[journey] : null;
+  // During a journey only the elements reached so far are lit; the whole path is lit once it reaches the outcome.
+  const reached = step ? new Set(step.kind === "node" ? order.slice(0, order.indexOf(step.id) + 1) : order) : null;
+  const current = step?.kind === "node" ? step.id : null;
   const panelRef = useRef<HTMLDivElement>(null);
   const first = useRef(true);
 
@@ -94,26 +136,32 @@ export function CaseExplorer() {
       first.current = false;
       return;
     }
-    if (!(selected || scenarioId) || window.matchMedia("(min-width: 1200px)").matches) return;
+    if (!(selected || scenarioId) || (journey !== null && journey > 0) || window.matchMedia("(min-width: 1200px)").matches) return;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     panelRef.current?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
-  }, [selected, scenarioId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected, scenarioId, journey === null]);
 
   const path = useMemo(() => {
     if (!scenario) return { nodes: new Set<string>(), edges: new Set<string>(), origin: new Set<string>() };
     const nodes = new Set<string>();
     const edges = new Set<string>();
     for (const st of scenario.steps) {
+      if (reached && !(reached.has(st.from) && reached.has(st.to))) continue;
       nodes.add(st.from);
       nodes.add(st.to);
       edges.add(edgeKey(st));
     }
+    if (reached) for (const id of reached) nodes.add(id);
     const origin = new Set(scenario.steps.length ? [scenario.steps[0].from] : []);
     return { nodes, edges, origin };
-  }, [scenario]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [scenario, journey]);
 
   // Path steps that are not already drawn as a structural edge get their own line.
-  const extraPathEdges = scenario ? scenario.steps.filter((s) => !caseData.edges.some((e) => edgeKey(e) === edgeKey(s))) : [];
+  const extraPathEdges = scenario
+    ? scenario.steps.filter((s) => path.edges.has(edgeKey(s)) && !caseData.edges.some((e) => edgeKey(e) === edgeKey(s)))
+    : [];
 
   const neighbours = useMemo(() => {
     if (!selected) return new Set<string>();
@@ -125,7 +173,15 @@ export function CaseExplorer() {
     return set;
   }, [selected]);
 
-  const select = (id: string) => setSelected((cur) => (cur === id ? null : id));
+  const select = (id: string) => {
+    setJourney(null);
+    setSelected((cur) => (cur === id ? null : id));
+  };
+  const startJourney = () => {
+    if (!scenarioId) setScenarioId(JOURNEY_DEFAULT);
+    setSelected(null);
+    setJourney(0);
+  };
   const onKey = (id: string) => (ev: KeyboardEvent) => {
     if (ev.key === "Enter" || ev.key === " ") {
       ev.preventDefault();
@@ -135,7 +191,7 @@ export function CaseExplorer() {
 
   const nodeClass = (n: CaseNode) => {
     const c = ["g-node"];
-    if (selected === n.id) c.push("selected");
+    if (selected === n.id || current === n.id) c.push("selected");
     if (scenario) {
       if (path.nodes.has(n.id)) c.push("on-path");
       else if (selected !== n.id) c.push("dim");
@@ -159,7 +215,14 @@ export function CaseExplorer() {
     <div>
       <div className="toolbar" id="explorer-top">
         <label htmlFor="scenario">Failure scenario</label>
-        <select id="scenario" value={scenarioId} onChange={(e) => setScenarioId(e.target.value)}>
+        <select
+          id="scenario"
+          value={scenarioId}
+          onChange={(e) => {
+            setScenarioId(e.target.value);
+            setJourney(e.target.value && journey !== null ? 0 : null);
+          }}
+        >
           <option value="">None: explore the dependencies</option>
           {caseData.scenarios.map((s) => (
             <option key={s.id} value={s.id}>
@@ -167,6 +230,9 @@ export function CaseExplorer() {
             </option>
           ))}
         </select>
+        <button type="button" className="btn primary" onClick={startJourney} aria-pressed={journey !== null}>
+          {journey !== null ? "Restart the journey" : "Guided journey"}
+        </button>
         <span className="seg" role="group" aria-label="View">
           <button type="button" aria-pressed={view === "graph"} onClick={() => setView("graph")}>
             Graph
@@ -182,6 +248,7 @@ export function CaseExplorer() {
             onClick={() => {
               setSelected(null);
               setScenarioId("");
+              setJourney(null);
             }}
           >
             Clear
@@ -304,7 +371,17 @@ export function CaseExplorer() {
               <a href="#explorer-top">Back to the elements</a>
             </p>
           )}
-          {scenario ? (
+          {scenario && step ? (
+            <JourneyPanel
+              scenario={scenario}
+              step={step}
+              index={journey!}
+              total={steps.length}
+              order={order}
+              onMove={(i) => setJourney(i)}
+              onExit={() => setJourney(null)}
+            />
+          ) : scenario ? (
             <ScenarioPanel scenario={scenario} pathNodes={path.nodes} onSelect={select} selected={selected} />
           ) : selected ? (
             <NodePanel id={selected} onSelect={select} onScenario={setScenarioId} />
@@ -329,6 +406,199 @@ function NodeLink({ id, onSelect }: { id: string; onSelect: (id: string) => void
   );
 }
 
+function JourneyPanel({
+  scenario,
+  step,
+  index,
+  total,
+  order,
+  onMove,
+  onExit,
+}: {
+  scenario: Scenario;
+  step: JourneyStep;
+  index: number;
+  total: number;
+  order: string[];
+  onMove: (i: number) => void;
+  onExit: () => void;
+}) {
+  const fullPath = new Set(order);
+  const safeguards = caseData.safeguards.filter((s) => scenario.safeguards.includes(s.id));
+  const controls = [...new Set(safeguards.flatMap((s) => s.controls))];
+  const gates = new Set<string>();
+  for (const c of controls) for (const g of caseData.controls[c]?.gates ?? []) gates.add(g.gate);
+  const gateStates = caseData.gateResults.filter((g) => gates.has(g.gate));
+  const d = caseData.decision;
+  const sc = caseData.score;
+
+  let body: React.ReactNode;
+  if (step.kind === "node") {
+    const n = nodesById.get(step.id)!;
+    const from = scenario.steps.filter((st) => st.to === n.id).map((st) => nodesById.get(st.from)?.name ?? st.from);
+    const onward = scenario.steps.filter((st) => st.from === n.id).map((st) => nodesById.get(st.to)?.name ?? st.to);
+    const initiators = caseData.initiators.filter((i) => scenario.initiatedBy.includes(i.id));
+    const fds = caseData.faultDomains.filter((f) => f.members.includes(n.id) && f.members.filter((m) => fullPath.has(m)).length >= 2);
+    const effect = scenario.effects.find((e) => e.outcome === n.id);
+    const outcome = caseData.outcomes.find((o) => o.id === n.id);
+    const unknowns = caseData.unknowns.filter((u) => u.subject === n.id || n.unknowns.includes(u.id));
+    body = (
+      <>
+        <p className="eyebrow" style={{ margin: 0 }}>
+          {layerOf(n)}
+          {n.domain ? ` · domain ${n.domain}` : ""}
+        </p>
+        <h3>{n.name}</h3>
+        {n.detail && n.detail !== n.name && <p className="small">{/^[A-Z_]+$/.test(n.detail) ? humanise(n.detail) : n.detail.replace(/^Illustrative: /, "")}</p>}
+        {from.length === 0 ? (
+          <p>
+            <strong>The failure starts here.</strong>{" "}
+            {initiators.map((i) => `${humanise(i.type)}: ${i.name}`).join("; ")}.
+          </p>
+        ) : (
+          <p>
+            <strong>Failure arrives from</strong> {from.join(" and ")}.
+          </p>
+        )}
+        {onward.length > 0 && (
+          <p>
+            <strong>It passes on to</strong> {onward.join(" and ")}.
+          </p>
+        )}
+        {effect && (
+          <p className="notice small">
+            <strong>Outcome effect.</strong> {effect.effect.replace(/^Illustrative: /, "")}
+            {outcome ? ` Tolerance: ${outcome.tolerance.replace(/^Illustrative: /, "")}.` : ""}
+          </p>
+        )}
+        {fds.map((fd) => (
+          <p key={fd.id} className="notice small">
+            <strong>Shared fault domain {fd.id}.</strong> {fd.commonMode} {fd.blastRadius}
+          </p>
+        ))}
+        {unknowns.map((u) => (
+          <p key={u.id} className="small">
+            <span className="state s-unknown">
+              {u.id} {u.severity}
+            </span>{" "}
+            {u.reason}
+          </p>
+        ))}
+      </>
+    );
+  } else if (step.kind === "safeguards") {
+    body = (
+      <>
+        <p className="eyebrow" style={{ margin: 0 }}>
+          Safeguards
+        </p>
+        <h3>What should have stopped it</h3>
+        <ul>
+          {safeguards.map((s) => {
+            const compromised = s.dependsOn.filter((x) => fullPath.has(x));
+            return (
+              <li key={s.id}>
+                <strong>{s.name}</strong> <span className="muted small">({humanise(s.activation)})</span>
+                {compromised.length > 0 && (
+                  <div className="small" style={{ color: "var(--fail)" }}>
+                    Depends on {compromised.map((x) => nodesById.get(x)?.name ?? x).join(", ")}, which is on this failure
+                    path, so it cannot be relied on here.
+                  </div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </>
+    );
+  } else if (step.kind === "controls") {
+    body = (
+      <>
+        <p className="eyebrow" style={{ margin: 0 }}>
+          Controls and evidence
+        </p>
+        <h3>What the evidence showed</h3>
+        <p className="small">Each safeguard is governed by controls. The assessment tested them against evidence:</p>
+        <ul>
+          {controls.map((c) => (
+            <ControlLine key={c} id={c} />
+          ))}
+        </ul>
+      </>
+    );
+  } else if (step.kind === "gates") {
+    body = (
+      <>
+        <p className="eyebrow" style={{ margin: 0 }}>
+          Critical gates
+        </p>
+        <h3>Where the results are judged</h3>
+        <p className="small">Control results roll up into critical gates. A gate does not average; one weak critical control holds it back.</p>
+        <ul>
+          {gateStates.map((g) => (
+            <li key={g.gate}>
+              <span className="mono">{g.gate}</span> {gateName(g.gate)} <span className={resultClass(g.state)}>{g.state}</span>
+              <div className="small muted">{g.decisionEffect}</div>
+            </li>
+          ))}
+        </ul>
+      </>
+    );
+  } else {
+    body = (
+      <>
+        <p className="eyebrow" style={{ margin: 0 }}>
+          Assurance decision
+        </p>
+        <h3>
+          <span className={resultClass(d.state)}>{d.state}</span>
+        </h3>
+        <p className="small">
+          <strong>Controlling reason:</strong> {d.controllingReasons.join("; ")}. The most restrictive ceiling across all
+          gates and UNKNOWNs decides, not this scenario alone.
+        </p>
+        <p className="small">
+          {sc.coverage.assessedCount} of {sc.coverage.inScopeCount} controls assessed; coverage{" "}
+          {percent(sc.coverage.coveragePercent, 2)}; score band {sc.band}.
+        </p>
+        <p className="small muted">Synthetic demonstration. It shows how the method reasons; it is not an assurance claim about any facility.</p>
+        <p className="small">
+          <a href="#decision-h">Read the full decision</a>
+        </p>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <p className="small muted" style={{ marginTop: 0 }}>
+        Guided journey · {scenario.id} {scenario.name} · step {index + 1} of {total}
+      </p>
+      <div className="journey-bar" aria-hidden="true">
+        <span style={{ width: `${((index + 1) / total) * 100}%` }} />
+      </div>
+      {body}
+      <div className="journey-nav">
+        <button type="button" className="btn" disabled={index === 0} onClick={() => onMove(index - 1)}>
+          ← Back
+        </button>
+        {index < total - 1 ? (
+          <button type="button" className="btn primary" onClick={() => onMove(index + 1)}>
+            Next →
+          </button>
+        ) : (
+          <button type="button" className="btn primary" onClick={onExit}>
+            Finish
+          </button>
+        )}
+        <button type="button" className="linklike small" onClick={onExit}>
+          Exit
+        </button>
+      </div>
+    </>
+  );
+}
+
 function IntroPanel() {
   const c = caseData.capability;
   return (
@@ -340,6 +610,10 @@ function IntroPanel() {
       <h4>How to use this</h4>
       <ul>
         <li>Select any box to see what it relies on, what relies on it, and what can go wrong.</li>
+        <li>
+          Start the <strong>guided journey</strong> to walk one failure step by step, from the plant through the AI
+          systems to the evidence, the gates and the decision.
+        </li>
         <li>Choose a failure scenario to trace it from its origin to the service outcome it breaks.</li>
         <li>
           Boxes marked <strong>UNKNOWN</strong> carry unresolved evidence gaps that cap the decision.

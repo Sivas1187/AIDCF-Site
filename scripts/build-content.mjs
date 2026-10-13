@@ -169,8 +169,76 @@ for (const line of ccm.split("\n")) {
 }
 assertEq("chain steps", chain.filter((s) => s.step !== "Loop").length, 16);
 
+// Domain clusters, parsed from the whitepaper section 8 table ("Why fifteen domains"), not retyped.
+const wpMdPath = "whitepaper/current/AIDCF_Technical_Whitepaper_v3.1_Validation_Candidate.md";
+const clusters = [];
+{
+  const text = track(wpMdPath);
+  const start = text.indexOf("# 8. Why fifteen domains");
+  if (start < 0) fail("whitepaper section 8 not found");
+  for (const line of text.slice(start).split("\n").slice(0, 30)) {
+    const m = line.match(/^\| ([^|*][^|]*?) +\| ([A-Z]{3}(?:, [A-Z]{3})*) +\| (.+?) +\|$/);
+    if (m) clusters.push({ name: m[1].trim(), domains: m[2].split(", "), rationale: m[3].trim() });
+  }
+}
+assertEq("clusters cover every domain once", clusters.flatMap((c) => c.domains).sort().join(), domains.map((d) => d.id).sort().join());
+for (const d of domains) d.cluster = clusters.find((c) => c.domains.includes(d.id)).name;
+
+// Lightweight family and control index for the domain explorer (the full control text goes to controls.json,
+// which only statically rendered pages read).
+const profiles = Object.fromEntries(csv("registries/controls/evidence-profiles.csv").map((p) => [p.controlId, p]));
+const gatesOf = (id, role) => gateMappings.filter((m) => m.controlId === id && m.role === role).map((m) => m.gateId);
+for (const d of domains) {
+  d.familyList = families
+    .filter((f) => f.domainId === d.id)
+    .map((f) => ({
+      id: f.familyId,
+      name: f.familyName,
+      controls: controls
+        .filter((c) => c.familyId === f.familyId)
+        .map((c) => ({ id: c.controlId, title: c.title, critical: gatesOf(c.controlId, "CRITICAL"), supporting: gatesOf(c.controlId, "SUPPORTING") })),
+    }));
+  d.criticalMappings = d.familyList.reduce((n, f) => n + f.controls.reduce((k, c) => k + c.critical.length, 0), 0);
+  d.supportingMappings = d.familyList.reduce((n, f) => n + f.controls.reduce((k, c) => k + c.supporting.length, 0), 0);
+}
+assertEq("explorer controls", domains.reduce((n, d) => n + d.familyList.reduce((k, f) => k + f.controls.length, 0), 0), 360);
+
+const vocab = (name) => Object.fromEntries(csv(`registries/vocabularies/${name}.csv`).map((r) => [r.code, r.name]));
+const controlDetail = {
+  registryStatus: controls[0].status,
+  registryVersion: controls[0].version,
+  vocab: {
+    evidenceClasses: vocab("evidence-classes"),
+    claimTypes: vocab("claim-types"),
+    sufficiency: vocab("sufficiency-levels"),
+  },
+  controls: Object.fromEntries(
+    controls.map((c) => {
+      const p = profiles[c.controlId] ?? {};
+      return [
+        c.controlId,
+        {
+          objective: c.objective,
+          requirement: c.requirement,
+          claimType: c.claimType,
+          assuranceLevel: c.requiredAssuranceLevel,
+          controlType: c.controlType,
+          tier: c.profileTier,
+          sufficiencyFloor: c.sufficiencyFloor,
+          requiredClasses: split(p.requiredClasses),
+          optionalClasses: split(p.optionalClasses),
+          stateCoverage: split(p.stateCoverage),
+          unknownEffect: p.unknownEffect ?? null,
+        },
+      ];
+    }),
+  ),
+};
+
 const framework = {
   domains,
+  clusters,
+  whitepaperMd: wpMdPath,
   counts: {
     domains: domains.length,
     families: families.length,
@@ -186,6 +254,10 @@ const framework = {
   chain,
   chainSource: ccmPath,
 };
+
+// The explorer index goes to its own file so that pages which only need domain summaries stay small.
+const domainIndex = Object.fromEntries(domains.map((d) => [d.id, d.familyList]));
+for (const d of domains) delete d.familyList;
 
 // ------------------------------------------------------- synthetic case
 
@@ -615,6 +687,8 @@ const outputs = {
   "manifest.json": manifest,
   "framework.json": framework,
   "case.json": caseData,
+  "controls.json": controlDetail,
+  "domains.json": domainIndex,
   "validation.json": validation,
   "research.json": research,
 };

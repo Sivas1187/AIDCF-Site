@@ -7,11 +7,11 @@ import { Logo } from "./Logo";
 
 const links = [
   { href: "/#method", label: "Methodology" },
-  { href: "/#domains", label: "15 domains" },
+  { href: "/domains/", label: "15 domains" },
   { href: "/case/", label: "Infrastructure graph" },
   { href: "/#validation", label: "Validation" },
   { href: "/#research", label: "Research" },
-  { href: "/#about", label: "About" },
+  { href: "/resources/", label: "Resources" },
 ];
 
 export function SiteHeader() {
@@ -50,7 +50,7 @@ export function SiteHeader() {
               <li key={l.href}>
                 <Link
                   href={l.href}
-                  aria-current={pathname === l.href ? "page" : undefined}
+                  aria-current={pathname === l.href || (!l.href.includes("#") && pathname.startsWith(l.href)) ? "page" : undefined}
                   onClick={() => setOpen(false)}
                 >
                   {l.label}

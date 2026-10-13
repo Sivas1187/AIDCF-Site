@@ -6,7 +6,7 @@ The framework itself lives in [Sivas1187/AIDCF](https://github.com/Sivas1187/AID
 
 ## How the content stays honest
 
-- **Generated, not copied.** Every count, name, gate, decision state and synthetic-case result on the site comes from `src/data/*.json`. Those files are written by `scripts/build-content.mjs` from the AIDCF repository.
+- **Generated, not copied.** Every count, name, gate, control, domain cluster, decision state and synthetic-case result on the site comes from `src/data/*.json`. Those files are written by `scripts/build-content.mjs` from the AIDCF repository.
 - **Pinned to a commit.** `source.json` names the AIDCF release and the exact commit. The content script reads every file from git at that commit, never from the working tree, and CI fails if `src/data/` no longer matches it.
 - **Hashed.** `src/data/manifest.json` records the SHA-256 of every source file used. The whitepaper PDF hash is shown on the site.
 - **Status from the source.** The repository status, the proposed state of registry v1.1, the validation counts and the conformance results are read from the AIDCF files. A few status sentences have no source file to read (whether a pilot host, expert panel or inter-rater trial exists yet). Those are written in `src/app/page.tsx` and must be updated by hand when the situation changes.
@@ -15,8 +15,11 @@ The framework itself lives in [Sivas1187/AIDCF](https://github.com/Sivas1187/AID
 
 | Path | Content |
 |---|---|
-| `/` | Problem, simplified assurance chain, doctrine, decision states, 15 domains, 15 critical gates, synthetic-case summary, validation status, research and citation, about |
-| `/case/` | The AIDCF-015 v1.3 synthetic case: decision question, interactive dependency graph with five failure scenarios, gate results and the computed decision |
+| `/` | Problem, simplified assurance chain, doctrine, decision states, 15 domains, 15 critical gates, synthetic-case summary, validation status, whitepaper and citation |
+| `/domains/` | Domain explorer: the 15 domains in the seven clusters of whitepaper section 8, the domains each shares critical gates with, and the domains behind each gate |
+| `/domains/<code>/` | One page per domain: every family and control with its objective, requirement, evidence classes and gate roles (registry v1.1, proposed) |
+| `/case/` | The AIDCF-015 v1.3 synthetic case: decision question (with any erratum), interactive dependency graph with five failure scenarios and a guided step-by-step journey, gate results and the computed decision |
+| `/resources/` | Repository, framework documents, domain guides, registries, reference implementation, errata, about and contributing |
 | `/privacy/` | Privacy notice (no analytics, no cookies) |
 | `/accessibility/` | Accessibility statement (target WCAG 2.2 AA) |
 

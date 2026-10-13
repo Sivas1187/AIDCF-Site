@@ -1,0 +1,3718 @@
+{
+  "GOV": [
+    {
+      "id": "GOV-01",
+      "name": "Governance architecture",
+      "controls": [
+        {
+          "id": "MCF-GOV-001",
+          "title": "Governance Charter",
+          "critical": [],
+          "supporting": [
+            "CG-13"
+          ]
+        },
+        {
+          "id": "MCF-GOV-002",
+          "title": "Decision Rights",
+          "critical": [
+            "CG-13"
+          ],
+          "supporting": []
+        },
+        {
+          "id": "MCF-GOV-003",
+          "title": "Committee Oversight",
+          "critical": [],
+          "supporting": [
+            "CG-13"
+          ]
+        },
+        {
+          "id": "MCF-GOV-004",
+          "title": "Methodology Ownership",
+          "critical": [],
+          "supporting": []
+        }
+      ]
+    },
+    {
+      "id": "GOV-02",
+      "name": "Accountability and responsibility",
+      "controls": [
+        {
+          "id": "MCF-GOV-005",
+          "title": "RACI and Role Ownership",
+          "critical": [
+            "CG-13"
+          ],
+          "supporting": []
+        },
+        {
+          "id": "MCF-GOV-006",
+          "title": "Critical Function Accountability",
+          "critical": [
+            "CG-13"
+          ],
+          "supporting": [
+            "CG-03"
+          ]
+        },
+        {
+          "id": "MCF-GOV-007",
+          "title": "Risk Acceptance Authority",
+          "critical": [
+            "CG-13"
+          ],
+          "supporting": []
+        },
+        {
+          "id": "MCF-GOV-008",
+          "title": "Evidence Custody",
+          "critical": [],
+          "supporting": [
+            "CG-13"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "GOV-03",
+      "name": "Policy and standards management",
+      "controls": [
+        {
+          "id": "MCF-GOV-009",
+          "title": "Policy Hierarchy",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-GOV-010",
+          "title": "Technical Standard Baselines",
+          "critical": [],
+          "supporting": [
+            "CG-14"
+          ]
+        },
+        {
+          "id": "MCF-GOV-011",
+          "title": "Exception Governance",
+          "critical": [],
+          "supporting": [
+            "CG-14",
+            "CG-13"
+          ]
+        },
+        {
+          "id": "MCF-GOV-012",
+          "title": "Document Lifecycle",
+          "critical": [],
+          "supporting": [
+            "CG-14"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "GOV-04",
+      "name": "Risk and assurance governance",
+      "controls": [
+        {
+          "id": "MCF-GOV-013",
+          "title": "Assurance Plan",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-GOV-014",
+          "title": "Risk Appetite Linkage",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-GOV-015",
+          "title": "Critical Gate Governance",
+          "critical": [],
+          "supporting": [
+            "CG-13"
+          ]
+        },
+        {
+          "id": "MCF-GOV-016",
+          "title": "Independent Review",
+          "critical": [],
+          "supporting": [
+            "CG-13"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "GOV-05",
+      "name": "Stakeholder and regulatory interface",
+      "controls": [
+        {
+          "id": "MCF-GOV-017",
+          "title": "Stakeholder Obligations",
+          "critical": [],
+          "supporting": [
+            "CG-01"
+          ]
+        },
+        {
+          "id": "MCF-GOV-018",
+          "title": "Regulatory Monitoring",
+          "critical": [],
+          "supporting": [
+            "CG-14"
+          ]
+        },
+        {
+          "id": "MCF-GOV-019",
+          "title": "Customer Commitments",
+          "critical": [],
+          "supporting": [
+            "CG-01"
+          ]
+        },
+        {
+          "id": "MCF-GOV-020",
+          "title": "External Reporting",
+          "critical": [],
+          "supporting": []
+        }
+      ]
+    },
+    {
+      "id": "GOV-06",
+      "name": "Ethics, impartiality and competence",
+      "controls": [
+        {
+          "id": "MCF-GOV-021",
+          "title": "Conflict Management",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-GOV-022",
+          "title": "Assessor Independence",
+          "critical": [],
+          "supporting": [
+            "CG-13"
+          ]
+        },
+        {
+          "id": "MCF-GOV-023",
+          "title": "Competence Management",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-GOV-024",
+          "title": "Appeal and Challenge",
+          "critical": [],
+          "supporting": []
+        }
+      ]
+    }
+  ],
+  "CAP": [
+    {
+      "id": "CAP-01",
+      "name": "Capability inventory",
+      "controls": [
+        {
+          "id": "MCF-CAP-001",
+          "title": "Capability Register",
+          "critical": [
+            "CG-01"
+          ],
+          "supporting": []
+        },
+        {
+          "id": "MCF-CAP-002",
+          "title": "Capability Ownership",
+          "critical": [
+            "CG-13"
+          ],
+          "supporting": [
+            "CG-01"
+          ]
+        },
+        {
+          "id": "MCF-CAP-003",
+          "title": "Lifecycle Status",
+          "critical": [],
+          "supporting": [
+            "CG-01",
+            "CG-14"
+          ]
+        },
+        {
+          "id": "MCF-CAP-004",
+          "title": "Architecture Linkage",
+          "critical": [
+            "CG-02"
+          ],
+          "supporting": [
+            "CG-03",
+            "CG-01"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CAP-02",
+      "name": "Service outcome definition",
+      "controls": [
+        {
+          "id": "MCF-CAP-005",
+          "title": "Availability Outcomes",
+          "critical": [
+            "CG-01"
+          ],
+          "supporting": []
+        },
+        {
+          "id": "MCF-CAP-006",
+          "title": "Performance Outcomes",
+          "critical": [
+            "CG-01"
+          ],
+          "supporting": [
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-CAP-007",
+          "title": "Integrity Outcomes",
+          "critical": [
+            "CG-01"
+          ],
+          "supporting": [
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-CAP-008",
+          "title": "Recovery Outcomes",
+          "critical": [
+            "CG-01"
+          ],
+          "supporting": [
+            "CG-10"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CAP-03",
+      "name": "Criticality and materiality",
+      "controls": [
+        {
+          "id": "MCF-CAP-009",
+          "title": "Criticality Criteria",
+          "critical": [],
+          "supporting": [
+            "CG-01"
+          ]
+        },
+        {
+          "id": "MCF-CAP-010",
+          "title": "Impact Tolerance",
+          "critical": [
+            "CG-01"
+          ],
+          "supporting": []
+        },
+        {
+          "id": "MCF-CAP-011",
+          "title": "Stakeholder Consequence",
+          "critical": [],
+          "supporting": [
+            "CG-01"
+          ]
+        },
+        {
+          "id": "MCF-CAP-012",
+          "title": "Priority Classification",
+          "critical": [],
+          "supporting": [
+            "CG-05",
+            "CG-06"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CAP-04",
+      "name": "Demand and growth modelling",
+      "controls": [
+        {
+          "id": "MCF-CAP-013",
+          "title": "Current Demand Baseline",
+          "critical": [],
+          "supporting": [
+            "CG-05",
+            "CG-06"
+          ]
+        },
+        {
+          "id": "MCF-CAP-014",
+          "title": "Peak and Transient Demand",
+          "critical": [],
+          "supporting": [
+            "CG-05",
+            "CG-06"
+          ]
+        },
+        {
+          "id": "MCF-CAP-015",
+          "title": "Growth Forecast",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-CAP-016",
+          "title": "Scenario Demand",
+          "critical": [],
+          "supporting": [
+            "CG-10",
+            "CG-05"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CAP-05",
+      "name": "Operating envelope",
+      "controls": [
+        {
+          "id": "MCF-CAP-017",
+          "title": "Load Envelope",
+          "critical": [],
+          "supporting": [
+            "CG-05",
+            "CG-06"
+          ]
+        },
+        {
+          "id": "MCF-CAP-018",
+          "title": "Environmental Envelope",
+          "critical": [],
+          "supporting": [
+            "CG-06"
+          ]
+        },
+        {
+          "id": "MCF-CAP-019",
+          "title": "Duration Limits",
+          "critical": [],
+          "supporting": [
+            "CG-05",
+            "CG-06",
+            "CG-10"
+          ]
+        },
+        {
+          "id": "MCF-CAP-020",
+          "title": "State-Specific Limits",
+          "critical": [],
+          "supporting": [
+            "CG-09",
+            "CG-10"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CAP-06",
+      "name": "Capability lifecycle and change",
+      "controls": [
+        {
+          "id": "MCF-CAP-021",
+          "title": "Design-to-Operation Traceability",
+          "critical": [],
+          "supporting": [
+            "CG-02"
+          ]
+        },
+        {
+          "id": "MCF-CAP-022",
+          "title": "Commissioning Acceptance",
+          "critical": [],
+          "supporting": [
+            "CG-02",
+            "CG-08",
+            "CG-14"
+          ]
+        },
+        {
+          "id": "MCF-CAP-023",
+          "title": "Material Change Impact",
+          "critical": [
+            "CG-14"
+          ],
+          "supporting": [
+            "CG-01"
+          ]
+        },
+        {
+          "id": "MCF-CAP-024",
+          "title": "Retirement Control",
+          "critical": [],
+          "supporting": [
+            "CG-14",
+            "CG-02",
+            "CG-04"
+          ]
+        }
+      ]
+    }
+  ],
+  "DEP": [
+    {
+      "id": "DEP-01",
+      "name": "Dependency discovery",
+      "controls": [
+        {
+          "id": "MCF-DEP-001",
+          "title": "Asset-to-Function Mapping",
+          "critical": [
+            "CG-03"
+          ],
+          "supporting": [
+            "CG-02"
+          ]
+        },
+        {
+          "id": "MCF-DEP-002",
+          "title": "Upstream Dependency Mapping",
+          "critical": [
+            "CG-03"
+          ],
+          "supporting": [
+            "CG-15"
+          ]
+        },
+        {
+          "id": "MCF-DEP-003",
+          "title": "Downstream Consequence Mapping",
+          "critical": [],
+          "supporting": [
+            "CG-03",
+            "CG-09"
+          ]
+        },
+        {
+          "id": "MCF-DEP-004",
+          "title": "Recovery Dependency Mapping",
+          "critical": [],
+          "supporting": [
+            "CG-03",
+            "CG-10"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "DEP-02",
+      "name": "Shared and common-mode dependencies",
+      "controls": [
+        {
+          "id": "MCF-DEP-005",
+          "title": "Shared Source Analysis",
+          "critical": [
+            "CG-03"
+          ],
+          "supporting": [
+            "CG-05",
+            "CG-06",
+            "CG-09"
+          ]
+        },
+        {
+          "id": "MCF-DEP-006",
+          "title": "Common Controller Analysis",
+          "critical": [],
+          "supporting": [
+            "CG-03",
+            "CG-07",
+            "CG-09"
+          ]
+        },
+        {
+          "id": "MCF-DEP-007",
+          "title": "Shared Route Analysis",
+          "critical": [
+            "CG-03"
+          ],
+          "supporting": [
+            "CG-09"
+          ]
+        },
+        {
+          "id": "MCF-DEP-008",
+          "title": "Shared Human Dependency Analysis",
+          "critical": [],
+          "supporting": [
+            "CG-03",
+            "CG-13"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "DEP-03",
+      "name": "External providers and utilities",
+      "controls": [
+        {
+          "id": "MCF-DEP-009",
+          "title": "Utility Dependency",
+          "critical": [
+            "CG-03"
+          ],
+          "supporting": [
+            "CG-05"
+          ]
+        },
+        {
+          "id": "MCF-DEP-010",
+          "title": "Telecom Dependency",
+          "critical": [
+            "CG-03"
+          ],
+          "supporting": [
+            "CG-10"
+          ]
+        },
+        {
+          "id": "MCF-DEP-011",
+          "title": "OEM Dependency",
+          "critical": [],
+          "supporting": [
+            "CG-03",
+            "CG-10"
+          ]
+        },
+        {
+          "id": "MCF-DEP-012",
+          "title": "Cloud and Service Dependency",
+          "critical": [
+            "CG-03"
+          ],
+          "supporting": [
+            "CG-15",
+            "CG-10"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "DEP-04",
+      "name": "Concentration and substitutability",
+      "controls": [
+        {
+          "id": "MCF-DEP-013",
+          "title": "Capacity Concentration",
+          "critical": [],
+          "supporting": [
+            "CG-03",
+            "CG-09"
+          ]
+        },
+        {
+          "id": "MCF-DEP-014",
+          "title": "Supplier Concentration",
+          "critical": [],
+          "supporting": [
+            "CG-03"
+          ]
+        },
+        {
+          "id": "MCF-DEP-015",
+          "title": "Knowledge Concentration",
+          "critical": [],
+          "supporting": [
+            "CG-13",
+            "CG-10"
+          ]
+        },
+        {
+          "id": "MCF-DEP-016",
+          "title": "Substitution Readiness",
+          "critical": [],
+          "supporting": [
+            "CG-10",
+            "CG-03"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "DEP-05",
+      "name": "Boundary and interface control",
+      "controls": [
+        {
+          "id": "MCF-DEP-017",
+          "title": "Assessment Boundary",
+          "critical": [
+            "CG-02",
+            "CG-03"
+          ],
+          "supporting": []
+        },
+        {
+          "id": "MCF-DEP-018",
+          "title": "Provider Boundary",
+          "critical": [
+            "CG-13"
+          ],
+          "supporting": [
+            "CG-03"
+          ]
+        },
+        {
+          "id": "MCF-DEP-019",
+          "title": "Tenant Boundary",
+          "critical": [],
+          "supporting": [
+            "CG-09",
+            "CG-13"
+          ]
+        },
+        {
+          "id": "MCF-DEP-020",
+          "title": "Cross-Boundary Enforcement",
+          "critical": [],
+          "supporting": [
+            "CG-09",
+            "CG-15"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "DEP-06",
+      "name": "Dependency monitoring and review",
+      "controls": [
+        {
+          "id": "MCF-DEP-021",
+          "title": "Dependency Health Indicators",
+          "critical": [],
+          "supporting": [
+            "CG-03"
+          ]
+        },
+        {
+          "id": "MCF-DEP-022",
+          "title": "Provider Performance",
+          "critical": [],
+          "supporting": [
+            "CG-13"
+          ]
+        },
+        {
+          "id": "MCF-DEP-023",
+          "title": "Change Detection",
+          "critical": [],
+          "supporting": [
+            "CG-14",
+            "CG-03"
+          ]
+        },
+        {
+          "id": "MCF-DEP-024",
+          "title": "Periodic Revalidation",
+          "critical": [],
+          "supporting": [
+            "CG-03"
+          ]
+        }
+      ]
+    }
+  ],
+  "PHY": [
+    {
+      "id": "PHY-01",
+      "name": "Site and location resilience",
+      "controls": [
+        {
+          "id": "MCF-PHY-001",
+          "title": "Site Hazard Assessment",
+          "critical": [],
+          "supporting": [
+            "CG-02",
+            "CG-03",
+            "CG-04"
+          ]
+        },
+        {
+          "id": "MCF-PHY-002",
+          "title": "External Exposure",
+          "critical": [],
+          "supporting": [
+            "CG-09",
+            "CG-03"
+          ]
+        },
+        {
+          "id": "MCF-PHY-003",
+          "title": "Access and Logistics",
+          "critical": [],
+          "supporting": [
+            "CG-10"
+          ]
+        },
+        {
+          "id": "MCF-PHY-004",
+          "title": "Adjacent Risk",
+          "critical": [],
+          "supporting": [
+            "CG-03"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "PHY-02",
+      "name": "Building and structural integrity",
+      "controls": [
+        {
+          "id": "MCF-PHY-005",
+          "title": "Structural Capacity",
+          "critical": [],
+          "supporting": [
+            "CG-02",
+            "CG-04"
+          ]
+        },
+        {
+          "id": "MCF-PHY-006",
+          "title": "Rack Loading",
+          "critical": [],
+          "supporting": [
+            "CG-04",
+            "CG-14"
+          ]
+        },
+        {
+          "id": "MCF-PHY-007",
+          "title": "Anchorage and Vibration",
+          "critical": [],
+          "supporting": [
+            "CG-09"
+          ]
+        },
+        {
+          "id": "MCF-PHY-008",
+          "title": "Building Envelope",
+          "critical": [],
+          "supporting": [
+            "CG-06"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "PHY-03",
+      "name": "Physical zoning and segregation",
+      "controls": [
+        {
+          "id": "MCF-PHY-009",
+          "title": "Security Zones",
+          "critical": [],
+          "supporting": [
+            "CG-15",
+            "CG-09"
+          ]
+        },
+        {
+          "id": "MCF-PHY-010",
+          "title": "Fire Zones",
+          "critical": [
+            "CG-09"
+          ],
+          "supporting": [
+            "CG-04"
+          ]
+        },
+        {
+          "id": "MCF-PHY-011",
+          "title": "Water Zones",
+          "critical": [],
+          "supporting": [
+            "CG-09",
+            "CG-04"
+          ]
+        },
+        {
+          "id": "MCF-PHY-012",
+          "title": "Tenant Segregation",
+          "critical": [],
+          "supporting": [
+            "CG-13",
+            "CG-02"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "PHY-04",
+      "name": "Access and surveillance",
+      "controls": [
+        {
+          "id": "MCF-PHY-013",
+          "title": "Identity-Based Access",
+          "critical": [],
+          "supporting": [
+            "CG-15"
+          ]
+        },
+        {
+          "id": "MCF-PHY-014",
+          "title": "Visitor Control",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-PHY-015",
+          "title": "Surveillance Coverage",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-PHY-016",
+          "title": "Alarm Response",
+          "critical": [],
+          "supporting": []
+        }
+      ]
+    },
+    {
+      "id": "PHY-05",
+      "name": "Asset movement and custody",
+      "controls": [
+        {
+          "id": "MCF-PHY-017",
+          "title": "Delivery Controls",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-PHY-018",
+          "title": "Equipment Movement",
+          "critical": [],
+          "supporting": [
+            "CG-04"
+          ]
+        },
+        {
+          "id": "MCF-PHY-019",
+          "title": "Media Custody",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-PHY-020",
+          "title": "Decommissioning Custody",
+          "critical": [],
+          "supporting": []
+        }
+      ]
+    },
+    {
+      "id": "PHY-06",
+      "name": "Fire, life safety and emergency interfaces",
+      "controls": [
+        {
+          "id": "MCF-PHY-021",
+          "title": "Fire Detection",
+          "critical": [
+            "CG-04"
+          ],
+          "supporting": [
+            "CG-09"
+          ]
+        },
+        {
+          "id": "MCF-PHY-022",
+          "title": "Suppression Interfaces",
+          "critical": [
+            "CG-04"
+          ],
+          "supporting": [
+            "CG-06",
+            "CG-07"
+          ]
+        },
+        {
+          "id": "MCF-PHY-023",
+          "title": "Egress and Emergency Access",
+          "critical": [
+            "CG-04"
+          ],
+          "supporting": []
+        },
+        {
+          "id": "MCF-PHY-024",
+          "title": "Emergency Shutdown Governance",
+          "critical": [
+            "CG-04"
+          ],
+          "supporting": [
+            "CG-07",
+            "CG-09"
+          ]
+        }
+      ]
+    }
+  ],
+  "POW": [
+    {
+      "id": "POW-01",
+      "name": "Utility and grid interface",
+      "controls": [
+        {
+          "id": "MCF-POW-001",
+          "title": "Utility Capacity",
+          "critical": [
+            "CG-05"
+          ],
+          "supporting": [
+            "CG-03"
+          ]
+        },
+        {
+          "id": "MCF-POW-002",
+          "title": "Grid Quality",
+          "critical": [],
+          "supporting": [
+            "CG-05"
+          ]
+        },
+        {
+          "id": "MCF-POW-003",
+          "title": "Connection Reliability",
+          "critical": [],
+          "supporting": [
+            "CG-03",
+            "CG-05",
+            "CG-09"
+          ]
+        },
+        {
+          "id": "MCF-POW-004",
+          "title": "Utility Contingency",
+          "critical": [],
+          "supporting": [
+            "CG-05",
+            "CG-10"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "POW-02",
+      "name": "Generation and fuel",
+      "controls": [
+        {
+          "id": "MCF-POW-005",
+          "title": "Generator Capacity",
+          "critical": [
+            "CG-05"
+          ],
+          "supporting": []
+        },
+        {
+          "id": "MCF-POW-006",
+          "title": "Start Reliability",
+          "critical": [
+            "CG-05"
+          ],
+          "supporting": [
+            "CG-07"
+          ]
+        },
+        {
+          "id": "MCF-POW-007",
+          "title": "Fuel Autonomy",
+          "critical": [
+            "CG-05"
+          ],
+          "supporting": []
+        },
+        {
+          "id": "MCF-POW-008",
+          "title": "Fuel Replenishment",
+          "critical": [],
+          "supporting": [
+            "CG-05",
+            "CG-03",
+            "CG-10"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "POW-03",
+      "name": "UPS and energy storage",
+      "controls": [
+        {
+          "id": "MCF-POW-009",
+          "title": "UPS Topology",
+          "critical": [
+            "CG-05"
+          ],
+          "supporting": [
+            "CG-09",
+            "CG-02"
+          ]
+        },
+        {
+          "id": "MCF-POW-010",
+          "title": "Battery Condition",
+          "critical": [
+            "CG-04"
+          ],
+          "supporting": [
+            "CG-05"
+          ]
+        },
+        {
+          "id": "MCF-POW-011",
+          "title": "Runtime and Derating",
+          "critical": [
+            "CG-05"
+          ],
+          "supporting": []
+        },
+        {
+          "id": "MCF-POW-012",
+          "title": "Bypass Exposure",
+          "critical": [],
+          "supporting": [
+            "CG-05",
+            "CG-09"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "POW-04",
+      "name": "Distribution and protection",
+      "controls": [
+        {
+          "id": "MCF-POW-013",
+          "title": "Switchgear Integrity",
+          "critical": [
+            "CG-04"
+          ],
+          "supporting": [
+            "CG-05"
+          ]
+        },
+        {
+          "id": "MCF-POW-014",
+          "title": "Selective Coordination",
+          "critical": [
+            "CG-09"
+          ],
+          "supporting": [
+            "CG-05"
+          ]
+        },
+        {
+          "id": "MCF-POW-015",
+          "title": "Busway and PDU Capacity",
+          "critical": [],
+          "supporting": [
+            "CG-05",
+            "CG-14"
+          ]
+        },
+        {
+          "id": "MCF-POW-016",
+          "title": "Earthing and Bonding",
+          "critical": [
+            "CG-04"
+          ],
+          "supporting": [
+            "CG-05"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "POW-05",
+      "name": "Power quality and transient response",
+      "controls": [
+        {
+          "id": "MCF-POW-017",
+          "title": "Voltage Quality",
+          "critical": [],
+          "supporting": [
+            "CG-05"
+          ]
+        },
+        {
+          "id": "MCF-POW-018",
+          "title": "Harmonics",
+          "critical": [],
+          "supporting": [
+            "CG-05"
+          ]
+        },
+        {
+          "id": "MCF-POW-019",
+          "title": "Transient Ride-Through",
+          "critical": [
+            "CG-05"
+          ],
+          "supporting": [
+            "CG-06"
+          ]
+        },
+        {
+          "id": "MCF-POW-020",
+          "title": "Load-Step Response",
+          "critical": [
+            "CG-05"
+          ],
+          "supporting": [
+            "CG-03"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "POW-06",
+      "name": "Electrical monitoring, maintenance and recovery",
+      "controls": [
+        {
+          "id": "MCF-POW-021",
+          "title": "EPMS Coverage",
+          "critical": [
+            "CG-07"
+          ],
+          "supporting": [
+            "CG-05",
+            "CG-15"
+          ]
+        },
+        {
+          "id": "MCF-POW-022",
+          "title": "Preventive Maintenance",
+          "critical": [],
+          "supporting": [
+            "CG-05"
+          ]
+        },
+        {
+          "id": "MCF-POW-023",
+          "title": "Switching Procedures",
+          "critical": [
+            "CG-04"
+          ],
+          "supporting": [
+            "CG-07",
+            "CG-14"
+          ]
+        },
+        {
+          "id": "MCF-POW-024",
+          "title": "Black-Start and Restoration",
+          "critical": [
+            "CG-10"
+          ],
+          "supporting": [
+            "CG-05",
+            "CG-07"
+          ]
+        }
+      ]
+    }
+  ],
+  "THM": [
+    {
+      "id": "THM-01",
+      "name": "Thermal architecture and capacity",
+      "controls": [
+        {
+          "id": "MCF-THM-001",
+          "title": "Heat-Load Model",
+          "critical": [],
+          "supporting": [
+            "CG-06",
+            "CG-01"
+          ]
+        },
+        {
+          "id": "MCF-THM-002",
+          "title": "Design Capacity",
+          "critical": [
+            "CG-06"
+          ],
+          "supporting": [
+            "CG-02"
+          ]
+        },
+        {
+          "id": "MCF-THM-003",
+          "title": "Resilient Capacity",
+          "critical": [
+            "CG-06"
+          ],
+          "supporting": [
+            "CG-09",
+            "CG-05"
+          ]
+        },
+        {
+          "id": "MCF-THM-004",
+          "title": "Seasonal Derating",
+          "critical": [
+            "CG-06"
+          ],
+          "supporting": [
+            "CG-03"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "THM-02",
+      "name": "Air cooling systems",
+      "controls": [
+        {
+          "id": "MCF-THM-005",
+          "title": "Airflow Management",
+          "critical": [],
+          "supporting": [
+            "CG-06"
+          ]
+        },
+        {
+          "id": "MCF-THM-006",
+          "title": "Containment",
+          "critical": [],
+          "supporting": [
+            "CG-06",
+            "CG-04"
+          ]
+        },
+        {
+          "id": "MCF-THM-007",
+          "title": "CRAH and In-Row Capacity",
+          "critical": [],
+          "supporting": [
+            "CG-06"
+          ]
+        },
+        {
+          "id": "MCF-THM-008",
+          "title": "Air-Side Monitoring",
+          "critical": [],
+          "supporting": [
+            "CG-06"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "THM-03",
+      "name": "Liquid cooling systems",
+      "controls": [
+        {
+          "id": "MCF-THM-009",
+          "title": "Direct-to-Chip Architecture",
+          "critical": [],
+          "supporting": [
+            "CG-06"
+          ]
+        },
+        {
+          "id": "MCF-THM-010",
+          "title": "CDU Capacity",
+          "critical": [
+            "CG-06"
+          ],
+          "supporting": [
+            "CG-07"
+          ]
+        },
+        {
+          "id": "MCF-THM-011",
+          "title": "Secondary Loop Integrity",
+          "critical": [
+            "CG-06"
+          ],
+          "supporting": [
+            "CG-09"
+          ]
+        },
+        {
+          "id": "MCF-THM-012",
+          "title": "Quick-Disconnect Management",
+          "critical": [],
+          "supporting": [
+            "CG-06",
+            "CG-04",
+            "CG-14"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "THM-04",
+      "name": "Heat rejection and water systems",
+      "controls": [
+        {
+          "id": "MCF-THM-013",
+          "title": "Chiller Capacity",
+          "critical": [
+            "CG-06"
+          ],
+          "supporting": [
+            "CG-04"
+          ]
+        },
+        {
+          "id": "MCF-THM-014",
+          "title": "Cooling Tower or Dry Cooler",
+          "critical": [],
+          "supporting": [
+            "CG-06"
+          ]
+        },
+        {
+          "id": "MCF-THM-015",
+          "title": "Water Continuity",
+          "critical": [
+            "CG-06"
+          ],
+          "supporting": [
+            "CG-03"
+          ]
+        },
+        {
+          "id": "MCF-THM-016",
+          "title": "Heat-Rejection Dependency",
+          "critical": [],
+          "supporting": [
+            "CG-03",
+            "CG-09",
+            "CG-06"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "THM-05",
+      "name": "Fluid quality and leak management",
+      "controls": [
+        {
+          "id": "MCF-THM-017",
+          "title": "Coolant Compatibility",
+          "critical": [],
+          "supporting": [
+            "CG-04",
+            "CG-06"
+          ]
+        },
+        {
+          "id": "MCF-THM-018",
+          "title": "Water Quality",
+          "critical": [
+            "CG-04"
+          ],
+          "supporting": [
+            "CG-06"
+          ]
+        },
+        {
+          "id": "MCF-THM-019",
+          "title": "Leak Detection",
+          "critical": [],
+          "supporting": [
+            "CG-06",
+            "CG-09",
+            "CG-04"
+          ]
+        },
+        {
+          "id": "MCF-THM-020",
+          "title": "Isolation and Drainage",
+          "critical": [
+            "CG-09"
+          ],
+          "supporting": [
+            "CG-04",
+            "CG-06"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "THM-06",
+      "name": "Thermal control, maintenance and recovery",
+      "controls": [
+        {
+          "id": "MCF-THM-021",
+          "title": "Control Stability",
+          "critical": [
+            "CG-07"
+          ],
+          "supporting": [
+            "CG-06",
+            "CG-15"
+          ]
+        },
+        {
+          "id": "MCF-THM-022",
+          "title": "Sensor Trust",
+          "critical": [],
+          "supporting": [
+            "CG-07",
+            "CG-06"
+          ]
+        },
+        {
+          "id": "MCF-THM-023",
+          "title": "Maintenance States",
+          "critical": [],
+          "supporting": [
+            "CG-06",
+            "CG-14",
+            "CG-04"
+          ]
+        },
+        {
+          "id": "MCF-THM-024",
+          "title": "Thermal Recovery",
+          "critical": [
+            "CG-10"
+          ],
+          "supporting": [
+            "CG-06"
+          ]
+        }
+      ]
+    }
+  ],
+  "ENV": [
+    {
+      "id": "ENV-01",
+      "name": "Environmental operating conditions",
+      "controls": [
+        {
+          "id": "MCF-ENV-001",
+          "title": "Temperature Control",
+          "critical": [],
+          "supporting": [
+            "CG-06",
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-ENV-002",
+          "title": "Humidity Control",
+          "critical": [],
+          "supporting": [
+            "CG-06"
+          ]
+        },
+        {
+          "id": "MCF-ENV-003",
+          "title": "Particulate and Corrosion",
+          "critical": [],
+          "supporting": [
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-ENV-004",
+          "title": "Vibration and Acoustic Conditions",
+          "critical": [],
+          "supporting": [
+            "CG-08"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ENV-02",
+      "name": "Energy performance",
+      "controls": [
+        {
+          "id": "MCF-ENV-005",
+          "title": "PUE Measurement",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-ENV-006",
+          "title": "Energy Allocation",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-ENV-007",
+          "title": "Efficiency Under Load",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-ENV-008",
+          "title": "Resilience-Efficiency Trade-Off",
+          "critical": [],
+          "supporting": [
+            "CG-05",
+            "CG-06",
+            "CG-14"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ENV-03",
+      "name": "Water performance",
+      "controls": [
+        {
+          "id": "MCF-ENV-009",
+          "title": "Water Source and Quality",
+          "critical": [],
+          "supporting": [
+            "CG-06",
+            "CG-04"
+          ]
+        },
+        {
+          "id": "MCF-ENV-010",
+          "title": "WUE Measurement",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-ENV-011",
+          "title": "Water Scarcity Response",
+          "critical": [],
+          "supporting": [
+            "CG-06",
+            "CG-03"
+          ]
+        },
+        {
+          "id": "MCF-ENV-012",
+          "title": "Discharge Control",
+          "critical": [],
+          "supporting": []
+        }
+      ]
+    },
+    {
+      "id": "ENV-04",
+      "name": "Carbon and resource reporting",
+      "controls": [
+        {
+          "id": "MCF-ENV-013",
+          "title": "Carbon Accounting Boundary",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-ENV-014",
+          "title": "Energy Attribute Evidence",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-ENV-015",
+          "title": "Embodied Resource Data",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-ENV-016",
+          "title": "Reporting Traceability",
+          "critical": [],
+          "supporting": []
+        }
+      ]
+    },
+    {
+      "id": "ENV-05",
+      "name": "Hazardous materials and waste",
+      "controls": [
+        {
+          "id": "MCF-ENV-017",
+          "title": "Battery Materials",
+          "critical": [],
+          "supporting": [
+            "CG-04"
+          ]
+        },
+        {
+          "id": "MCF-ENV-018",
+          "title": "Refrigerants and Coolants",
+          "critical": [
+            "CG-04"
+          ],
+          "supporting": []
+        },
+        {
+          "id": "MCF-ENV-019",
+          "title": "Fuel and Suppressant Handling",
+          "critical": [],
+          "supporting": [
+            "CG-04"
+          ]
+        },
+        {
+          "id": "MCF-ENV-020",
+          "title": "Hardware and Media Waste",
+          "critical": [],
+          "supporting": []
+        }
+      ]
+    },
+    {
+      "id": "ENV-06",
+      "name": "Climate adaptation and resource continuity",
+      "controls": [
+        {
+          "id": "MCF-ENV-021",
+          "title": "Heatwave Readiness",
+          "critical": [],
+          "supporting": [
+            "CG-06",
+            "CG-05"
+          ]
+        },
+        {
+          "id": "MCF-ENV-022",
+          "title": "Drought Readiness",
+          "critical": [],
+          "supporting": [
+            "CG-03"
+          ]
+        },
+        {
+          "id": "MCF-ENV-023",
+          "title": "Flood Adaptation",
+          "critical": [],
+          "supporting": [
+            "CG-09"
+          ]
+        },
+        {
+          "id": "MCF-ENV-024",
+          "title": "Long-Term Resource Constraints",
+          "critical": [],
+          "supporting": [
+            "CG-01",
+            "CG-03"
+          ]
+        }
+      ]
+    }
+  ],
+  "CMP": [
+    {
+      "id": "CMP-01",
+      "name": "Compute architecture and configuration",
+      "controls": [
+        {
+          "id": "MCF-CMP-001",
+          "title": "Accelerator Architecture",
+          "critical": [],
+          "supporting": [
+            "CG-08",
+            "CG-01"
+          ]
+        },
+        {
+          "id": "MCF-CMP-002",
+          "title": "Node Configuration",
+          "critical": [],
+          "supporting": [
+            "CG-08",
+            "CG-15"
+          ]
+        },
+        {
+          "id": "MCF-CMP-003",
+          "title": "Rack-Scale Composition",
+          "critical": [],
+          "supporting": [
+            "CG-08",
+            "CG-06",
+            "CG-05"
+          ]
+        },
+        {
+          "id": "MCF-CMP-004",
+          "title": "Approved Baseline",
+          "critical": [],
+          "supporting": [
+            "CG-02",
+            "CG-08",
+            "CG-14"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CMP-02",
+      "name": "Cluster and scale-up domains",
+      "controls": [
+        {
+          "id": "MCF-CMP-005",
+          "title": "Cluster Topology",
+          "critical": [],
+          "supporting": [
+            "CG-08",
+            "CG-02"
+          ]
+        },
+        {
+          "id": "MCF-CMP-006",
+          "title": "Scale-Up Domain Integrity",
+          "critical": [
+            "CG-08"
+          ],
+          "supporting": [
+            "CG-09"
+          ]
+        },
+        {
+          "id": "MCF-CMP-007",
+          "title": "Partitioning",
+          "critical": [],
+          "supporting": [
+            "CG-09",
+            "CG-15"
+          ]
+        },
+        {
+          "id": "MCF-CMP-008",
+          "title": "Fault-Domain Design",
+          "critical": [
+            "CG-09"
+          ],
+          "supporting": [
+            "CG-08",
+            "CG-03"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CMP-03",
+      "name": "Capacity, scheduling and utilisation",
+      "controls": [
+        {
+          "id": "MCF-CMP-009",
+          "title": "Usable Accelerator Capacity",
+          "critical": [
+            "CG-08"
+          ],
+          "supporting": [
+            "CG-01"
+          ]
+        },
+        {
+          "id": "MCF-CMP-010",
+          "title": "Scheduler Controls",
+          "critical": [],
+          "supporting": [
+            "CG-08",
+            "CG-15"
+          ]
+        },
+        {
+          "id": "MCF-CMP-011",
+          "title": "Resource Reservation",
+          "critical": [],
+          "supporting": [
+            "CG-10",
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-CMP-012",
+          "title": "Contention Management",
+          "critical": [],
+          "supporting": [
+            "CG-08"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CMP-04",
+      "name": "Firmware, driver and compatibility",
+      "controls": [
+        {
+          "id": "MCF-CMP-013",
+          "title": "Firmware Baseline",
+          "critical": [
+            "CG-08"
+          ],
+          "supporting": [
+            "CG-14",
+            "CG-15"
+          ]
+        },
+        {
+          "id": "MCF-CMP-014",
+          "title": "Driver Compatibility",
+          "critical": [],
+          "supporting": [
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-CMP-015",
+          "title": "Upgrade Testing",
+          "critical": [
+            "CG-14"
+          ],
+          "supporting": [
+            "CG-09",
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-CMP-016",
+          "title": "Rollback Readiness",
+          "critical": [],
+          "supporting": [
+            "CG-10",
+            "CG-14"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CMP-05",
+      "name": "Compute health and observability",
+      "controls": [
+        {
+          "id": "MCF-CMP-017",
+          "title": "GPU Telemetry",
+          "critical": [],
+          "supporting": [
+            "CG-08",
+            "CG-06"
+          ]
+        },
+        {
+          "id": "MCF-CMP-018",
+          "title": "Node Health",
+          "critical": [],
+          "supporting": [
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-CMP-019",
+          "title": "Error and Degradation Detection",
+          "critical": [
+            "CG-08"
+          ],
+          "supporting": []
+        },
+        {
+          "id": "MCF-CMP-020",
+          "title": "Performance Baselines",
+          "critical": [],
+          "supporting": [
+            "CG-08"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CMP-06",
+      "name": "Compute lifecycle and recovery",
+      "controls": [
+        {
+          "id": "MCF-CMP-021",
+          "title": "Provisioning",
+          "critical": [],
+          "supporting": [
+            "CG-08",
+            "CG-14"
+          ]
+        },
+        {
+          "id": "MCF-CMP-022",
+          "title": "Spares and RMA",
+          "critical": [],
+          "supporting": [
+            "CG-10",
+            "CG-03"
+          ]
+        },
+        {
+          "id": "MCF-CMP-023",
+          "title": "Node Rebuild",
+          "critical": [
+            "CG-10"
+          ],
+          "supporting": [
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-CMP-024",
+          "title": "Secure Retirement",
+          "critical": [],
+          "supporting": [
+            "CG-02"
+          ]
+        }
+      ]
+    }
+  ],
+  "STO": [
+    {
+      "id": "STO-01",
+      "name": "Storage architecture and tiering",
+      "controls": [
+        {
+          "id": "MCF-STO-001",
+          "title": "Training Data Tier",
+          "critical": [],
+          "supporting": [
+            "CG-08",
+            "CG-01"
+          ]
+        },
+        {
+          "id": "MCF-STO-002",
+          "title": "Checkpoint Tier",
+          "critical": [],
+          "supporting": [
+            "CG-08",
+            "CG-10"
+          ]
+        },
+        {
+          "id": "MCF-STO-003",
+          "title": "Model and Artifact Tier",
+          "critical": [],
+          "supporting": [
+            "CG-08",
+            "CG-10"
+          ]
+        },
+        {
+          "id": "MCF-STO-004",
+          "title": "Archive Tier",
+          "critical": [],
+          "supporting": [
+            "CG-10"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "STO-02",
+      "name": "Performance and capacity",
+      "controls": [
+        {
+          "id": "MCF-STO-005",
+          "title": "Throughput and IOPS",
+          "critical": [
+            "CG-08"
+          ],
+          "supporting": []
+        },
+        {
+          "id": "MCF-STO-006",
+          "title": "Metadata Performance",
+          "critical": [],
+          "supporting": [
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-STO-007",
+          "title": "Capacity Headroom",
+          "critical": [],
+          "supporting": [
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-STO-008",
+          "title": "Burst Handling",
+          "critical": [],
+          "supporting": [
+            "CG-08",
+            "CG-09"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "STO-03",
+      "name": "Integrity and consistency",
+      "controls": [
+        {
+          "id": "MCF-STO-009",
+          "title": "Data Integrity",
+          "critical": [
+            "CG-08"
+          ],
+          "supporting": []
+        },
+        {
+          "id": "MCF-STO-010",
+          "title": "Metadata Integrity",
+          "critical": [
+            "CG-08"
+          ],
+          "supporting": [
+            "CG-10"
+          ]
+        },
+        {
+          "id": "MCF-STO-011",
+          "title": "Checksum and Scrubbing",
+          "critical": [],
+          "supporting": [
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-STO-012",
+          "title": "Configuration Consistency",
+          "critical": [],
+          "supporting": [
+            "CG-14",
+            "CG-08"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "STO-04",
+      "name": "Protection and replication",
+      "controls": [
+        {
+          "id": "MCF-STO-013",
+          "title": "Snapshot Protection",
+          "critical": [],
+          "supporting": [
+            "CG-10"
+          ]
+        },
+        {
+          "id": "MCF-STO-014",
+          "title": "Replication",
+          "critical": [],
+          "supporting": [
+            "CG-10",
+            "CG-09",
+            "CG-03"
+          ]
+        },
+        {
+          "id": "MCF-STO-015",
+          "title": "Erasure Coding",
+          "critical": [
+            "CG-09"
+          ],
+          "supporting": [
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-STO-016",
+          "title": "Immutable Recovery Copy",
+          "critical": [
+            "CG-10"
+          ],
+          "supporting": [
+            "CG-15"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "STO-05",
+      "name": "Checkpoint and recovery services",
+      "controls": [
+        {
+          "id": "MCF-STO-017",
+          "title": "Checkpoint Durability",
+          "critical": [
+            "CG-08"
+          ],
+          "supporting": [
+            "CG-10"
+          ]
+        },
+        {
+          "id": "MCF-STO-018",
+          "title": "Restart Readiness",
+          "critical": [
+            "CG-10"
+          ],
+          "supporting": []
+        },
+        {
+          "id": "MCF-STO-019",
+          "title": "Storage Recovery Sequencing",
+          "critical": [],
+          "supporting": [
+            "CG-10",
+            "CG-09"
+          ]
+        },
+        {
+          "id": "MCF-STO-020",
+          "title": "Recovery Validation",
+          "critical": [
+            "CG-10"
+          ],
+          "supporting": []
+        }
+      ]
+    },
+    {
+      "id": "STO-06",
+      "name": "Storage monitoring and lifecycle",
+      "controls": [
+        {
+          "id": "MCF-STO-021",
+          "title": "Storage Telemetry",
+          "critical": [],
+          "supporting": [
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-STO-022",
+          "title": "Capacity Forecasting",
+          "critical": [],
+          "supporting": [
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-STO-023",
+          "title": "Media Health",
+          "critical": [],
+          "supporting": [
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-STO-024",
+          "title": "Secure Sanitisation",
+          "critical": [],
+          "supporting": []
+        }
+      ]
+    }
+  ],
+  "NET": [
+    {
+      "id": "NET-01",
+      "name": "Scale-up and scale-out fabrics",
+      "controls": [
+        {
+          "id": "MCF-NET-001",
+          "title": "Fabric Topology",
+          "critical": [
+            "CG-08"
+          ],
+          "supporting": [
+            "CG-02"
+          ]
+        },
+        {
+          "id": "MCF-NET-002",
+          "title": "Path Diversity",
+          "critical": [],
+          "supporting": [
+            "CG-03",
+            "CG-08",
+            "CG-09"
+          ]
+        },
+        {
+          "id": "MCF-NET-003",
+          "title": "Oversubscription",
+          "critical": [],
+          "supporting": [
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-NET-004",
+          "title": "Fabric Fault-Domain Design",
+          "critical": [
+            "CG-09"
+          ],
+          "supporting": [
+            "CG-08",
+            "CG-03"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NET-02",
+      "name": "Performance and congestion control",
+      "controls": [
+        {
+          "id": "MCF-NET-005",
+          "title": "Latency Baseline",
+          "critical": [],
+          "supporting": [
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-NET-006",
+          "title": "Loss and Retransmission",
+          "critical": [],
+          "supporting": [
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-NET-007",
+          "title": "Congestion Control",
+          "critical": [
+            "CG-08"
+          ],
+          "supporting": [
+            "CG-09"
+          ]
+        },
+        {
+          "id": "MCF-NET-008",
+          "title": "Collective Communication Performance",
+          "critical": [
+            "CG-08"
+          ],
+          "supporting": []
+        }
+      ]
+    },
+    {
+      "id": "NET-03",
+      "name": "Storage and service networks",
+      "controls": [
+        {
+          "id": "MCF-NET-009",
+          "title": "Storage Fabric",
+          "critical": [
+            "CG-08"
+          ],
+          "supporting": [
+            "CG-10"
+          ]
+        },
+        {
+          "id": "MCF-NET-010",
+          "title": "Frontend Network",
+          "critical": [],
+          "supporting": [
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-NET-011",
+          "title": "Service Gateways",
+          "critical": [],
+          "supporting": [
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-NET-012",
+          "title": "Traffic Isolation",
+          "critical": [],
+          "supporting": [
+            "CG-09",
+            "CG-08",
+            "CG-15"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NET-04",
+      "name": "Management and out-of-band networks",
+      "controls": [
+        {
+          "id": "MCF-NET-013",
+          "title": "Management Separation",
+          "critical": [],
+          "supporting": [
+            "CG-15",
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-NET-014",
+          "title": "Console Access",
+          "critical": [],
+          "supporting": [
+            "CG-10",
+            "CG-15"
+          ]
+        },
+        {
+          "id": "MCF-NET-015",
+          "title": "OOB Resilience",
+          "critical": [
+            "CG-10"
+          ],
+          "supporting": [
+            "CG-15",
+            "CG-03"
+          ]
+        },
+        {
+          "id": "MCF-NET-016",
+          "title": "Break-Glass Access",
+          "critical": [],
+          "supporting": [
+            "CG-15",
+            "CG-10"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NET-05",
+      "name": "Physical connectivity and optics",
+      "controls": [
+        {
+          "id": "MCF-NET-017",
+          "title": "Cabling Standards",
+          "critical": [],
+          "supporting": [
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-NET-018",
+          "title": "Optics Compatibility",
+          "critical": [],
+          "supporting": [
+            "CG-08",
+            "CG-03"
+          ]
+        },
+        {
+          "id": "MCF-NET-019",
+          "title": "Cross-Connect Control",
+          "critical": [],
+          "supporting": [
+            "CG-14",
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-NET-020",
+          "title": "Path Documentation",
+          "critical": [],
+          "supporting": [
+            "CG-02",
+            "CG-03",
+            "CG-10"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NET-06",
+      "name": "Network control and observability",
+      "controls": [
+        {
+          "id": "MCF-NET-021",
+          "title": "Controller Resilience",
+          "critical": [],
+          "supporting": [
+            "CG-08",
+            "CG-09",
+            "CG-10"
+          ]
+        },
+        {
+          "id": "MCF-NET-022",
+          "title": "Configuration Management",
+          "critical": [
+            "CG-14"
+          ],
+          "supporting": [
+            "CG-08",
+            "CG-10"
+          ]
+        },
+        {
+          "id": "MCF-NET-023",
+          "title": "Flow Telemetry",
+          "critical": [],
+          "supporting": [
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-NET-024",
+          "title": "Time and Core Services",
+          "critical": [],
+          "supporting": [
+            "CG-08",
+            "CG-03",
+            "CG-10"
+          ]
+        }
+      ]
+    }
+  ],
+  "OPS": [
+    {
+      "id": "OPS-01",
+      "name": "Operating model and staffing",
+      "controls": [
+        {
+          "id": "MCF-OPS-001",
+          "title": "24x7 Coverage",
+          "critical": [],
+          "supporting": [
+            "CG-13",
+            "CG-10"
+          ]
+        },
+        {
+          "id": "MCF-OPS-002",
+          "title": "Role Clarity",
+          "critical": [
+            "CG-13"
+          ],
+          "supporting": [
+            "CG-14"
+          ]
+        },
+        {
+          "id": "MCF-OPS-003",
+          "title": "Shift Handover",
+          "critical": [],
+          "supporting": [
+            "CG-04",
+            "CG-14"
+          ]
+        },
+        {
+          "id": "MCF-OPS-004",
+          "title": "Competence and Authorisation",
+          "critical": [
+            "CG-04"
+          ],
+          "supporting": [
+            "CG-13"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OPS-02",
+      "name": "Procedure and work control",
+      "controls": [
+        {
+          "id": "MCF-OPS-005",
+          "title": "Standard Operating Procedures",
+          "critical": [],
+          "supporting": [
+            "CG-10",
+            "CG-13",
+            "CG-14"
+          ]
+        },
+        {
+          "id": "MCF-OPS-006",
+          "title": "Method Statements",
+          "critical": [
+            "CG-14"
+          ],
+          "supporting": [
+            "CG-04"
+          ]
+        },
+        {
+          "id": "MCF-OPS-007",
+          "title": "Permit to Work",
+          "critical": [
+            "CG-04"
+          ],
+          "supporting": []
+        },
+        {
+          "id": "MCF-OPS-008",
+          "title": "Lockout and Tagout",
+          "critical": [
+            "CG-04"
+          ],
+          "supporting": []
+        }
+      ]
+    },
+    {
+      "id": "OPS-03",
+      "name": "Maintenance and reliability",
+      "controls": [
+        {
+          "id": "MCF-OPS-009",
+          "title": "Maintenance Strategy",
+          "critical": [],
+          "supporting": [
+            "CG-05",
+            "CG-06"
+          ]
+        },
+        {
+          "id": "MCF-OPS-010",
+          "title": "Condition Monitoring",
+          "critical": [],
+          "supporting": [
+            "CG-05",
+            "CG-06"
+          ]
+        },
+        {
+          "id": "MCF-OPS-011",
+          "title": "Calibration",
+          "critical": [],
+          "supporting": [
+            "CG-07"
+          ]
+        },
+        {
+          "id": "MCF-OPS-012",
+          "title": "Deferred Maintenance",
+          "critical": [],
+          "supporting": [
+            "CG-05",
+            "CG-06",
+            "CG-13"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OPS-04",
+      "name": "Alarm, incident and problem management",
+      "controls": [
+        {
+          "id": "MCF-OPS-013",
+          "title": "Alarm Rationalisation",
+          "critical": [
+            "CG-07"
+          ],
+          "supporting": [
+            "CG-06",
+            "CG-05"
+          ]
+        },
+        {
+          "id": "MCF-OPS-014",
+          "title": "Incident Response",
+          "critical": [],
+          "supporting": [
+            "CG-10",
+            "CG-13"
+          ]
+        },
+        {
+          "id": "MCF-OPS-015",
+          "title": "Root Cause Analysis",
+          "critical": [],
+          "supporting": [
+            "CG-09"
+          ]
+        },
+        {
+          "id": "MCF-OPS-016",
+          "title": "Problem Elimination",
+          "critical": [],
+          "supporting": [
+            "CG-14"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OPS-05",
+      "name": "Change and configuration management",
+      "controls": [
+        {
+          "id": "MCF-OPS-017",
+          "title": "Configuration Baseline",
+          "critical": [
+            "CG-14"
+          ],
+          "supporting": [
+            "CG-02",
+            "CG-07"
+          ]
+        },
+        {
+          "id": "MCF-OPS-018",
+          "title": "Change Assessment",
+          "critical": [
+            "CG-14"
+          ],
+          "supporting": [
+            "CG-03"
+          ]
+        },
+        {
+          "id": "MCF-OPS-019",
+          "title": "Temporary Configuration",
+          "critical": [],
+          "supporting": [
+            "CG-14",
+            "CG-07",
+            "CG-04"
+          ]
+        },
+        {
+          "id": "MCF-OPS-020",
+          "title": "Rollback and Validation",
+          "critical": [
+            "CG-14"
+          ],
+          "supporting": [
+            "CG-10"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OPS-06",
+      "name": "Capacity and service operations",
+      "controls": [
+        {
+          "id": "MCF-OPS-021",
+          "title": "Capacity Review",
+          "critical": [],
+          "supporting": [
+            "CG-05",
+            "CG-06"
+          ]
+        },
+        {
+          "id": "MCF-OPS-022",
+          "title": "Service Level Monitoring",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-OPS-023",
+          "title": "Resource Balancing",
+          "critical": [],
+          "supporting": [
+            "CG-05",
+            "CG-06",
+            "CG-09"
+          ]
+        },
+        {
+          "id": "MCF-OPS-024",
+          "title": "Operational Reporting",
+          "critical": [],
+          "supporting": [
+            "CG-13"
+          ]
+        }
+      ]
+    }
+  ],
+  "RES": [
+    {
+      "id": "RES-01",
+      "name": "Resilience strategy",
+      "controls": [
+        {
+          "id": "MCF-RES-001",
+          "title": "Minimum Service Outcome",
+          "critical": [],
+          "supporting": [
+            "CG-01",
+            "CG-10",
+            "CG-09"
+          ]
+        },
+        {
+          "id": "MCF-RES-002",
+          "title": "Graceful Degradation",
+          "critical": [],
+          "supporting": [
+            "CG-09",
+            "CG-10"
+          ]
+        },
+        {
+          "id": "MCF-RES-003",
+          "title": "Resilience Scenarios",
+          "critical": [],
+          "supporting": [
+            "CG-09",
+            "CG-10",
+            "CG-03"
+          ]
+        },
+        {
+          "id": "MCF-RES-004",
+          "title": "Resilience Ownership",
+          "critical": [],
+          "supporting": [
+            "CG-13"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "RES-02",
+      "name": "Fault-domain and containment design",
+      "controls": [
+        {
+          "id": "MCF-RES-005",
+          "title": "Fault-Domain Definition",
+          "critical": [
+            "CG-09"
+          ],
+          "supporting": [
+            "CG-03",
+            "CG-02"
+          ]
+        },
+        {
+          "id": "MCF-RES-006",
+          "title": "Containment Boundaries",
+          "critical": [],
+          "supporting": [
+            "CG-09"
+          ]
+        },
+        {
+          "id": "MCF-RES-007",
+          "title": "Blast Radius",
+          "critical": [
+            "CG-09"
+          ],
+          "supporting": [
+            "CG-03"
+          ]
+        },
+        {
+          "id": "MCF-RES-008",
+          "title": "Isolation Validation",
+          "critical": [
+            "CG-09"
+          ],
+          "supporting": [
+            "CG-04"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "RES-03",
+      "name": "Continuity planning",
+      "controls": [
+        {
+          "id": "MCF-RES-009",
+          "title": "Continuity Strategy",
+          "critical": [],
+          "supporting": [
+            "CG-10",
+            "CG-01"
+          ]
+        },
+        {
+          "id": "MCF-RES-010",
+          "title": "Alternative Capacity",
+          "critical": [],
+          "supporting": [
+            "CG-10",
+            "CG-03"
+          ]
+        },
+        {
+          "id": "MCF-RES-011",
+          "title": "Site and Provider Continuity",
+          "critical": [],
+          "supporting": [
+            "CG-03",
+            "CG-10"
+          ]
+        },
+        {
+          "id": "MCF-RES-012",
+          "title": "Crisis Priorities",
+          "critical": [],
+          "supporting": [
+            "CG-10",
+            "CG-01"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "RES-04",
+      "name": "Recovery planning",
+      "controls": [
+        {
+          "id": "MCF-RES-013",
+          "title": "Recovery Dependencies",
+          "critical": [
+            "CG-10"
+          ],
+          "supporting": [
+            "CG-03"
+          ]
+        },
+        {
+          "id": "MCF-RES-014",
+          "title": "Recovery Sequencing",
+          "critical": [
+            "CG-10"
+          ],
+          "supporting": [
+            "CG-05",
+            "CG-06"
+          ]
+        },
+        {
+          "id": "MCF-RES-015",
+          "title": "Configuration Restoration",
+          "critical": [],
+          "supporting": [
+            "CG-10",
+            "CG-07",
+            "CG-14"
+          ]
+        },
+        {
+          "id": "MCF-RES-016",
+          "title": "Data and Checkpoint Recovery",
+          "critical": [
+            "CG-10"
+          ],
+          "supporting": [
+            "CG-08"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "RES-05",
+      "name": "Testing and exercising",
+      "controls": [
+        {
+          "id": "MCF-RES-017",
+          "title": "Component Tests",
+          "critical": [],
+          "supporting": [
+            "CG-10",
+            "CG-05",
+            "CG-06"
+          ]
+        },
+        {
+          "id": "MCF-RES-018",
+          "title": "Integrated Scenario Tests",
+          "critical": [
+            "CG-10"
+          ],
+          "supporting": [
+            "CG-09",
+            "CG-05",
+            "CG-06"
+          ]
+        },
+        {
+          "id": "MCF-RES-019",
+          "title": "Tabletop Exercises",
+          "critical": [],
+          "supporting": [
+            "CG-10",
+            "CG-13"
+          ]
+        },
+        {
+          "id": "MCF-RES-020",
+          "title": "Lessons and Retest",
+          "critical": [],
+          "supporting": [
+            "CG-10",
+            "CG-14"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "RES-06",
+      "name": "Crisis and adaptive response",
+      "controls": [
+        {
+          "id": "MCF-RES-021",
+          "title": "Crisis Command",
+          "critical": [],
+          "supporting": [
+            "CG-13",
+            "CG-10"
+          ]
+        },
+        {
+          "id": "MCF-RES-022",
+          "title": "Stakeholder Communications",
+          "critical": [],
+          "supporting": [
+            "CG-13"
+          ]
+        },
+        {
+          "id": "MCF-RES-023",
+          "title": "Emergency Change",
+          "critical": [],
+          "supporting": [
+            "CG-14"
+          ]
+        },
+        {
+          "id": "MCF-RES-024",
+          "title": "Post-Event Adaptation",
+          "critical": [],
+          "supporting": [
+            "CG-14"
+          ]
+        }
+      ]
+    }
+  ],
+  "SUP": [
+    {
+      "id": "SUP-01",
+      "name": "Supplier due diligence",
+      "controls": [
+        {
+          "id": "MCF-SUP-001",
+          "title": "Supplier Capability",
+          "critical": [],
+          "supporting": [
+            "CG-03"
+          ]
+        },
+        {
+          "id": "MCF-SUP-002",
+          "title": "Financial and Operational Resilience",
+          "critical": [],
+          "supporting": [
+            "CG-03"
+          ]
+        },
+        {
+          "id": "MCF-SUP-003",
+          "title": "Security and Quality Posture",
+          "critical": [],
+          "supporting": [
+            "CG-08",
+            "CG-15"
+          ]
+        },
+        {
+          "id": "MCF-SUP-004",
+          "title": "Sub-Tier Visibility",
+          "critical": [
+            "CG-03"
+          ],
+          "supporting": []
+        }
+      ]
+    },
+    {
+      "id": "SUP-02",
+      "name": "Contract and service obligations",
+      "controls": [
+        {
+          "id": "MCF-SUP-005",
+          "title": "Service Levels",
+          "critical": [],
+          "supporting": [
+            "CG-10",
+            "CG-13"
+          ]
+        },
+        {
+          "id": "MCF-SUP-006",
+          "title": "Evidence Rights",
+          "critical": [],
+          "supporting": [
+            "CG-03"
+          ]
+        },
+        {
+          "id": "MCF-SUP-007",
+          "title": "Incident Notification",
+          "critical": [],
+          "supporting": [
+            "CG-03",
+            "CG-15"
+          ]
+        },
+        {
+          "id": "MCF-SUP-008",
+          "title": "Exit and Transition Rights",
+          "critical": [],
+          "supporting": [
+            "CG-10"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SUP-03",
+      "name": "Hardware and component provenance",
+      "controls": [
+        {
+          "id": "MCF-SUP-009",
+          "title": "Approved Sourcing",
+          "critical": [],
+          "supporting": [
+            "CG-08",
+            "CG-04"
+          ]
+        },
+        {
+          "id": "MCF-SUP-010",
+          "title": "Counterfeit Prevention",
+          "critical": [],
+          "supporting": [
+            "CG-04",
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-SUP-011",
+          "title": "Chain of Custody",
+          "critical": [],
+          "supporting": [
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-SUP-012",
+          "title": "Component Traceability",
+          "critical": [],
+          "supporting": [
+            "CG-08",
+            "CG-03"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SUP-04",
+      "name": "Software, firmware and update supply",
+      "controls": [
+        {
+          "id": "MCF-SUP-013",
+          "title": "Release Provenance",
+          "critical": [],
+          "supporting": [
+            "CG-15",
+            "CG-14"
+          ]
+        },
+        {
+          "id": "MCF-SUP-014",
+          "title": "Signature Validation",
+          "critical": [],
+          "supporting": [
+            "CG-15",
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-SUP-015",
+          "title": "Compatibility Assurance",
+          "critical": [],
+          "supporting": [
+            "CG-14",
+            "CG-08",
+            "CG-09"
+          ]
+        },
+        {
+          "id": "MCF-SUP-016",
+          "title": "Vulnerability Response",
+          "critical": [],
+          "supporting": [
+            "CG-15"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SUP-05",
+      "name": "Spares, logistics and obsolescence",
+      "controls": [
+        {
+          "id": "MCF-SUP-017",
+          "title": "Critical Spares",
+          "critical": [],
+          "supporting": [
+            "CG-10",
+            "CG-05",
+            "CG-06"
+          ]
+        },
+        {
+          "id": "MCF-SUP-018",
+          "title": "Lead Times",
+          "critical": [],
+          "supporting": [
+            "CG-10",
+            "CG-03"
+          ]
+        },
+        {
+          "id": "MCF-SUP-019",
+          "title": "Logistics Continuity",
+          "critical": [],
+          "supporting": [
+            "CG-10",
+            "CG-05"
+          ]
+        },
+        {
+          "id": "MCF-SUP-020",
+          "title": "End-of-Life Planning",
+          "critical": [],
+          "supporting": [
+            "CG-03"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SUP-06",
+      "name": "Remote support and third-party access",
+      "controls": [
+        {
+          "id": "MCF-SUP-021",
+          "title": "Support Identity",
+          "critical": [
+            "CG-15"
+          ],
+          "supporting": [
+            "CG-13"
+          ]
+        },
+        {
+          "id": "MCF-SUP-022",
+          "title": "Activation and Approval",
+          "critical": [
+            "CG-15"
+          ],
+          "supporting": [
+            "CG-14"
+          ]
+        },
+        {
+          "id": "MCF-SUP-023",
+          "title": "Session Monitoring",
+          "critical": [],
+          "supporting": [
+            "CG-15"
+          ]
+        },
+        {
+          "id": "MCF-SUP-024",
+          "title": "Revocation and Review",
+          "critical": [],
+          "supporting": [
+            "CG-15",
+            "CG-13"
+          ]
+        }
+      ]
+    }
+  ],
+  "SEC": [
+    {
+      "id": "SEC-01",
+      "name": "Identity and privileged access",
+      "controls": [
+        {
+          "id": "MCF-SEC-001",
+          "title": "Human Identity",
+          "critical": [],
+          "supporting": [
+            "CG-15",
+            "CG-07",
+            "CG-13"
+          ]
+        },
+        {
+          "id": "MCF-SEC-002",
+          "title": "Machine Identity",
+          "critical": [],
+          "supporting": [
+            "CG-15",
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-SEC-003",
+          "title": "Privileged Access",
+          "critical": [
+            "CG-15"
+          ],
+          "supporting": [
+            "CG-07"
+          ]
+        },
+        {
+          "id": "MCF-SEC-004",
+          "title": "Break-Glass Governance",
+          "critical": [],
+          "supporting": [
+            "CG-15",
+            "CG-10"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SEC-02",
+      "name": "Control-plane protection",
+      "controls": [
+        {
+          "id": "MCF-SEC-005",
+          "title": "BMS and EPMS Security",
+          "critical": [
+            "CG-07"
+          ],
+          "supporting": [
+            "CG-15",
+            "CG-05",
+            "CG-06"
+          ]
+        },
+        {
+          "id": "MCF-SEC-006",
+          "title": "Cluster Manager Security",
+          "critical": [
+            "CG-15"
+          ],
+          "supporting": [
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-SEC-007",
+          "title": "Fabric Controller Security",
+          "critical": [],
+          "supporting": [
+            "CG-15",
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-SEC-008",
+          "title": "Storage Controller Security",
+          "critical": [],
+          "supporting": [
+            "CG-15",
+            "CG-10",
+            "CG-08"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SEC-03",
+      "name": "Network security and segmentation",
+      "controls": [
+        {
+          "id": "MCF-SEC-009",
+          "title": "Security Zoning",
+          "critical": [
+            "CG-07"
+          ],
+          "supporting": [
+            "CG-15",
+            "CG-09"
+          ]
+        },
+        {
+          "id": "MCF-SEC-010",
+          "title": "Management-Plane Segmentation",
+          "critical": [
+            "CG-15"
+          ],
+          "supporting": [
+            "CG-07"
+          ]
+        },
+        {
+          "id": "MCF-SEC-011",
+          "title": "Filtering and Gateways",
+          "critical": [],
+          "supporting": [
+            "CG-07",
+            "CG-15"
+          ]
+        },
+        {
+          "id": "MCF-SEC-012",
+          "title": "Remote Access",
+          "critical": [
+            "CG-15"
+          ],
+          "supporting": [
+            "CG-07"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SEC-04",
+      "name": "Configuration, vulnerability and patching",
+      "controls": [
+        {
+          "id": "MCF-SEC-013",
+          "title": "Secure Baseline",
+          "critical": [],
+          "supporting": [
+            "CG-07",
+            "CG-15",
+            "CG-08"
+          ]
+        },
+        {
+          "id": "MCF-SEC-014",
+          "title": "Vulnerability Management",
+          "critical": [],
+          "supporting": [
+            "CG-07",
+            "CG-15"
+          ]
+        },
+        {
+          "id": "MCF-SEC-015",
+          "title": "Patch Governance",
+          "critical": [],
+          "supporting": [
+            "CG-14",
+            "CG-07"
+          ]
+        },
+        {
+          "id": "MCF-SEC-016",
+          "title": "Exception and Compensating Control",
+          "critical": [],
+          "supporting": [
+            "CG-07",
+            "CG-15"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SEC-05",
+      "name": "Detection and response",
+      "controls": [
+        {
+          "id": "MCF-SEC-017",
+          "title": "Security Telemetry",
+          "critical": [],
+          "supporting": [
+            "CG-15",
+            "CG-07"
+          ]
+        },
+        {
+          "id": "MCF-SEC-018",
+          "title": "Behaviour Detection",
+          "critical": [],
+          "supporting": [
+            "CG-15",
+            "CG-07"
+          ]
+        },
+        {
+          "id": "MCF-SEC-019",
+          "title": "Incident Containment",
+          "critical": [],
+          "supporting": [
+            "CG-09",
+            "CG-15",
+            "CG-07",
+            "CG-10"
+          ]
+        },
+        {
+          "id": "MCF-SEC-020",
+          "title": "Forensic Readiness",
+          "critical": [],
+          "supporting": [
+            "CG-15"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SEC-06",
+      "name": "AI-enabled and automated action",
+      "controls": [
+        {
+          "id": "MCF-SEC-021",
+          "title": "Agent or Automation Authority",
+          "critical": [
+            "CG-15"
+          ],
+          "supporting": [
+            "CG-07"
+          ]
+        },
+        {
+          "id": "MCF-SEC-022",
+          "title": "Approval Controls",
+          "critical": [],
+          "supporting": [
+            "CG-15",
+            "CG-14"
+          ]
+        },
+        {
+          "id": "MCF-SEC-023",
+          "title": "Command Allowlisting",
+          "critical": [
+            "CG-07"
+          ],
+          "supporting": [
+            "CG-15"
+          ]
+        },
+        {
+          "id": "MCF-SEC-024",
+          "title": "Safe Rollback",
+          "critical": [],
+          "supporting": [
+            "CG-15",
+            "CG-10",
+            "CG-07"
+          ]
+        }
+      ]
+    }
+  ],
+  "EVA": [
+    {
+      "id": "EVA-01",
+      "name": "Evidence architecture",
+      "controls": [
+        {
+          "id": "MCF-EVA-001",
+          "title": "Evidence Taxonomy",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-EVA-002",
+          "title": "Evidence Ownership",
+          "critical": [],
+          "supporting": [
+            "CG-13"
+          ]
+        },
+        {
+          "id": "MCF-EVA-003",
+          "title": "Evidence Repository",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-EVA-004",
+          "title": "Retention and Protection",
+          "critical": [],
+          "supporting": []
+        }
+      ]
+    },
+    {
+      "id": "EVA-02",
+      "name": "Evidence provenance and quality",
+      "controls": [
+        {
+          "id": "MCF-EVA-005",
+          "title": "Source Provenance",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-EVA-006",
+          "title": "Integrity and Custody",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-EVA-007",
+          "title": "Relevance and Reliability",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-EVA-008",
+          "title": "Currency and Coverage",
+          "critical": [],
+          "supporting": []
+        }
+      ]
+    },
+    {
+      "id": "EVA-03",
+      "name": "Assessment planning and execution",
+      "controls": [
+        {
+          "id": "MCF-EVA-009",
+          "title": "Decision Question",
+          "critical": [
+            "CG-01"
+          ],
+          "supporting": []
+        },
+        {
+          "id": "MCF-EVA-010",
+          "title": "Scope and Criteria",
+          "critical": [
+            "CG-02"
+          ],
+          "supporting": []
+        },
+        {
+          "id": "MCF-EVA-011",
+          "title": "Sampling and Testing",
+          "critical": [],
+          "supporting": [
+            "CG-04"
+          ]
+        },
+        {
+          "id": "MCF-EVA-012",
+          "title": "Specialist Involvement",
+          "critical": [],
+          "supporting": []
+        }
+      ]
+    },
+    {
+      "id": "EVA-04",
+      "name": "Findings, UNKNOWN and limitations",
+      "controls": [
+        {
+          "id": "MCF-EVA-013",
+          "title": "Finding Traceability",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-EVA-014",
+          "title": "UNKNOWN Preservation",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-EVA-015",
+          "title": "Conflict Handling",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-EVA-016",
+          "title": "Limitation Disclosure",
+          "critical": [],
+          "supporting": []
+        }
+      ]
+    },
+    {
+      "id": "EVA-05",
+      "name": "Critical gates and decisions",
+      "controls": [
+        {
+          "id": "MCF-EVA-017",
+          "title": "Gate Applicability",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-EVA-018",
+          "title": "Gate Evidence",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-EVA-019",
+          "title": "Independent Decision",
+          "critical": [],
+          "supporting": [
+            "CG-13"
+          ]
+        },
+        {
+          "id": "MCF-EVA-020",
+          "title": "Claim Language",
+          "critical": [],
+          "supporting": []
+        }
+      ]
+    },
+    {
+      "id": "EVA-06",
+      "name": "Reassessment and continuing assurance",
+      "controls": [
+        {
+          "id": "MCF-EVA-021",
+          "title": "Evidence Expiry",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-EVA-022",
+          "title": "Change Triggers",
+          "critical": [],
+          "supporting": [
+            "CG-14"
+          ]
+        },
+        {
+          "id": "MCF-EVA-023",
+          "title": "Monitoring Coverage",
+          "critical": [],
+          "supporting": []
+        },
+        {
+          "id": "MCF-EVA-024",
+          "title": "Decision Suspension and Supersession",
+          "critical": [],
+          "supporting": []
+        }
+      ]
+    }
+  ]
+}

@@ -231,7 +231,7 @@ p {
   font-size: 0.8rem;
 }
 
-@media (min-width: 1240px) {
+@media (min-width: 1440px) {
   .brand small {
     display: inline;
   }
@@ -251,6 +251,7 @@ p {
 
 .nav a {
   display: block;
+  white-space: nowrap;
   padding: 6px 10px;
   border-radius: var(--radius);
   color: var(--ink-2);
@@ -1403,4 +1404,259 @@ select,
   .only-narrow {
     display: none;
   }
+}
+
+/* ------------------------------------------------------ domain explorer */
+
+.dx-map {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.dx-cluster {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  display: grid;
+  gap: 10px;
+}
+
+@media (min-width: 820px) {
+  .dx-cluster {
+    grid-template-columns: 230px minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.dx-cluster-head {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.dx-cluster-head h3 {
+  font-size: 1rem;
+  margin: 0 0 2px;
+}
+
+.dx-cluster-head p {
+  margin: 0;
+}
+
+.dx-step {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+}
+
+.dx-domains {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 190px), 1fr));
+}
+
+.dx-domain {
+  all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: grid;
+  gap: 2px;
+  width: 100%;
+  height: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.dx-domain .code {
+  font-family: var(--mono);
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.dx-domain .dx-name {
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.dx-domain .meta {
+  font-size: 0.78rem;
+  color: var(--ink-3);
+}
+
+.dx-domain:hover {
+  border-color: var(--accent);
+}
+
+.dx-domain:focus-visible {
+  outline: 3px solid var(--focus);
+}
+
+.dx-domain.selected {
+  border: 2px solid var(--accent);
+  background: var(--accent-soft);
+}
+
+.dx-domain.linked,
+.dx-domain.in-gate {
+  border-color: var(--accent);
+  border-style: dashed;
+}
+
+.dx-domain.in-gate {
+  border-style: solid;
+  border-width: 2px;
+  background: var(--accent-soft);
+}
+
+.dx-domain.dim {
+  background: var(--surface-2);
+  border-color: var(--rule);
+}
+
+.dx-domain.dim .code,
+.dx-domain.dim .dx-name {
+  color: var(--ink-3);
+}
+
+.legend i.sw {
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--accent);
+  border-radius: 3px;
+}
+
+.legend i.sw.sel {
+  background: var(--accent-soft);
+}
+
+.legend i.sw.link {
+  border-style: dashed;
+  border-width: 1px;
+}
+
+details.dx-family {
+  border-top: 1px solid var(--rule);
+  padding: 6px 0;
+}
+
+details.dx-family summary {
+  cursor: pointer;
+}
+
+details.dx-family ul {
+  margin-top: 6px;
+}
+
+.dx-toc ul {
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+}
+
+.dx-fam {
+  margin-top: 32px;
+  scroll-margin-top: 72px;
+}
+
+.dx-fam h2 {
+  font-size: 1.35rem;
+}
+
+.dx-control {
+  margin-top: 12px;
+  scroll-margin-top: 72px;
+}
+
+.dx-control h3 {
+  font-size: 1.05rem;
+}
+
+.dx-control:target {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+
+.dx-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.dx-tags span {
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 1px 9px;
+  color: var(--ink-2);
+}
+
+.dx-tags span.crit {
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.dx-pager {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.journey-bar {
+  height: 4px;
+  background: var(--surface-2);
+  border-radius: 2px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.journey-bar span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+
+.journey-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.dx-anchor { scroll-margin-top: 80px; }
+
+.dx-domain.selected .meta,
+.dx-domain.in-gate .meta {
+  color: var(--ink-2);
+}
+
+.panel ul.plain {
+  list-style: none;
+  padding-left: 0;
 }

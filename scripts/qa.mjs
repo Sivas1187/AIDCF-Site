@@ -8,7 +8,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_PATH ?? "playwright");
 const axeSource = readFileSync(require.resolve("axe-core/axe.min.js"), "utf8");
 
 const [base, out] = process.argv.slice(2);
-const pages = ["/", "/case/", "/privacy/", "/accessibility/"];
+const pages = ["/", "/domains/", "/domains/pow/", "/case/", "/resources/", "/privacy/", "/accessibility/"];
 const viewports = { desktop: { width: 1366, height: 900 }, tablet: { width: 1024, height: 768 }, mobile: { width: 375, height: 812 } };
 const browser = await chromium.launch();
 let problems = 0;
@@ -68,6 +68,40 @@ for (const scheme of ["light", "dark"]) {
         problems++;
       }
       await page.screenshot({ path: `${out}/${scheme}-desktop-case-node.png` });
+      // Guided journey: walks the default scenario to the decision.
+      await page.getByRole("button", { name: "Guided journey" }).click();
+      await page.waitForTimeout(150);
+      let jp = await page.locator(".panel").innerText();
+      if (!/step 1 of \d+/.test(jp) || !/The failure starts here/.test(jp)) {
+        console.log(`CASE ${scheme}: journey did not start at the origin`);
+        problems++;
+      }
+      await page.getByRole("button", { name: "Next →" }).click();
+      await page.getByRole("button", { name: "Next →" }).click();
+      await page.waitForTimeout(150);
+      await page.screenshot({ path: `${out}/${scheme}-desktop-case-journey.png` });
+      for (let i = 0; i < 20 && (await page.getByRole("button", { name: "Next →" }).count()); i++) {
+        await page.getByRole("button", { name: "Next →" }).click();
+      }
+      jp = await page.locator(".panel").innerText();
+      if (!jp.includes(await page.evaluate(() => document.querySelector(".decision-card .big")?.textContent ?? "?"))) {
+        console.log(`CASE ${scheme}: journey does not end on the decision`);
+        problems++;
+      }
+      // Domain explorer: choose a domain, then a gate.
+      await page.goto(base + "/domains/", { waitUntil: "networkidle" });
+      await page.locator(".dx-domain", { hasText: "THM" }).click();
+      if (!/Cooling, Thermal and Fluid/.test(await page.locator(".panel").innerText())) {
+        console.log(`DOMAINS ${scheme}: THM not shown after selection`);
+        problems++;
+      }
+      await page.selectOption("#gate-filter", "CG-07");
+      await page.waitForTimeout(150);
+      if (!/domains hold CRITICAL controls/.test(await page.locator(".panel").innerText())) {
+        console.log(`DOMAINS ${scheme}: gate view missing`);
+        problems++;
+      }
+      await page.screenshot({ path: `${out}/${scheme}-desktop-domains-gate.png` });
     } else if (vpName === "mobile") {
       const listShown = await page.locator(".list-view").count();
       if (!listShown) {
@@ -77,6 +111,10 @@ for (const scheme of ["light", "dark"]) {
       await page.selectOption("#scenario", "FS-04");
       await page.waitForTimeout(200);
       await page.screenshot({ path: `${out}/${scheme}-mobile-case-FS04.png`, fullPage: true });
+      await page.getByRole("button", { name: "Guided journey" }).click();
+      await page.getByRole("button", { name: "Next →" }).click();
+      await page.waitForTimeout(400);
+      await page.screenshot({ path: `${out}/${scheme}-mobile-case-journey.png` });
     }
     for (const e of errors) {
       console.log(`CONSOLE ${scheme} ${vpName}: ${e}`);
@@ -98,6 +136,13 @@ for (const scheme of ["light", "dark"]) {
   await page.waitForURL("**/case/");
   await page.selectOption("#scenario", "FS-05");
   await page.locator(".gate-cell").nth(6).click();
+  await page.locator('.nav a[href="/domains/"]').click();
+  await page.waitForURL("**/domains/");
+  await page.locator(".dx-domain", { hasText: "NET" }).click();
+  if (!/AI Network and Interconnect/.test(await page.locator(".panel").innerText())) {
+    console.log("CSP pass: domain explorer did not respond");
+    problems++;
+  }
   await page.locator('.nav a[href="/#validation"]').click();
   await page.waitForTimeout(400);
   const hydrated = await page.evaluate(() => location.pathname);
