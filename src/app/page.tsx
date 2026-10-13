@@ -16,9 +16,11 @@ import {
 
 const pct = (n: number) => percent(n, 2);
 
-// Review types and what each does and does not establish for an AI workload.
-// This is the project's own analysis (see the impact assessment in the
-// repository), not a measured survey.
+// Review types, what each can establish, and what it may leave open for an AI
+// workload depending on how it is scoped. This is the project's own analysis
+// (see the impact assessment in the repository), not a measured survey, and
+// whether AIDCF adds anything to these reviews is what VAL-001 v1.1 section 10A
+// is designed to test.
 const reviewGap = [
   {
     review: "Tier certification, ANSI/TIA-942 rating, EN 50600 / ISO/IEC 22237 classification",
@@ -27,13 +29,23 @@ const reviewGap = [
   },
   {
     review: "Commissioning and integrated systems testing",
-    establishes: "That systems worked at handover",
-    gap: "Behaviour after later changes, under real AI load profiles, and through recovery",
+    establishes: "That systems, often several of them together, worked as designed at handover",
+    gap: "Behaviour after later changes, under real AI load profiles and through recovery, unless these were in the test scope",
+  },
+  {
+    review: "Engineering and reliability studies (power system studies, FMEA, fault tree analysis)",
+    establishes: "Failure modes and fault behaviour of the systems studied, which can cross power, cooling and controls",
+    gap: "Whether the study follows each failure through to the AI service outcomes, and whether it still holds after changes",
+  },
+  {
+    review: "OT security risk assessment (IEC 62443-3-2)",
+    establishes: "Zones, conduits, threats and target security levels for the control systems in scope",
+    gap: "How a compromise would affect power, cooling and the AI workload, where that consequence is outside the assessment scope",
   },
   {
     review: "ISO/IEC 27001, SOC 2 and similar reports",
-    establishes: "That a security management system or controls exist",
-    gap: "Integrity of the building, power and cooling control systems, and their effect on AI outcomes",
+    establishes: "That a security management system and selected controls are in place for the declared scope, which can include building and OT control systems",
+    gap: "Whether that scope actually reaches the power and cooling control systems, and how a failure there would affect AI outcomes",
   },
   {
     review: "ISO/IEC 42001, NIST AI RMF",
@@ -110,8 +122,12 @@ export default function Home() {
       state: "progress",
       text: (
         <>
-          Incident back-test under way: {bt.logged} public incidents logged, {bt.eligible} eligible.{" "}
-          {bt.selected > 0 ? `${bt.selected} selected for coding.` : "The sample has not been drawn yet."}
+          Incident back-test (AIDCF-VAL-001): protocol prepared and comparison instruments implemented (v1.1, draft).{" "}
+          {bt.comparison.approved < bt.comparison.baselines
+            ? `Practitioner approval of the comparison baselines is pending (${bt.comparison.approved} of ${bt.comparison.baselines} approved). `
+            : ""}
+          {bt.selected > 0 ? `${bt.selected} incidents selected for coding. ` : "The sample has not been drawn. "}
+          No results are available.
         </>
       ),
     },
@@ -169,8 +185,8 @@ export default function Home() {
           <div className="notice" role="note">
             <p>
               <strong>A methodology, not a certification or a product.</strong> AIDCF is a validation candidate. It
-              has not yet been independently reviewed or used on a real facility, and the example on this site is
-              synthetic.
+              has not yet been independently reviewed or used on a real facility, whether it adds anything to
+              existing reviews has not been tested, and the example on this site is synthetic.
             </p>
           </div>
           <div className="figures" aria-label="Framework at a glance">
@@ -201,8 +217,11 @@ export default function Home() {
             <h2 id="problem-h">The problem</h2>
             <p>
               A reliable AI service needs dense, transient power, liquid cooling, tightly coupled fabrics, checkpoint
-              storage, building control systems and outside suppliers to work together. Today each of these is
-              reviewed separately, and nobody joins the results up at the level of the AI workload.
+              storage, building control systems and outside suppliers to work together. Existing reviews cover
+              these to different extents. Some, such as integrated systems testing, reliability studies and OT risk
+              assessments, cross several domains. Whether a given set of reviews, as scoped for a particular site,
+              shows that the AI workload itself can deliver its outcomes is an open question that depends on that
+              scope.
             </p>
           </div>
           <div className="table-scroll">
@@ -212,7 +231,7 @@ export default function Home() {
                 <tr>
                   <th scope="col">Review commonly used today</th>
                   <th scope="col">What it establishes</th>
-                  <th scope="col">What it does not establish for an AI workload</th>
+                  <th scope="col">What it may leave open for an AI workload, depending on scope</th>
                 </tr>
               </thead>
               <tbody>
@@ -220,16 +239,26 @@ export default function Home() {
                   <tr key={r.review}>
                     <td data-label="Review">{r.review}</td>
                     <td data-label="Establishes">{r.establishes}</td>
-                    <td data-label="Does not establish">{r.gap}</td>
+                    <td data-label="May leave open">{r.gap}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
           <p className="caption">
-            The project&rsquo;s own analysis. AIDCF treats existing certifications and reports as bounded evidence, not
-            as proof that an AI capability is resilient.
+            The project&rsquo;s own analysis, not a survey or a measured result. A particular review may cover more
+            than shown here. AIDCF treats existing certifications and reports as bounded evidence, not as proof that
+            an AI capability is resilient.
           </p>
+          <div className="notice" role="note" style={{ marginTop: 16 }}>
+            <p>
+              <strong>Untested claim.</strong> Whether AIDCF finds weaknesses that these reviews miss has not been
+              tested. The draft{" "}
+              <a href={sourceUrl(bt.draftProtocol)}>comparative protocol (AIDCF-VAL-001 v1.1, section 10A)</a> is
+              designed to test it against engineering studies, commissioning and OT risk assessment.{" "}
+              {bt.comparison.rows > 0 ? "Comparative coding has started; no results are published yet." : "No comparative coding has started, so there are no results."}
+            </p>
+          </div>
           <div className="card" style={{ marginTop: 20 }}>
             <h3>The question AIDCF answers</h3>
             <p>
@@ -421,7 +450,7 @@ export default function Home() {
           <div className="section-head">
             <span className="num">07</span>
             <h2 id="validation-h">Validation status</h2>
-            <p>What has been done, what is under way, and what is still needed before anyone should rely on AIDCF.</p>
+            <p>What has been done, what has been prepared, and what is still needed before anyone should rely on AIDCF.</p>
           </div>
           <ul className="checklist" aria-label="Release status">
             {statusItems.map((item, i) => (
@@ -452,10 +481,17 @@ export default function Home() {
                   <td data-label="Instrument">
                     <a href={sourceUrl(bt.protocol)}>Incident back-test (AIDCF-VAL-001)</a>
                   </td>
-                  <td data-label="Question">Would AIDCF have flagged the causes of real, publicly reported outages?</td>
+                  <td data-label="Question">
+                    Would AIDCF have flagged the causes of real, publicly reported outages, and would conventional
+                    reviews have flagged them too?
+                  </td>
                   <td data-label="State">
-                    {bt.logged} incidents logged, {bt.eligible} eligible, {bt.excluded} excluded with reasons.{" "}
-                    {bt.selected > 0 ? `${bt.selected} selected.` : "Exclusions are being cross-checked before the sample draw."}
+                    Protocol v1.0 in force. Draft{" "}
+                    <a href={sourceUrl(bt.draftProtocol)}>v1.1</a> adds the comparison with conventional reviews, and its
+                    instruments are implemented. {bt.comparison.approved} of {bt.comparison.baselines} comparison
+                    baselines approved by practitioners. Sampling frame: {bt.logged} incidents logged, {bt.eligible}{" "}
+                    eligible, {bt.excluded} excluded with reasons.{" "}
+                    {bt.selected > 0 ? `${bt.selected} selected.` : "Sample not drawn."} No results.
                   </td>
                 </tr>
                 <tr>

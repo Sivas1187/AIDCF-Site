@@ -1,7 +1,7 @@
 {
   "release": "AIDCF-REL-2026.10.1",
   "repository": "https://github.com/Sivas1187/AIDCF",
-  "commit": "02b9a2021c23ef4595133c85baf5d35ef8175dd7",
+  "commit": "0c6dfac7ff179f05a93adefca83e8ec98e3efbf7",
   "sources": {
     "CITATION.cff": "d5e72a58ac069ace57cea354ccdc753266b5fe070351ebbe8ddea918381dbb39",
     "README.md": "ecaaaf985305c041d3a516d2f2c5fba897699f21699c9330b5eacd92c7f853e7",
@@ -29,7 +29,9 @@
     "registries/vocabularies/decision-states.csv": "d25ef8aa363eb945fbac0ea237952bd4fcbab3d3c223d1e32c434a826a5c8c01",
     "registries/vocabularies/evidence-classes.csv": "2e406cd9585ce4eef4c4a9780a55584cf0155a7c7ac0885e9f8512d3005207bb",
     "registries/vocabularies/sufficiency-levels.csv": "23ab765722288a2c2b237b8569dc8fed2e815f32aa30acc54b47ffdc1f24b1a7",
-    "research/back-testing/incident-register.csv": "74e3738877475184acc7cb86deed831f56779536435298a56ca3cd2f0c91a857",
+    "research/back-testing/baselines.csv": "8080ed8f832528b9135e9dfe93bf8744e4e1832da87db9a48aed8f83c1a73f3e",
+    "research/back-testing/comparative-sheet.csv": "681ae04a08c2b9fedc86b957d22aa4c72ff79ba67cbe5c306fdabaccdd3358b1",
+    "research/back-testing/incident-register.csv": "b78578f70c4cc9e80d8fb097f5565fd18b86c8d9e02b9c48a394da224b0bdfb9",
     "validation/expert-panel/control-sample.csv": "cbd4f334592feddd729c99748986e41b7f42732fa583cbef7263813897d11a7c",
     "validation/expert-panel/gate-sample.csv": "79f9576adda3b30049efd0546ef7492d54f678152fa85cf378f832442c108930",
     "whitepaper/current/AIDCF_Technical_Whitepaper_v3.1_Validation_Candidate.md": "d0dffa39fa4ffd54699185f66c27c66d2d1eb7b095393c1d53ddc310376ce937",
