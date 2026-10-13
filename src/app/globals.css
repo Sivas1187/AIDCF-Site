@@ -269,7 +269,7 @@ p {
   display: none;
 }
 
-@media (max-width: 959px) {
+@media (max-width: 1199px) {
   .nav-toggle {
     display: inline-flex;
     margin-left: auto;
@@ -855,6 +855,32 @@ details.gate dt {
 
 details.gate dd {
   margin: 0 0 6px;
+}
+
+/* -------------------------------------------------------- positioning */
+
+.status-line {
+  margin: 16px 0;
+  font-size: 0.95rem;
+  color: var(--ink-2, var(--ink));
+}
+
+.steps-inline {
+  margin: 12px 0 0;
+  padding-left: 1.4em;
+  display: grid;
+  gap: 4px;
+}
+
+.phase-list {
+  margin: 0;
+  padding-left: 1.6em;
+  display: grid;
+  gap: 10px;
+}
+
+.phase-list li > span:last-child {
+  display: block;
 }
 
 /* -------------------------------------------------------- status */
