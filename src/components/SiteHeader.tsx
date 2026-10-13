@@ -9,6 +9,7 @@ const links = [
   { href: "/#method", label: "Methodology" },
   { href: "/domains/", label: "15 domains" },
   { href: "/case/", label: "Infrastructure graph" },
+  { href: "/scenarios/", label: "Scenarios" },
   { href: "/#validation", label: "Validation" },
   { href: "/#research", label: "Research" },
   { href: "/resources/", label: "Resources" },

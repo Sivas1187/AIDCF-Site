@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { CaseExplorer } from "@/components/CaseExplorer";
 import { FailureStory } from "@/components/FailureStory";
@@ -43,8 +44,9 @@ export default function CasePage() {
         <div className="wrap">
           <FailureStory variant="board" />
           <p className="small muted">
-            This is one of {caseData.scenarios.length} analysed failure scenarios. The full graph below is the expert
-            view: every element, dependency and scenario.
+            This is one of {caseData.scenarios.length} failure scenarios instantiated in this case. The full graph
+            below is the expert view: every element, dependency and scenario. The{" "}
+            <Link href="/scenarios/">scenario library</Link> has the twenty cross-domain reference scenarios of AIDCF-004.
           </p>
         </div>
       </section>

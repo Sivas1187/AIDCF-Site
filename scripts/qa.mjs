@@ -8,7 +8,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_PATH ?? "playwright");
 const axeSource = readFileSync(require.resolve("axe-core/axe.min.js"), "utf8");
 
 const [base, out] = process.argv.slice(2);
-const pages = ["/", "/domains/", "/domains/pow/", "/case/", "/resources/", "/privacy/", "/accessibility/"];
+const pages = ["/", "/domains/", "/domains/pow/", "/case/", "/scenarios/", "/resources/", "/privacy/", "/accessibility/"];
 const viewports = { desktop: { width: 1366, height: 900 }, tablet: { width: 1024, height: 768 }, mobile: { width: 375, height: 812 } };
 const browser = await chromium.launch();
 let problems = 0;
@@ -136,6 +136,20 @@ for (const scheme of ["light", "dark"]) {
         problems++;
       }
       await page.screenshot({ path: `${out}/${scheme}-desktop-domains-gate.png` });
+      // Scenario library: 20 cards; filters narrow them.
+      await page.goto(base + "/scenarios/", { waitUntil: "networkidle" });
+      const all = await page.locator(".sc-card:visible").count();
+      await page.selectOption("#sc-domain", "NET");
+      await page.selectOption("#sc-gate", "CG-08");
+      await page.waitForTimeout(150);
+      const net = await page.locator(".sc-card:visible").count();
+      await page.fill("#sc-q", "zzzz-no-match");
+      await page.waitForTimeout(150);
+      const none = await page.locator(".sc-card:visible").count();
+      if (all !== 20 || !(net > 0 && net < 20) || none !== 0) {
+        console.log(`SCENARIOS ${scheme}: ${all} cards, ${net} for NET and CG-08, ${none} for a non-match`);
+        problems++;
+      }
       await page.goto(base + "/domains/pow/", { waitUntil: "networkidle" });
       await page.fill("#control-filter", "UPS");
       await page.waitForTimeout(150);

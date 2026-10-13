@@ -19,6 +19,7 @@ The framework itself lives in [Sivas1187/AIDCF](https://github.com/Sivas1187/AID
 | `/domains/` | Domain explorer: the 15 domains in the seven clusters of whitepaper section 8, the domains each shares critical gates with, and the domains behind each gate |
 | `/domains/<code>/` | One page per domain: every family and control with its objective, requirement, evidence classes and gate roles (registry v1.1, proposed) |
 | `/case/` | The AIDCF-015 v1.3 synthetic case: decision question (with any erratum), interactive dependency graph with five failure scenarios and a guided step-by-step journey, gate results and the computed decision |
+| `/scenarios/` | The twenty AIDCF-004 cross-domain failure scenarios, searchable by domain, gate and operating state |
 | `/resources/` | Repository, framework documents, domain guides, registries, reference implementation, errata, about and contributing |
 | `/privacy/` | Privacy notice (no analytics, no cookies) |
 | `/accessibility/` | Accessibility statement (target WCAG 2.2 AA) |

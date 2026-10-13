@@ -708,6 +708,74 @@ const manifest = {
 
 // ---------------------------------------------------------------- write
 
+// ------------------------------------------------ scenario library (AIDCF-004 Part XIV)
+
+const thfPath = "foundations/threat-model/AIDCF-004_Threat_Hazard_and_Failure_Model_v1.1.md";
+const scenarioLibrary = (() => {
+  const text = track(thfPath).toString("utf8").replace(/\r/g, "");
+  const start = text.indexOf("\n# Part XIV");
+  if (start < 0) fail(`${thfPath}: Part XIV not found`);
+  const end = text.indexOf("\n# ", start + 5);
+  const part = text.slice(start, end < 0 ? undefined : end);
+  const domainIds = new Set(framework.domains.map((d) => d.id));
+  const gateIds = new Set(framework.gates.map((g) => g.id));
+  const fields = {
+    "Initiating event": "initiatingEvent",
+    Preconditions: "preconditions",
+    "Operating states": "operatingStates",
+    "Propagation path": "path",
+    "Affected Required Functions": "requiredFunctions",
+    "Affected Service Outcomes": "serviceOutcomes",
+    "Safeguards that should interrupt it": "safeguards",
+    "Relevant MCF control families": "families",
+    "Relevant critical gates": "gates",
+    "Evidence that would show the safeguards work": "evidence",
+    "Typical UNKNOWNs": "unknowns",
+  };
+  const items = part.split(/\n## (?=X\d{2} )/).slice(1).map((sec) => {
+    const [head, ...rest] = sec.split("\n");
+    const [, id, title] = head.match(/^(X\d{2}) (.+)$/);
+    const body = rest.join("\n");
+    const raw = {};
+    for (const m of body.matchAll(/\*\*([^*]+)\.\*\*([\s\S]*?)(?=\n\*\*[^*]+\.\*\*|$)/g)) {
+      const key = fields[m[1].trim()];
+      if (key) raw[key] = m[2].trim();
+    }
+    for (const k of Object.values(fields)) if (!raw[k]) fail(`${thfPath}: ${id} has no "${k}"`);
+    const listOf = (t) => t.split("\n").map((l) => l.replace(/^(\d+\.|-)\s+/, "").trim()).filter(Boolean);
+    const path = listOf(raw.path).map((l) => {
+      const m = l.match(/^([A-Z]{3}(?:\s*(?:→|\/)\s*[A-Z]{3})*)\s+—\s+([\s\S]+)$/);
+      const domains = m ? m[1].split(/\s*(?:→|\/)\s*/).filter((d) => domainIds.has(d)) : [];
+      return { domains, text: m ? m[2] : l };
+    });
+    const families = [...raw.families.matchAll(/\b([A-Z]{3}-\d{2})\b/g)].map((m) => m[1]);
+    const gates = [...raw.gates.matchAll(/\b(CG-\d{2})\b/g)].map((m) => m[1]).filter((g) => gateIds.has(g));
+    const states = [...new Set([...raw.operatingStates.matchAll(/\b(NORMAL|MAINTENANCE|EMERGENCY|DEGRADED|RECOVERY|FAILED|ISOLATED)\b/g)].map((m) => m[1]))];
+    const domains = [...new Set(path.flatMap((p) => p.domains))];
+    return {
+      id,
+      title,
+      initiatingEvent: raw.initiatingEvent,
+      preconditions: raw.preconditions,
+      operatingStates: raw.operatingStates,
+      states,
+      path,
+      requiredFunctions: raw.requiredFunctions.replace(/\.$/, ""),
+      serviceOutcomes: raw.serviceOutcomes.replace(/\.$/, ""),
+      safeguards: listOf(raw.safeguards),
+      families,
+      familyText: raw.families.replace(/\.$/, ""),
+      gates,
+      evidence: listOf(raw.evidence),
+      unknowns: raw.unknowns,
+      domains,
+    };
+  });
+  if (items.length !== 20) fail(`${thfPath}: expected 20 library scenarios, found ${items.length}`);
+  const intro = part.split("\n## ")[0].split("\n\n").map((t) => t.trim()).find((t) => t && !t.startsWith("#"));
+  return { source: thfPath, intro, scenarios: items };
+})();
+
 const outputs = {
   "manifest.json": manifest,
   "framework.json": framework,
@@ -716,6 +784,7 @@ const outputs = {
   "domains.json": domainIndex,
   "validation.json": validation,
   "research.json": research,
+  "scenarios.json": scenarioLibrary,
 };
 
 let stale = 0;
