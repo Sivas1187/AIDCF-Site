@@ -8,7 +8,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_PATH ?? "playwright");
 const axeSource = readFileSync(require.resolve("axe-core/axe.min.js"), "utf8");
 
 const [base, out] = process.argv.slice(2);
-const pages = ["/", "/domains/", "/domains/pow/", "/case/", "/scenarios/", "/resources/", "/privacy/", "/accessibility/"];
+const pages = ["/", "/method/", "/domains/", "/domains/pow/", "/case/", "/scenarios/", "/resources/", "/privacy/", "/accessibility/"];
 const viewports = { desktop: { width: 1366, height: 900 }, tablet: { width: 1024, height: 768 }, mobile: { width: 375, height: 812 } };
 const browser = await chromium.launch();
 let problems = 0;
@@ -201,7 +201,9 @@ for (const scheme of ["light", "dark"]) {
   }
   await page.selectOption("#scenario", "FS-05");
   await page.locator(".gate-cell").nth(6).click();
-  await page.locator('.nav a[href="/domains/"]').click();
+  await page.locator('.nav a[href="/method/"]').click();
+  await page.waitForURL("**/method/");
+  await page.locator('main a[href="/domains/"]').first().click();
   await page.waitForURL("**/domains/");
   await page.locator(".dx-domain", { hasText: "NET" }).click();
   if (!/AI Network and Interconnect/.test(await page.locator(".panel").innerText())) {

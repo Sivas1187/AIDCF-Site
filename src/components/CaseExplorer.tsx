@@ -358,6 +358,7 @@ export function CaseExplorer() {
                   })}
                 </svg>
               </div>
+              <p className="graph-hint small muted">Swipe sideways to see the whole graph, or switch to List.</p>
               <div className="legend" aria-hidden="true">
                 <span>
                   <i /> structure (part of, implements, required by)

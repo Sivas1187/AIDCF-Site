@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { CaseExplorer } from "@/components/CaseExplorer";
+import { CoverageWaffle } from "@/components/CoverageWaffle";
 import { FailureStory } from "@/components/FailureStory";
 import { GateResults } from "@/components/GateResults";
 import { caseData, gateName, humanise, manifest, percent, repoUrl, sourceUrl } from "@/lib/data";
@@ -182,6 +183,7 @@ export default function CasePage() {
                 <span>score band</span>
               </div>
             </div>
+            <CoverageWaffle />
             <p className="small">
               <strong>Why the score band is withheld:</strong> {sc.bandWithheldReason}. AIDCF withholds the band below 80%
               coverage, or while a US4 or US5 UNKNOWN is open, so a score cannot imply more than the evidence supports.
